@@ -20,7 +20,7 @@ const Faq = () => (
 
       <div>
         <h2 className="text-xl font-semibold">How is my data used?</h2>
-        <p>Check out our <Link to="/privacy-policy" className="text-pink-600 underline">Privacy Policy</Link> for information on how we protect your data.</p>
+        <p>Check out our <Link to="/privacy" className="text-pink-600 underline">Privacy Policy</Link> for information on how we protect your data.</p>
       </div>
 
       <div>
