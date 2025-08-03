@@ -252,7 +252,7 @@ function Dashboard() {
         <div className="modal-overlay" onClick={() => setSelectedUser(null)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <span className="modal-close" onClick={() => setSelectedUser(null)}>
-              ×
+              
             </span>
             <h3>
               {selectedUser.name} - {calculateAge(selectedUser.dob)} yrs
