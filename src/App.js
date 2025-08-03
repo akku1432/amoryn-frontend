@@ -63,7 +63,7 @@ function App() {
           <Route path="/reset-password/:token" element={<ResetPassword />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
-          <Route path="/faq" element={<Faq />} />
+          <Route path="/Faq" element={<Faq />} />
           <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/cancellation-refund" element={<CancellationRefund />} />
         </Routes>

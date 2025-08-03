@@ -207,7 +207,7 @@ function Dashboard() {
             </span>
           )}
         </Link>
-        <Link to="/faq">FAQ</Link>
+        <Link to="/Faq">FAQ</Link>
 
         <button className="premium-button" onClick={handlePremiumClick}>
           <BadgePercent size={18} style={{ marginRight: '8px' }} /> Go Premium
