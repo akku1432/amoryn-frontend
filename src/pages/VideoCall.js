@@ -10,6 +10,8 @@ import {
 } from 'lucide-react';
 import './VideoCall.css';
 import axios from 'axios';
+import { BASE_URL } from '../utils/config';
+
 
 const VideoCall = () => {
   const [searchParams] = useSearchParams();
@@ -39,7 +41,7 @@ const VideoCall = () => {
     const checkSubscription = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await axios.get('http://localhost:5000/api/user/profile', {
+        const res = await axios.get(`${BASE_URL}/api/user/profile`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 

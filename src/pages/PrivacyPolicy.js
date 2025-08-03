@@ -1,5 +1,6 @@
 import React from 'react';
 import './PrivacyPolicy.css';
+import { BASE_URL } from '../utils/config';
 
 const PrivacyPolicy = () => {
   return (

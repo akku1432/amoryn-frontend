@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Video, Home, X } from 'lucide-react';
 import { SocketContext } from '../SocketContext';
 import './Friends.css';
+import { BASE_URL } from '../utils/config';
 
 function Friends() {
   const [friends, setFriends] = useState([]);
@@ -22,7 +23,7 @@ function Friends() {
 
   const fetchFriends = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/user/friends', {
+      const res = await axios.get(`${BASE_URL}/api/user/friends`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setFriends(res.data);
@@ -33,7 +34,7 @@ function Friends() {
 
   const fetchRequests = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/user/requests', {
+      const res = await axios.get(`${BASE_URL}/api/user/requests`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setRequests(res.data);
@@ -44,7 +45,7 @@ function Friends() {
 
   const fetchPremiumStatus = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/user/profile', {
+      const res = await axios.get(`${BASE_URL}/api/user/profile`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setIsPremium(res.data.isPremium);
@@ -57,7 +58,7 @@ function Friends() {
 
   const acceptRequest = async (userId) => {
     try {
-      await axios.post('http://localhost:5000/api/user/match/action', {
+      await axios.post(`${BASE_URL}/api/user/match/action`, {
         targetUserId: userId,
         action: 'like',
       }, {
@@ -72,7 +73,7 @@ function Friends() {
 
   const rejectRequest = async (userId) => {
     try {
-      await axios.post('http://localhost:5000/api/user/match/action', {
+      await axios.post(`${BASE_URL}/api/user/match/action`, {
         targetUserId: userId,
         action: 'dislike',
       }, {
@@ -136,7 +137,7 @@ function Friends() {
           friends.map(friend => (
             <div className="friend-card" key={friend._id}>
               <img
-                src={friend.photos?.[0] ? `http://localhost:5000/${friend.photos[0].replace(/\\/g, '/')}` : '/default-user.png'}
+                src={friend.photos?.[0] ? `${BASE_URL}/${friend.photos[0].replace(/\\/g, '/')}` : '/default-user.png'}
                 alt={friend.name}
                 onClick={() => setSelectedUser(friend)}
               />
@@ -164,7 +165,7 @@ function Friends() {
           requests.map(user => (
             <div className="friend-card" key={user._id}>
               <img
-                src={user.photos?.[0] ? `http://localhost:5000/${user.photos[0].replace(/\\/g, '/')}` : '/default-user.png'}
+                src={user.photos?.[0] ? `${BASE_URL}/${user.photos[0].replace(/\\/g, '/')}` : '/default-user.png'}
                 alt={user.name}
               />
               <div className="friend-details">
@@ -188,7 +189,7 @@ function Friends() {
             <span className="modal-close" onClick={() => setSelectedUser(null)}>×</span>
             <h3>{selectedUser.name} - {calculateAge(selectedUser.dob)} yrs</h3>
             <img
-              src={selectedUser.photos?.[0] ? `http://localhost:5000/${selectedUser.photos[0].replace(/\\/g, '/')}` : '/default-user.png'}
+              src={selectedUser.photos?.[0] ? `${BASE_URL}/${selectedUser.photos[0].replace(/\\/g, '/')}` : '/default-user.png'}
               alt="Profile"
               className="modal-photo"
             />

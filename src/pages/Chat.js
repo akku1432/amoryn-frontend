@@ -4,6 +4,7 @@ import './Chat.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { SocketContext } from '../SocketContext';
 import { Video, Home, X } from 'lucide-react';
+import { BASE_URL } from '../utils/config';
 
 function Chat() {
   const [conversations, setConversations] = useState([]);
@@ -29,7 +30,7 @@ function Chat() {
   // Fetch user's premium status
   useEffect(() => {
     axios
-      .get('http://localhost:5000/api/user/profile', {
+      .get(`${BASE_URL}/api/user/profile`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => setIsPremium(res.data.isPremium || false))
@@ -39,7 +40,7 @@ function Chat() {
   // Fetch conversations (chat users) AND initialize unread notifications
   useEffect(() => {
     axios
-      .get('http://localhost:5000/api/chat/conversations', {
+       .get(`${BASE_URL}/api/chat/conversations`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -70,8 +71,8 @@ function Chat() {
 
     // NEW: Fetch unread messages count per user to initialize notifications
     axios
-      .get('http://localhost:5000/api/chat/unread', { 
-        headers: { Authorization: `Bearer ${token}` }
+         .get(`${BASE_URL}/api/chat/unread`, {
+        headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
         setChatNotifications(res.data || {});
@@ -86,7 +87,7 @@ function Chat() {
     if (!selectedUser) return;
 
     axios
-      .get(`http://localhost:5000/api/chat/messages/${selectedUser._id}`, {
+      .get(`${BASE_URL}/api/chat/messages/${selectedUser._id}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -136,8 +137,8 @@ function Chat() {
     if (!newMessage.trim() || !selectedUser?._id) return;
 
     try {
-      const res = await axios.post(
-        'http://localhost:5000/api/chat/send',
+       const res = await axios.post(
+        `${BASE_URL}/api/chat/send`,
         { to: selectedUser._id, message: newMessage.trim() },
         { headers: { Authorization: `Bearer ${token}` } }
       );

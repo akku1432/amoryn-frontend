@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Home, X } from 'lucide-react';
+import { BASE_URL } from '../utils/config';
 import './Profile.css';
 
 function Profile() {
@@ -28,7 +29,7 @@ function Profile() {
 
   useEffect(() => {
     axios
-      .get('http://localhost:5000/api/user/profile', {
+      .get(`${BASE_URL}/api/user/profile`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -45,7 +46,7 @@ function Profile() {
           city: data.city || '',
         });
         setExistingPhotos(savedPhotos);
-        const previewUrls = savedPhotos.map((p) => `http://localhost:5000/${p.replace(/\\/g, '/')}`);
+        const previewUrls = savedPhotos.map((p) => `${BASE_URL}/${p.replace(/\\/g, '/')}`);
         setImagePreviews(previewUrls);
       })
       .catch(() => setMessage('❌ Failed to fetch user'));
@@ -125,7 +126,7 @@ function Profile() {
     formData.append('city', location.city);
 
     try {
-      await axios.put('http://localhost:5000/api/user/profile', formData, {
+      await axios.put(`${BASE_URL}/api/user/profile`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',

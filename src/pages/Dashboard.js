@@ -4,6 +4,7 @@ import axios from 'axios';
 import './Dashboard.css';
 import { SocketContext } from '../SocketContext';
 import { Video, BadgePercent } from 'lucide-react';
+import { BASE_URL } from '../utils/config';
 
 function Dashboard() {
   const socket = useContext(SocketContext);
@@ -33,7 +34,7 @@ function Dashboard() {
   // Fetch match users and premium status
   useEffect(() => {
     axios
-      .get('http://localhost:5000/api/user/match', { headers: { Authorization: `Bearer ${token}` } })
+            .get(`${BASE_URL}/api/user/match`, { headers: { Authorization: `Bearer ${token}` } })
       .then((res) => {
         setUsers(res.data.users || []);
         setIsPremium(res.data.isPremium || false);
@@ -45,7 +46,7 @@ function Dashboard() {
   // Fetch friend requests count
   const fetchFriendRequests = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/user/requests', {
+      const res = await axios.get(`${BASE_URL}/api/user/requests`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setFriendRequestsCount(res.data.length || 0);
@@ -65,7 +66,7 @@ function Dashboard() {
 
     const fetchUnreadChats = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/chat/unread', {
+        const res = await axios.get(`${BASE_URL}/api/chat/unread`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const totalUnread = Object.values(res.data).reduce((acc, val) => acc + val, 0);
@@ -130,7 +131,7 @@ function Dashboard() {
 
     try {
       await axios.post(
-        'http://localhost:5000/api/user/match/action',
+        `${BASE_URL}/api/user/match/action`,
         { targetUserId: userId, action },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -224,7 +225,7 @@ function Dashboard() {
               <img
                 src={
                   user.photos?.length
-                    ? `http://localhost:5000/${user.photos[0].replace(/\\/g, '/')}`
+                    ? `${BASE_URL}/${user.photos[0].replace(/\\/g, '/')}`
                     : '/default-user.png'
                 }
                 alt={user.name}
@@ -258,7 +259,7 @@ function Dashboard() {
             <img
               src={
                 selectedUser.photos?.length
-                  ? `http://localhost:5000/${selectedUser.photos[0].replace(/\\/g, '/')}`
+                  ? `${BASE_URL}/${selectedUser.photos[0].replace(/\\/g, '/')}`
                   : '/default-user.png'
               }
               alt="Profile"

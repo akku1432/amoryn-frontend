@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Video, Home } from 'lucide-react';
 import './Match.css';
+import { BASE_URL } from '../utils/config';
 
 function Match() {
   const [matches, setMatches] = useState([]);
@@ -17,7 +18,7 @@ function Match() {
   useEffect(() => {
     const fetchMatches = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/user/match', {
+        const res = await axios.get(`${BASE_URL}/api/user/match`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setMatches(res.data.users || []);
@@ -40,7 +41,7 @@ function Match() {
 
     try {
       await axios.post(
-        'http://localhost:5000/api/user/match/action',
+        `${BASE_URL}/api/user/match/action`,
         { targetUserId, action },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -114,7 +115,7 @@ function Match() {
             <img
               src={
                 user.photos?.length
-                  ? `http://localhost:5000/${user.photos[0].replace(/\\/g, '/')}`
+                  ? `${BASE_URL}/${user.photos[0].replace(/\\/g, '/')}`
                   : '/default-user.png'
               }
               alt={user.name}
@@ -138,7 +139,7 @@ function Match() {
             <img
               src={
                 selectedUser.photos?.length
-                  ? `http://localhost:5000/${selectedUser.photos[0].replace(/\\/g, '/')}`
+                  ? `${BASE_URL}/${selectedUser.photos[0].replace(/\\/g, '/')}`
                   : '/default-user.png'
               }
               alt="Profile"

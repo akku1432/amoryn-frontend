@@ -4,6 +4,7 @@ import './Subscription.css';
 import { Crown, Home } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { BASE_URL } from '../utils/config';
 
 const Subscription = () => {
   const [userCurrency, setUserCurrency] = useState('INR');
@@ -65,7 +66,7 @@ const Subscription = () => {
   const fetchActivePlan = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('http://localhost:5000/api/user/profile', {
+      const res = await axios.get(`${BASE_URL}/api/user/profile`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -119,7 +120,7 @@ const Subscription = () => {
         if (planType) {
           try {
             const result = await axios.post(
-              'http://localhost:5000/api/user/subscribe',
+              `${BASE_URL}/api/user/subscribe`,
               { plan: planType },
               { headers: { Authorization: `Bearer ${token}` } }
             );

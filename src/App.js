@@ -15,8 +15,9 @@ import Subscription from './pages/Subscription'; // ✅ Added subscription page
 import ResetPassword from './pages/ResetPassword';
 import Terms from './pages/Terms';
 import PrivacyPolicy from './pages/PrivacyPolicy';
+import { BASE_URL } from '../utils/config';
 
-const socket = io('http://localhost:5000');
+const socket = io(`${BASE_URL}`);
 
 function App() {
   useEffect(() => {
