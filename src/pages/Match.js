@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Video, Home } from 'lucide-react';
 import './Match.css';
-import { BASE_URL } from './utils/config';
+import { BASE_URL } from '../utils/config';
 
 function Match() {
   const [matches, setMatches] = useState([]);

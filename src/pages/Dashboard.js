@@ -4,7 +4,7 @@ import axios from 'axios';
 import './Dashboard.css';
 import { SocketContext } from '../SocketContext';
 import { Video, BadgePercent } from 'lucide-react';
-import { BASE_URL } from './utils/config';
+import { BASE_URL } from '../utils/config';
 
 function Dashboard() {
   const socket = useContext(SocketContext);
@@ -207,6 +207,7 @@ function Dashboard() {
             </span>
           )}
         </Link>
+        <Link to="/faq">FAQ</Link>
 
         <button className="premium-button" onClick={handlePremiumClick}>
           <BadgePercent size={18} style={{ marginRight: '8px' }} /> Go Premium

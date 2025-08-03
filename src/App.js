@@ -15,6 +15,9 @@ import Subscription from './pages/Subscription'; // ✅ Added subscription page
 import ResetPassword from './pages/ResetPassword';
 import Terms from './pages/Terms';
 import PrivacyPolicy from './pages/PrivacyPolicy';
+import Faq from './pages/Faq';
+import ContactUs from './pages/ContactUs';
+import CancellationRefund from './pages/CancellationRefund';
 import { BASE_URL } from './utils/config';
 
 const socket = io(`${BASE_URL}`);
@@ -60,6 +63,9 @@ function App() {
           <Route path="/reset-password/:token" element={<ResetPassword />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/faq" element={<Faq />} />
+          <Route path="/contact-us" element={<ContactUs />} />
+          <Route path="/cancellation-refund" element={<CancellationRefund />} />
         </Routes>
       </Router>
     </SocketContext.Provider>

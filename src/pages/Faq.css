@@ -1,0 +1,92 @@
+/* Faq.css */
+
+body {
+    background: linear-gradient(135deg, #ffe6f0, #ffffff);
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.p-6 {
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    margin: 40px auto;
+    padding: 24px;
+    max-width: 95%;
+}
+
+@media (min-width: 640px) {
+    .p-6 {
+        padding: 32px;
+        max-width: 90%;
+    }
+}
+
+@media (min-width: 1024px) {
+    .p-6 {
+        max-width: 60%;
+    }
+}
+
+h1 {
+    text-align: center;
+    color: #ec4899; /* Tailwind pink-600 */
+    font-weight: 700;
+    font-size: 2rem;
+    margin-bottom: 24px;
+}
+
+@media (min-width: 640px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+}
+
+.space-y-4 > div {
+    background-color: #fafafa;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 16px;
+    transition: box-shadow 0.3s ease;
+}
+
+.space-y-4 > div:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+h2 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #111827; /* Tailwind gray-800 */
+    margin-bottom: 8px;
+}
+
+@media (min-width: 640px) {
+    h2 {
+        font-size: 1.25rem;
+    }
+}
+
+p {
+    color: #374151; /* Tailwind gray-700 */
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+@media (min-width: 640px) {
+    p {
+        font-size: 1rem;
+    }
+}
+
+a {
+    color: #ec4899; /* Tailwind pink-600 */
+    text-decoration: underline;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #be185d; /* Tailwind pink-800 */
+}
