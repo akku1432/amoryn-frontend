@@ -4,7 +4,7 @@ import axios from 'axios';
 import './Dashboard.css';
 import { SocketContext } from '../SocketContext';
 import { Video, BadgePercent } from 'lucide-react';
-import { BASE_URL } from '../utils/config';
+import { BASE_URL } from './utils/config';
 
 function Dashboard() {
   const socket = useContext(SocketContext);

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './ForgotPassword.css';
-import { BASE_URL } from '../utils/config';
+import { BASE_URL } from './utils/config';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
