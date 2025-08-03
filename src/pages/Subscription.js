@@ -157,6 +157,10 @@ const Subscription = () => {
       <div className="subscription-header">
         <h2>Unlock Premium Features</h2>
         <p>Prices shown in your local currency for your convenience</p>
+        <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded mb-6" role="alert">
+  <p className="font-bold">Notice</p>
+  <p>Payments are temporarily disabled. Subscription purchases will be available in 1–3 days.</p>
+</div>
       </div>
 
       {subscription ? (
