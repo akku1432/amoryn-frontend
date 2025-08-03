@@ -1,5 +1,5 @@
 import React from 'react';
-import { BASE_URL } from './utils/config';
+import { BASE_URL } from '../utils/config';
 import './Terms.css';
 
 const Terms = () => {

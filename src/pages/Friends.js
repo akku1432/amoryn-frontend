@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Video, Home, X } from 'lucide-react';
 import { SocketContext } from '../SocketContext';
 import './Friends.css';
-import { BASE_URL } from './utils/config';
+import { BASE_URL } from '../utils/config';
 
 function Friends() {
   const [friends, setFriends] = useState([]);

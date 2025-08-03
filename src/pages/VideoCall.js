@@ -10,7 +10,7 @@ import {
 } from 'lucide-react';
 import './VideoCall.css';
 import axios from 'axios';
-import { BASE_URL } from './utils/config';
+import { BASE_URL } from '../utils/config';
 
 
 const VideoCall = () => {

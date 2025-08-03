@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Home, X } from 'lucide-react';
-import { BASE_URL } from './utils/config';
+import { BASE_URL } from '../utils/config';
 import './Profile.css';
 
 function Profile() {
