@@ -1,0 +1,116 @@
+.signup-container {
+  max-width: 420px;
+  margin: 60px auto;
+  padding: 40px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(243, 176, 176, 0.3);
+  text-align: center;
+}
+
+.logo {
+  font-size: 32px;
+  font-weight: bold;
+  color: #a3cae9;
+  margin-bottom: 5px;
+}
+
+.quote {
+  font-size: 20px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.signup-container h2 {
+  margin-bottom: 15px;
+  color: #040404;
+}
+
+.signup-container input,
+.signup-container select,
+.signup-container label {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  border: none;
+  box-shadow: 0 0px 5px rgba(97, 94, 94, 0.3);
+  border-radius: 8px;
+  box-sizing: border-box;
+  height: 45px;
+}
+
+.signup-container button {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  background-color: #fc3786;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.signup-container button:hover {
+  background-color: #990000;
+}
+
+.message {
+  margin-bottom: 10px;
+  color: #006600;
+}
+.terms-checkbox {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #555;
+}
+
+.terms-checkbox input[type="checkbox"] {
+  margin-right: 8px;
+  width: 16px;
+  height: 16px;
+  accent-color: #e91e63; /* Use your brand color */
+}
+
+.terms-checkbox label a {
+  color: #e91e63;
+  text-decoration: none;
+}
+
+.terms-checkbox label a:hover {
+  text-decoration: underline;
+}
+
+
+/* Responsive Design */
+@media screen and (max-width: 480px) {
+  .signup-container {
+    padding: 25px;
+    margin: 40px 20px;
+  }
+
+  .logo {
+    font-size: 26px;
+  }
+
+  .quote {
+    font-size: 16px;
+  }
+
+  .signup-container h2 {
+    font-size: 22px;
+  }
+
+  .signup-container input,
+  .signup-container select,
+  .signup-container label {
+    font-size: 14px;
+  }
+
+  .signup-container button {
+    font-size: 15px;
+  }
+}

@@ -1,0 +1,278 @@
+.friends-container {
+  padding: 30px;
+  text-align: center;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.friend-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.friend-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 850px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 16px 20px;
+  transition: transform 0.2s;
+  min-height: 120px;
+  flex-wrap: wrap;
+}
+
+.friend-card:hover {
+  transform: scale(1.01);
+}
+
+.friend-card img {
+  width: 120px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-right: 20px;
+}
+
+.friend-details {
+  flex: 1;
+  text-align: left;
+  padding-right: 20px;
+  min-width: 200px;
+}
+
+.friend-details h4 {
+  margin: 0 0 4px;
+  font-size: 20px;
+}
+
+.friend-details p {
+  margin: 2px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.friend-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-end;
+  min-width: 120px;
+}
+
+.friend-actions button,
+.modal-buttons button {
+  padding: 8px 14px;
+  font-size: 14px;
+  border: none;
+  border-radius: 8px;
+  background: #f06292;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.friend-actions button:hover,
+.modal-buttons button:hover {
+  background: #e91e63;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 100%;
+  text-align: left;
+  position: relative;
+}
+
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.modal-photo {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.modal-buttons {
+  margin-top: 20px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.message-button,
+.video-button {
+  flex: 1 1 auto;
+  min-width: 120px;
+  background: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 16px;
+  cursor: pointer;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  transition: background 0.3s ease;
+}
+
+.video-button {
+  background: #4caf50;
+}
+
+.message-button:hover {
+  background: #1976d2;
+}
+
+.video-button:hover {
+  background: #388e3c;
+}
+
+/* ✅ Premium Dialog Box */
+.premium-dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.premium-dialog-content {
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 420px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.premium-dialog-content h3 {
+  margin-bottom: 15px;
+  color: #e91e63;
+  font-size: 22px;
+}
+
+.premium-dialog-content p {
+  margin-bottom: 25px;
+  color: #444;
+  font-size: 15px;
+}
+
+.premium-dialog-content button {
+  padding: 10px 18px;
+  font-size: 16px;
+  background-color: #e91e63;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.premium-dialog-content button:hover {
+  background-color: #d81b60;
+}
+
+.premium-dialog-close {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* ✅ Responsive Design */
+@media (max-width: 768px) {
+  .friend-card {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .friend-card img {
+    margin: 0 0 12px 0;
+    width: 100%;
+    height: auto;
+  }
+
+  .friend-details {
+    padding: 0;
+    text-align: center;
+  }
+
+  .friend-actions {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 12px;
+  }
+
+  .modal-content {
+    padding: 20px;
+  }
+
+  .modal-buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+  }
+
+  .message-button,
+  .video-button {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .premium-dialog-content {
+    padding: 20px;
+  }
+
+  .premium-dialog-content button {
+    width: 100%;
+    max-width: 300px;
+  }
+}

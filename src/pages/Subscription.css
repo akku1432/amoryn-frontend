@@ -1,0 +1,190 @@
+.subscription-container {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 20px;
+  background: linear-gradient(to right, #f5f7fa, #c3cfe2);
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow-x: hidden; /* ✅ Prevent horizontal overflow */
+}
+
+.subscription-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.subscription-header h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: #2c3e50;
+}
+
+.subscription-header p {
+  font-size: 1rem;
+  color: #555;
+}
+
+/* Grid layout */
+.plan-grid {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+}
+
+/* Plan Card */
+.plan-card {
+  background: #fff;
+  padding: 25px;
+  border-radius: 15px;
+  width: 100%;
+  max-width: 220px; /* ✅ Limit card width for all screen sizes */
+  text-align: center;
+  border: 2px solid transparent;
+  transition: 0.3s ease-in-out;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.plan-card:hover {
+  transform: translateY(-5px);
+  border-color: #3498db;
+}
+
+.plan-card h3 {
+  font-size: 1.5rem;
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+.plan-card p {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.plan-price {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #2980b9;
+}
+
+.premium-icon {
+  font-size: 2rem;
+  color: gold;
+  margin-bottom: 10px;
+}
+
+/* Active Plan Card */
+.active-plan {
+  background: #eaf6ff;
+  border: 2px solid #3498db;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  cursor: default;
+}
+
+.active-plan h3 {
+  color: #1a6fa5;
+}
+
+.active-plan .plan-price {
+  color: #1a6fa5;
+}
+
+.active-plan .premium-icon {
+  color: #f1c40f;
+}
+
+/* Home Button */
+.subscription-home-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #f1f1f1;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  color: #333;
+  transition: background 0.2s ease;
+}
+
+.subscription-home-button:hover {
+  background-color: #e0e0e0;
+}
+
+/* Coin Packs (Hidden) */
+.coin-packs {
+  margin-top: 40px;
+  display: none;
+}
+
+.coin-pack {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  margin: 10px auto;
+  max-width: 400px;
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.coin-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.coin-icon {
+  font-size: 1.5rem;
+  color: #f39c12;
+}
+
+.coin-pack button {
+  background-color: #27ae60;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+.coin-pack button:hover {
+  background-color: #219150;
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+  .plan-grid {
+    display:flex;
+    align-items: center;
+  }
+
+  .plan-card {
+    max-width: 100%;
+  }
+
+  .subscription-home-button {
+    position: static;
+    margin-bottom: 20px;
+    justify-content: center;
+  }
+
+  .subscription-container {
+    margin: 20px;
+    padding: 15px;
+  }
+}
