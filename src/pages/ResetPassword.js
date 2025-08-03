@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { BASE_URL } from '../utils/config';
+import { BASE_URL } from './utils/config';
 import './ResetPassword.css';
 
 const ResetPassword = () => {

@@ -15,7 +15,7 @@ import Subscription from './pages/Subscription'; // ✅ Added subscription page
 import ResetPassword from './pages/ResetPassword';
 import Terms from './pages/Terms';
 import PrivacyPolicy from './pages/PrivacyPolicy';
-import { BASE_URL } from '../utils/config';
+import { BASE_URL } from './utils/config';
 
 const socket = io(`${BASE_URL}`);
 

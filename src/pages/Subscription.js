@@ -4,7 +4,7 @@ import './Subscription.css';
 import { Crown, Home } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { BASE_URL } from '../utils/config';
+import { BASE_URL } from './utils/config';
 
 const Subscription = () => {
   const [userCurrency, setUserCurrency] = useState('INR');

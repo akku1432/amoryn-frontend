@@ -4,7 +4,7 @@ import './Chat.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { SocketContext } from '../SocketContext';
 import { Video, Home, X } from 'lucide-react';
-import { BASE_URL } from '../utils/config';
+import { BASE_URL } from './utils/config';
 
 function Chat() {
   const [conversations, setConversations] = useState([]);
