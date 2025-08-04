@@ -19,10 +19,9 @@ const CancellationRefund = () => (
     <p className="mb-2">
       As our services are digital and access is provided immediately after payment, refunds are generally not issued. However, a refund may be considered in the following exceptional cases:
     </p>
-    <ul className="list-disc ml-6 mb-4">
-      <li>Duplicate payment or accidental overcharging</li>
-      <li>Technical errors that prevent access to services (after review)</li>
-    </ul>
+      <p>Duplicate payment or accidental overcharging</p>
+      <p>Technical errors that prevent access to services (after review)</p>
+   
     <p className="mb-4">
       Refund requests must be submitted within <strong>7 days</strong> of the transaction date. Approved refunds will be processed within 7–10 business days.
     </p>
@@ -31,11 +30,11 @@ const CancellationRefund = () => (
     <p className="mb-4">
       To initiate a refund request, contact our support team at <strong>support@amoryn.in</strong> with the following details:
     </p>
-    <ul className="list-disc ml-6 mb-4">
-      <li>Registered email address</li>
-      <li>Transaction ID or payment receipt</li>
-      <li>Reason for the refund request</li>
-    </ul>
+    
+      <p>Registered email address</p>
+      <p>Transaction ID or payment receipt</p>
+      <p>Reason for the refund request</p>
+  
     <p>
       Our team will review your request and respond within 3–5 business days.
     </p>
