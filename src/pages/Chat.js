@@ -234,7 +234,7 @@ function Chat() {
             <div className="chat-input">
               <input
                 type="text"
-                name="message"
+                name='message'
                 placeholder={isPremium ? 'Type your message...' : 'Messaging is for Premium users only.'}
                 value={newMessage}
                 onChange={(e) => setNewMessage(e.target.value)}
