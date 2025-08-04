@@ -26,6 +26,9 @@ const Faq = () => (
       <div>
         <h2 className="text-xl font-semibold">What are the terms of using Amoryn?</h2>
         <p>Please read our <Link to="/terms" className="text-pink-600 underline">Terms & Conditions</Link> for more details.</p>
+      </div><div>
+        <h2 className="text-xl font-semibold">Shipping & Delivery Policy ?</h2>
+        <p>Please read our <Link to="/shipping" className="text-pink-600 underline">Shipping & Delivery Policy</Link> for more details.</p>
       </div>
 
       <div>

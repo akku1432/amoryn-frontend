@@ -1,81 +1,69 @@
-/* CancellationRefund.css */
-
-body {
-    background: linear-gradient(135deg, #fff0f5, #ffffff);
-    font-family: 'Inter', sans-serif;
-    margin: 0;
-    padding: 0;
+.cancellation-container {
+  min-height: 100vh;
+  background-color: #fff0f5;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px 20px;
+  box-sizing: border-box;
 }
 
-.p-6 {
-    background-color: #ffffff;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
-    border-radius: 12px;
-    margin: 40px auto;
-    padding: 24px;
-    max-width: 95%;
+.cancellation-card {
+  background-color: white;
+  max-width: 800px;
+  width: 100%;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
-@media (min-width: 640px) {
-    .p-6 {
-        padding: 32px;
-        max-width: 85%;
-    }
+.cancellation-title {
+  font-size: 2em;
+  color: #d63384;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
-@media (min-width: 1024px) {
-    .p-6 {
-        max-width: 50%;
-    }
+.cancellation-description {
+  font-size: 1.1em;
+  color: #444;
+  margin-bottom: 30px;
+  text-align: center;
 }
 
-h1 {
-    text-align: center;
-    color: #ec4899; /* Tailwind pink-600 */
-    font-weight: 700;
-    font-size: 1.75rem;
-    margin-bottom: 24px;
+.cancellation-subtitle {
+  font-size: 1.3em;
+  color: #333;
+  margin: 20px 0 10px;
 }
 
-@media (min-width: 640px) {
-    h1 {
-        font-size: 2.25rem;
-    }
+.cancellation-text {
+  font-size: 1em;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 20px;
 }
 
-p {
-    color: #374151; /* Tailwind gray-700 */
-    font-size: 0.95rem;
-    line-height: 1.5;
-    margin-bottom: 16px;
-    text-align: center;
+.cancellation-list {
+  padding-left: 20px;
+  margin-bottom: 20px;
+  color: #555;
 }
 
-@media (min-width: 640px) {
-    p {
-        font-size: 1rem;
-    }
+.cancellation-list li {
+  margin-bottom: 10px;
+  line-height: 1.5;
 }
 
-ul {
-    list-style-type: disc;
-    padding-left: 1.5rem;
-    color: #374151;
+.nested-list {
+  margin-top: 10px;
+  margin-left: 20px;
+  list-style-type: circle;
 }
 
-li {
-    margin-bottom: 10px;
-    font-size: 0.95rem;
-    line-height: 1.5;
-}
-
-@media (min-width: 640px) {
-    li {
-        font-size: 1rem;
-    }
-}
-
-strong {
-    color: #111827; /* Tailwind gray-800 */
-    font-weight: 600;
+.last-updated {
+  font-size: 0.9em;
+  color: #888;
+  margin-top: 40px;
+  text-align: center;
 }

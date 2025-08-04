@@ -18,6 +18,7 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import Faq from './pages/Faq';
 import ContactUs from './pages/ContactUs';
 import CancellationRefund from './pages/CancellationRefund';
+import ShippingPolicy from './pages/ShippingPolicy';
 import { BASE_URL } from './utils/config';
 
 const socket = io(`${BASE_URL}`);
@@ -66,6 +67,8 @@ function App() {
           <Route path="/Faq" element={<Faq />} />
           <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/cancellation-refund" element={<CancellationRefund />} />
+          <Route path="/shipping" element={<ShippingPolicy />} />
+
         </Routes>
       </Router>
     </SocketContext.Provider>

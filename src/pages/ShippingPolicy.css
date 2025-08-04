@@ -1,0 +1,27 @@
+.shipping-policy-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1rem 1.5rem;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  font-family: 'Arial', sans-serif;
+}
+
+.shipping-policy-container h1 {
+  color: #d63384;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.shipping-policy-container h2 {
+  margin-top: 1.5rem;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.shipping-policy-container p,
+.shipping-policy-container a {
+  color: #555;
+  line-height: 1.6;
+}
