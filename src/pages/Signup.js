@@ -76,17 +76,18 @@ function Signup() {
 
         <div className="terms-checkbox">
           <input
+            name="checkbox"
             type="checkbox"
             id="terms"
             checked={acceptTerms}
             onChange={(e) => setAcceptTerms(e.target.checked)}
           />
-          <label htmlFor="terms">
+          <label htmlFor="terms" name="terms">
             I agree to the <Link to="/terms" target="_blank">Terms and Conditions</Link>
           </label>
         </div>
 
-        <button type="submit">Signup</button>
+        <button type="submit" name='button'>Signup</button>
       </form>
     </div>
   );

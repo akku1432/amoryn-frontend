@@ -28,7 +28,7 @@ function Login() {
   return (
     <div className="login-container">
       <div className="logo">Amoryn</div>
-      <p className="quote">“Where hearts connect, stories begin.”</p>
+      <p className="quote" name="quote">“Where hearts connect, stories begin.”</p>
       <h2>Login</h2>
       {message && <p className="message">{message}</p>}
       <form onSubmit={handleSubmit}>
