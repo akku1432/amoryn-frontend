@@ -6,7 +6,8 @@ const Terms = () => {
     <div className="terms-container">
       <h1>Terms and Conditions</h1>
       <p>Last updated: July 2025</p>
-
+      <p>For the purpose of these Terms and Conditions, the terms "we", "us", "our" shall mean Akkupalli Tejaram, whose registered/operational office is 1-1077, Kilasagiri Colony, Chittoor, Andhra Pradesh 517644. The terms "you", "your", "user", "visitor" shall mean any natural or legal person who visits our website and/or purchases from us.</p>
+      
       <h2>1. Acceptance of Terms</h2>
       <p>By accessing or using Amoryn, you agree to be bound by these Terms and our Privacy Policy. If you do not agree, please do not use the service.</p>
 
@@ -46,7 +47,7 @@ const Terms = () => {
 
       <h2>9. Dispute Resolution</h2>
       <p>
-        In case of disputes related to transactions or services, please reach out to our support team first. If unresolved, disputes shall be governed by the laws of India and subject to the jurisdiction of the courts in Mumbai, Maharashtra.
+        In case of disputes related to transactions or services, please reach out to our support team first. If unresolved, Disputes shall be governed by the laws of India and subject to the jurisdiction of the courts in Chittoor, Andhra Pradesh.
       </p>
 
       <h2>10. Changes to Terms</h2>
@@ -54,6 +55,26 @@ const Terms = () => {
 
       <h2>11. Contact Us</h2>
       <p>If you have any questions about these Terms, contact us at <a href="mailto:support@amoryn.in">support@amoryn.in</a>.</p>
+      <h2>12. Website Content</h2>
+       <p>
+       The content on this website is for general information and use only. It is subject to change without notice. We make no warranties or guarantees as to the accuracy, performance, or completeness of the content. Any reliance you place on such material is strictly at your own risk.
+      </p>
+      <h2>13. Intellectual Property</h2>
+      <p>
+       All content, design, layout, logos, and graphics on this website are owned by or licensed to us. Reproduction of any part of the website without written permission is prohibited.
+      </p>
+      <h2>14. Unauthorized Use</h2>
+       <p>
+         Unauthorized use of this website may give rise to a claim for damages and/or be a criminal offense.
+        </p>
+       <p>
+         You may not create a link to this website from another website without prior written consent from us.
+       </p>
+       <h2>15. Third-Party Links</h2>
+        <p>
+          From time to time, we may include links to other websites. These links are provided for your convenience and do not signify that we endorse those websites. We are not responsible for their content.
+        </p>
+
     </div>
   );
 };
