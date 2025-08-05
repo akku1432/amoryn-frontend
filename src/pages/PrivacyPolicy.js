@@ -5,68 +5,114 @@ const PrivacyPolicy = () => {
   return (
     <div className="privacy-container">
       <h1>Privacy Policy</h1>
-      <p>Last updated: July 2025</p>
+      <p>Last updated: August 2025</p>
 
       <h2>1. Introduction</h2>
       <p>
-        Welcome to Amoryn. Your privacy is important to us. This Privacy Policy explains how we collect, use, and safeguard your personal information when you use our dating platform.
+        Welcome to Amoryn. Your privacy and the protection of your personal data are extremely important to us. This Privacy Policy explains how we collect, use, store, protect, and share your information when you use our dating platform, including our website, mobile applications, and services. By accessing or using our services, you accept and agree to the practices described in this policy.
       </p>
 
       <h2>2. Information We Collect</h2>
-      
-        <p><strong>Personal Information:</strong> Name, email, gender, age, photos, preferences, and bio.</p>
-        <p><strong>Usage Data:</strong> IP address, browser type, device type, and interactions with the app.</p>
-        <p><strong>Messages:</strong> Chats and video calls are securely transmitted and not shared publicly.</p>
-        <p><strong>Payment Information:</strong> If you make purchases, payment details are securely processed via Razorpay or other payment gateways. We do not store card or bank information on our servers.</p>
-      
+      <p>
+        We collect the following categories of personal information:
+      </p>
+
+      <p><strong>a. Personal Data You Provide:</strong> When you sign up or edit your profile, you provide personal information such as your full name, date of birth, email address, phone number, gender identity, sexual orientation, dating preferences, profile photos, and biography content. This data is necessary for building your dating profile and enabling matches.</p>
+
+      <p><strong>b. Communications:</strong> When you interact with other users or contact support, we collect the content of those messages (including chat and video call metadata), support tickets, and user feedback. While chat messages are end-to-end encrypted, we may retain limited metadata to improve user experience and ensure community safety.</p>
+
+      <p><strong>c. Payment Data:</strong> When you make a purchase (such as premium subscriptions or coin packs), your payment details are processed securely by our payment partner CCBill. We do not store full credit card numbers or sensitive banking information on our servers. CCBill may collect billing address, card details, and transaction history in compliance with PCI DSS standards.</p>
+
+      <p><strong>d. Usage and Device Information:</strong> We automatically collect information such as your device type, browser version, IP address, geographic location, access times, pages visited, and interaction patterns. This helps us detect fraudulent behavior and improve platform usability.</p>
+
+      <p><strong>e. Cookies and Tracking Technologies:</strong> We use session cookies, persistent cookies, and tracking pixels to enhance your browsing experience, remember login details, and track engagement metrics. You can control cookie behavior via your browser settings.</p>
+
       <h2>3. How We Use Your Information</h2>
-      
-        <p>To create and manage your account</p>
-        <p>To match you with compatible users</p>
-        <p>To improve user experience</p>
-        <p>To detect and prevent fraud or abuse</p>
-        <p>To send important updates or offers</p>
-        <p>To process transactions and manage subscriptions</p>
-
-      <h2>4. Sharing Your Information</h2>
       <p>
-        We do not sell your personal data. We may share information with trusted service providers (e.g., payment gateways like Razorpay) who assist in operating our platform, but only under strict data protection agreements. These third parties are obligated to handle your data securely and in accordance with privacy laws.
+        We use the information collected to:
+      </p>
+      <p>
+        • Create and manage your user account<br />
+        • Suggest potential matches and enable profile discovery<br />
+        • Facilitate secure messaging, video calls, and content sharing<br />
+        • Process payments via CCBill and manage premium access<br />
+        • Prevent fraud, spamming, and policy violations<br />
+        • Provide user support and respond to inquiries<br />
+        • Monitor platform safety and moderate content where necessary<br />
+        • Improve our algorithms, match suggestions, and user experience<br />
+        • Send promotional offers, service updates, and surveys (with opt-out options)
       </p>
 
-      <h2>5. Your Rights</h2>
-      <ul>
-        <p>You can access, edit, or delete your data at any time from your profile settings.</p>
-        <p>You can request account deletion by contacting <a href="mailto:support@amoryn.in">support@amoryn.in</a>.</p>
-      </ul>
-
-      <h2>6. Cookies and Tracking</h2>
+      <h2>4. Legal Grounds for Processing</h2>
       <p>
-        We may use cookies to enhance site performance and analytics. You can control cookie settings through your browser.
+        We process your personal data only when we have a lawful basis to do so, including:
+      </p>
+      <p>
+        • Your consent<br />
+        • Performance of a contract (e.g., premium services)<br />
+        • Compliance with legal obligations<br />
+        • Legitimate interests (e.g., platform safety, fraud prevention)
       </p>
 
-      <h2>7. Data Security</h2>
+      <h2>5. Sharing and Disclosure of Your Information</h2>
       <p>
-        We use encryption and secure servers to protect your personal data. However, no method of transmission over the internet is 100% secure.
+        We do not sell your personal information. We may share limited data with trusted third parties for the following reasons:
+      </p>
+      <p>
+        • Payment processing: With CCBill to securely manage transactions and fraud prevention<br />
+        • Service providers: For hosting, analytics, and customer support<br />
+        • Legal requests: When required by law, court orders, or regulatory authorities<br />
+        • Business transfer: In the event of a merger, acquisition, or asset sale
       </p>
 
-      <h2>8. Children’s Privacy</h2>
+      <h2>6. Data Retention</h2>
       <p>
-        Amoryn is strictly for users aged 18 and above. We do not knowingly collect data from anyone under 18.
+        We retain your information for as long as your account is active and for a reasonable time thereafter to comply with legal obligations, resolve disputes, and enforce our agreements. You may request deletion of your data by contacting us.
       </p>
 
-      <h2>9. Changes to This Policy</h2>
+      <h2>7. International Transfers</h2>
       <p>
-        We may update this policy. If so, we’ll notify users via email or through the app.
+        Your information may be transferred to and maintained on servers located outside of your jurisdiction, including countries that may not have the same data protection laws. We ensure appropriate safeguards are in place when transferring data internationally.
       </p>
 
-      <h2>10. Legal Basis for Processing</h2>
+      <h2>8. Your Rights</h2>
       <p>
-        We process your data under lawful bases such as your consent, to fulfill our contract with you, to comply with legal obligations, and for our legitimate interests including fraud prevention and service improvement.
+        Depending on your location, you may have the right to:
+      </p>
+      <p>
+        • Access the personal data we hold about you<br />
+        • Request correction or deletion of your data<br />
+        • Withdraw consent where applicable<br />
+        • Object to certain data processing activities<br />
+        • Lodge complaints with a data protection authority
+      </p>
+      <p>
+        You can manage most of your data via your profile settings. For other requests, email us at <a href="mailto:support@amoryn.in">support@amoryn.in</a>.
       </p>
 
-      <h2>11. Contact Us</h2>
+      <h2>9. Data Security</h2>
       <p>
-        If you have any questions or concerns about your privacy, contact us at <a href="mailto:support@amoryn.in">support@amoryn.in</a>.
+        We use a combination of physical, technical, and administrative safeguards to protect your information. This includes SSL encryption, secure data storage, strict access controls, and regular system audits. However, no method of transmission over the internet is 100% secure. We encourage users to take necessary precautions such as using strong passwords and avoiding sharing credentials.
+      </p>
+
+      <h2>10. Children’s Privacy</h2>
+      <p>
+        Our platform is strictly intended for individuals aged 18 and above. We do not knowingly collect or store personal information from minors. If we become aware that a user under 18 has registered or provided data, we will take immediate steps to delete the account and associated information.
+      </p>
+
+      <h2>11. Third-Party Links</h2>
+      <p>
+        Our platform may contain links to third-party websites or services (e.g., CCBill payment page). We are not responsible for the content, privacy practices, or terms of those third-party sites. We encourage users to review their respective privacy policies.
+      </p>
+
+      <h2>12. Updates to This Policy</h2>
+      <p>
+        We may update this Privacy Policy periodically to reflect changes in our services, legal requirements, or user feedback. The revised version will be posted on this page with a new “Last Updated” date. In the case of material changes, we may notify you via email or in-app alerts.
+      </p>
+
+      <h2>13. Contact Us</h2>
+      <p>
+        If you have any questions, complaints, or concerns about our Privacy Policy or data handling practices, please contact us at <a href="mailto:support@amoryn.in">support@amoryn.in</a>.
       </p>
     </div>
   );

@@ -6,75 +6,94 @@ const Terms = () => {
     <div className="terms-container">
       <h1>Terms and Conditions</h1>
       <p>Last updated: July 2025</p>
-      <p>For the purpose of these Terms and Conditions, the terms "we", "us", "our" shall mean Akkupalli Tejaram, whose registered/operational office is 1-1077, Kilasagiri Colony, Chittoor, Andhra Pradesh 517644. The terms "you", "your", "user", "visitor" shall mean any natural or legal person who visits our website and/or purchases from us.</p>
-      
+
+      <p>
+        These Terms and Conditions ("Terms") govern your access to and use of the Amoryn dating platform (the "Service"), operated by Akkupalli Tejaram, located at 1-1077, Kilasagiri Colony, Chittoor, Andhra Pradesh 517644. By using our website or mobile services, you confirm that you have read, understood, and agree to be bound by these Terms.
+      </p>
+
       <h2>1. Acceptance of Terms</h2>
-      <p>By accessing or using Amoryn, you agree to be bound by these Terms and our Privacy Policy. If you do not agree, please do not use the service.</p>
+      <p>
+        By registering, accessing, or using Amoryn in any manner, you agree to comply with and be legally bound by these Terms, as well as our Privacy Policy. If you do not agree with any part of these Terms, you must immediately cease using our services.
+      </p>
 
       <h2>2. Eligibility</h2>
-      <p>You must be at least 18 years old to use Amoryn. By using the service, you represent and warrant that you are 18 or older.</p>
+      <p>
+        You must be at least 18 years of age to access or use Amoryn. By using the Service, you affirm that you are legally eligible to enter into this agreement and that all information provided during registration is accurate and truthful.
+      </p>
 
       <h2>3. User Responsibilities</h2>
-        <p>You are responsible for the accuracy of your profile and any content you post.</p>
-        <p>You will not harass, abuse, or harm another user.</p>
-        <p>You will not impersonate anyone or create fake accounts.</p>
-        <p>You will not upload offensive or explicit content.</p>
-      
+      <p>
+        As a user, you are solely responsible for the information you provide on your profile, including photos, text, or other media. You agree not to upload any content that is illegal, offensive, obscene, or infringes on the rights of others. You will not use the platform to harass, defraud, or impersonate others. Fake profiles and misleading information are strictly prohibited and may result in immediate account suspension.
+      </p>
 
       <h2>4. Privacy</h2>
-      <p>We collect and use your information according to our <a href="/privacy">Privacy Policy</a>. By using Amoryn, you consent to such collection and use.</p>
+      <p>
+        Your personal data is collected and processed in accordance with our Privacy Policy. By using our services, you consent to the collection, use, and sharing of your personal information as outlined in our Privacy Policy.
+      </p>
 
       <h2>5. Subscriptions & Payments</h2>
-      <p>If you purchase a Premium membership, you agree to our payment terms. All sales are final unless stated otherwise. Unauthorized chargebacks may result in account suspension.</p>
-      
-        <p>Payments are securely processed via third-party providers like <strong>Razorpay</strong>.</p>
-        <p>We do not store your card or banking information on our servers.</p>
-        <p>Once a payment is made, it is deemed as a confirmed purchase.</p>
-        <p>Users are responsible for maintaining the confidentiality of their payment details.</p>
-      
+      <p>
+        Amoryn offers both free and paid subscription plans. By purchasing a subscription or making in-app purchases, you authorize us and our third-party payment processors to charge the payment method provided. Subscriptions may auto-renew depending on your selection at checkout. You are responsible for cancelling your subscription before renewal to avoid future charges.
+      </p>
+      <p>
+        All payments are processed through secure gateways. We do not store your credit card, debit card, or banking details on our servers. Payment credentials are encrypted and securely transmitted to third-party processors for handling.
+      </p>
+      <p>
+        Chargebacks or disputes raised fraudulently may result in account suspension, and we reserve the right to contest any unjustified chargeback with supporting transaction records.
+      </p>
 
       <h2>6. Refund & Cancellation Policy</h2>
       <p>
-        We do not offer refunds for any subscriptions or in-app purchases once the service has been rendered. Exceptions may be made in cases of accidental duplicate transactions or proven technical errors.
+        All payments made for subscriptions or virtual items are non-refundable once access is granted. Refunds will only be considered in exceptional circumstances such as technical failures, duplicate charges, or accidental purchases, provided that no services were used. Refund requests must be made within 7 days by contacting us at <a href="mailto:support@amoryn.in">support@amoryn.in</a>.
       </p>
-      <p>To request a refund (if applicable), contact <a href="mailto:support@amoryn.in">support@amoryn.in</a> within 7 days of the transaction.</p>
-
-      <h2>7. Account Termination</h2>
-      <p>We reserve the right to suspend or delete your account at our sole discretion if you violate these Terms or behave inappropriately.</p>
-
-      <h2>8. Limitation of Liability</h2>
-      <p>Amoryn is not responsible for any interactions, damages, or losses incurred through your use of the service. Use at your own risk.</p>
-
-      <h2>9. Dispute Resolution</h2>
       <p>
-        In case of disputes related to transactions or services, please reach out to our support team first. If unresolved, Disputes shall be governed by the laws of India and subject to the jurisdiction of the courts in Chittoor, Andhra Pradesh.
+        Cancellations of auto-renewal must be completed at least 24 hours prior to the next billing cycle. Once cancelled, you will retain access to premium features until the end of the billing period.
       </p>
 
-      <h2>10. Changes to Terms</h2>
-      <p>We may modify these Terms at any time. Continued use of Amoryn constitutes acceptance of the updated terms.</p>
-
-      <h2>11. Contact Us</h2>
-      <p>If you have any questions about these Terms, contact us at <a href="mailto:support@amoryn.in">support@amoryn.in</a>.</p>
-      <h2>12. Website Content</h2>
-       <p>
-       The content on this website is for general information and use only. It is subject to change without notice. We make no warranties or guarantees as to the accuracy, performance, or completeness of the content. Any reliance you place on such material is strictly at your own risk.
-      </p>
-      <h2>13. Intellectual Property</h2>
+      <h2>7. Account Suspension and Termination</h2>
       <p>
-       All content, design, layout, logos, and graphics on this website are owned by or licensed to us. Reproduction of any part of the website without written permission is prohibited.
+        We reserve the right to suspend, restrict, or terminate your account without prior notice if we find violations of these Terms, including harassment, fraudulent behavior, or illegal activity. Termination may include removal of all content associated with your account.
       </p>
-      <h2>14. Unauthorized Use</h2>
-       <p>
-         Unauthorized use of this website may give rise to a claim for damages and/or be a criminal offense.
-        </p>
-       <p>
-         You may not create a link to this website from another website without prior written consent from us.
-       </p>
-       <h2>15. Third-Party Links</h2>
-        <p>
-          From time to time, we may include links to other websites. These links are provided for your convenience and do not signify that we endorse those websites. We are not responsible for their content.
-        </p>
 
+      <h2>8. Intellectual Property</h2>
+      <p>
+        All trademarks, logos, content, code, and media displayed on Amoryn are the property of Akkupalli Tejaram or its licensors. You are prohibited from reproducing, distributing, or reusing any part of the platform’s content without prior written consent.
+      </p>
+
+      <h2>9. Limitation of Liability</h2>
+      <p>
+        Amoryn is a platform for social interaction. We do not guarantee matches or relationship success. We are not liable for user interactions that result in emotional, financial, or physical harm. Your use of the service is entirely at your own risk.
+      </p>
+
+      <h2>10. Dispute Resolution and Jurisdiction</h2>
+      <p>
+        If a dispute arises between you and Amoryn, we strongly encourage you to first contact our support team. If a resolution cannot be reached, any legal claim must be filed in the jurisdiction of Chittoor, Andhra Pradesh, India. These Terms are governed by and construed under Indian law.
+      </p>
+
+      <h2>11. Modifications to Terms</h2>
+      <p>
+        We reserve the right to update or modify these Terms at any time. Changes become effective immediately upon posting. Continued use of the platform after updates implies your acceptance of the new terms.
+      </p>
+
+      <h2>12. Content and Accuracy</h2>
+      <p>
+        We make reasonable efforts to ensure the accuracy of information on the website, but we do not warrant the completeness or reliability of content. Information may be updated or corrected without notice.
+      </p>
+
+      <h2>13. Unauthorized Use</h2>
+      <p>
+        Unauthorized use of our service or content may result in legal action. Attempts to access or exploit Amoryn through bots, scraping tools, or reverse engineering is strictly forbidden. Linking to Amoryn from other platforms without permission is prohibited.
+      </p>
+
+      <h2>14. Third-Party Links</h2>
+      <p>
+        Our platform may contain links to third-party websites for convenience. These are not under our control, and we assume no responsibility for the content, policies, or practices of any third-party site.
+      </p>
+
+      <h2>15. Contact Information</h2>
+      <p>
+        If you have questions, suggestions, or complaints regarding these Terms, you may reach us at <a href="mailto:support@amoryn.in">support@amoryn.in</a>.
+      </p>
     </div>
   );
 };
