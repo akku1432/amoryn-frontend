@@ -21,7 +21,7 @@ const PrivacyPolicy = () => {
 
       <p><strong>b. Communications:</strong> When you interact with other users or contact support, we collect the content of those messages (including chat and video call metadata), support tickets, and user feedback. While chat messages are end-to-end encrypted, we may retain limited metadata to improve user experience and ensure community safety.</p>
 
-      <p><strong>c. Payment Data:</strong> When you make a purchase (such as premium subscriptions or coin packs), your payment details are processed securely by our payment partner CCBill. We do not store full credit card numbers or sensitive banking information on our servers. CCBill may collect billing address, card details, and transaction history in compliance with PCI DSS standards.</p>
+      <p><strong>c. Payment Data:</strong> When you make a purchase (such as premium subscriptions or coin packs), your payment details are processed securely by our payment partner Razorpay. We do not store full credit card numbers or sensitive banking information on our servers. Razorpay may collect billing address, card details, and transaction history in compliance with PCI DSS standards.</p>
 
       <p><strong>d. Usage and Device Information:</strong> We automatically collect information such as your device type, browser version, IP address, geographic location, access times, pages visited, and interaction patterns. This helps us detect fraudulent behavior and improve platform usability.</p>
 
@@ -35,7 +35,7 @@ const PrivacyPolicy = () => {
         • Create and manage your user account<br />
         • Suggest potential matches and enable profile discovery<br />
         • Facilitate secure messaging, video calls, and content sharing<br />
-        • Process payments via CCBill and manage premium access<br />
+        • Process payments via Razorpay and manage premium access<br />
         • Prevent fraud, spamming, and policy violations<br />
         • Provide user support and respond to inquiries<br />
         • Monitor platform safety and moderate content where necessary<br />
@@ -59,7 +59,7 @@ const PrivacyPolicy = () => {
         We do not sell your personal information. We may share limited data with trusted third parties for the following reasons:
       </p>
       <p>
-        • Payment processing: With CCBill to securely manage transactions and fraud prevention<br />
+        • Payment processing: With Razorpay to securely manage transactions and fraud prevention<br />
         • Service providers: For hosting, analytics, and customer support<br />
         • Legal requests: When required by law, court orders, or regulatory authorities<br />
         • Business transfer: In the event of a merger, acquisition, or asset sale
@@ -102,7 +102,7 @@ const PrivacyPolicy = () => {
 
       <h2>11. Third-Party Links</h2>
       <p>
-        Our platform may contain links to third-party websites or services (e.g., CCBill payment page). We are not responsible for the content, privacy practices, or terms of those third-party sites. We encourage users to review their respective privacy policies.
+        Our platform may contain links to third-party websites or services (e.g., Razorpay payment page). We are not responsible for the content, privacy practices, or terms of those third-party sites. We encourage users to review their respective privacy policies.
       </p>
 
       <h2>12. Updates to This Policy</h2>

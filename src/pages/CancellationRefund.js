@@ -7,7 +7,7 @@ const CancellationRefund = () => (
     <h1 className="text-3xl font-bold text-pink-600 mb-4">Cancellation & Refund Policy</h1>
 
     <p className="mb-4">
-      At Amoryn, we are committed to providing a smooth, secure, and transparent digital experience. This policy outlines the terms related to cancellations and refunds for any services purchased through our platform using our payment partner, CCBill. By making a purchase or subscribing to any plan, you agree to the terms outlined below.
+      At Amoryn, we are committed to providing a smooth, secure, and transparent digital experience. This policy outlines the terms related to cancellations and refunds for any services purchased through our platform using our payment partner, Razorpay. By making a purchase or subscribing to any plan, you agree to the terms outlined below.
     </p>
 
     <h2 className="text-xl font-semibold text-gray-700 mt-4 mb-2">1. Cancellation Policy</h2>
@@ -33,7 +33,7 @@ const CancellationRefund = () => (
     </p>
 
     <p>Your registered email address associated with your Amoryn account.</p>
-    <p>The transaction ID or payment confirmation receipt from CCBill.</p>
+    <p>The transaction ID or payment confirmation receipt from Razorpay.</p>
     <p>A brief explanation of the issue and reason for the refund request.</p>
 
     <p>
