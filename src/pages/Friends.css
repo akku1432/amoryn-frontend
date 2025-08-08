@@ -101,7 +101,7 @@
 
 .modal-content {
   background: #fff;
-  padding: 30px;
+  padding: 50px;
   border-radius: 12px;
   max-width: 600px;
   width: 100%;
@@ -252,7 +252,7 @@
   }
 
   .modal-content {
-    padding: 20px;
+    padding: 5px;
   }
 
   .modal-buttons {

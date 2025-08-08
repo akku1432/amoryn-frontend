@@ -250,10 +250,7 @@
     font-size: 28px;
     padding: 20px 0 10px;
   }
-  .modal-overlay{
-    padding-left: 10px;
-    padding-right: 10px;
-  }
+ 
 
   .dashboard-nav {
     gap: 12px;
@@ -280,7 +277,7 @@
   }
 
   .modal-content {
-    padding: 20px;
+    padding: 10px;
   }
 
   .modal-photo {
