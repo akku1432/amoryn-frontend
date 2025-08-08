@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import io from 'socket.io-client';
 import { SocketContext } from './SocketContext';
+import { PayPalScriptProvider } from '@paypal/react-paypal-js'; // ✅ NEW
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
@@ -11,7 +12,7 @@ import Match from './pages/Match';
 import Chat from './pages/Chat';
 import VideoCall from './pages/VideoCall';
 import Friends from './pages/Friends';
-import Subscription from './pages/Subscription'; // ✅ Added subscription page
+import Subscription from './pages/Subscription';
 import ResetPassword from './pages/ResetPassword';
 import Terms from './pages/Terms';
 import PrivacyPolicy from './pages/PrivacyPolicy';
@@ -48,29 +49,30 @@ function App() {
 
   return (
     <SocketContext.Provider value={socket}>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Navigate to="/login" />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/match" element={<Match />} />
-          <Route path="/chats" element={<Chat />} />
-          <Route path="/video-call" element={<VideoCall />} />
-          <Route path="/friends" element={<Friends />} />
-          <Route path="/subscription" element={<Subscription />} /> {/* ✅ Premium route */}
-          <Route path="/reset-password/:token" element={<ResetPassword />} />
-          <Route path="/terms" element={<Terms />} />
-          <Route path="/privacy" element={<PrivacyPolicy />} />
-          <Route path="/Faq" element={<Faq />} />
-          <Route path="/contact-us" element={<ContactUs />} />
-          <Route path="/cancellation-refund" element={<CancellationRefund />} />
-          <Route path="/shipping" element={<ShippingPolicy />} />
-
-        </Routes>
-      </Router>
+      <PayPalScriptProvider options={{ "client-id": "AY7qRs7DfygmOYGno4nGmmk_LInRmmIANlI4dHb3iY8fru8CMbIkdNEFfyvWTSnsR6AybBUQrG4EOnsa", currency: "USD" }}>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Navigate to="/login" />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/match" element={<Match />} />
+            <Route path="/chats" element={<Chat />} />
+            <Route path="/video-call" element={<VideoCall />} />
+            <Route path="/friends" element={<Friends />} />
+            <Route path="/subscription" element={<Subscription />} />
+            <Route path="/reset-password/:token" element={<ResetPassword />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/Faq" element={<Faq />} />
+            <Route path="/contact-us" element={<ContactUs />} />
+            <Route path="/cancellation-refund" element={<CancellationRefund />} />
+            <Route path="/shipping" element={<ShippingPolicy />} />
+          </Routes>
+        </Router>
+      </PayPalScriptProvider>
     </SocketContext.Provider>
   );
 }

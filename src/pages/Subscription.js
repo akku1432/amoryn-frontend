@@ -1,64 +1,31 @@
-// Subscription.js
 import React, { useEffect, useState } from 'react';
 import './Subscription.css';
 import { Crown, Home } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { PayPalButtons } from '@paypal/react-paypal-js';
 import { BASE_URL } from '../utils/config';
-const Subscription = () => {
-  const [userCurrency, setUserCurrency] = useState('INR');
-  const [conversionRate, setConversionRate] = useState(1);
-  const [symbol, setSymbol] = useState('₹');
-  const [razorpayReady, setRazorpayReady] = useState(false);
-  const [subscription, setSubscription] = useState(null);
 
+const Subscription = () => {
+  const [subscription, setSubscription] = useState(null);
+  const [selectedPlan, setSelectedPlan] = useState(null);
   const navigate = useNavigate();
 
+  // Plans in USD
   const plans = [
     {
       name: 'Monthly',
       description: 'Unlimited matches & chats for 30 days',
-      price: 199,
-      isPremium: true,
+      price: 3.0, // USD
     },
     {
       name: 'Yearly',
       description: '1-year access to all premium features',
-      price: 699,
-      isPremium: true,
+      price: 32.0, // USD
     },
   ];
 
   useEffect(() => {
-    fetch('https://ipapi.co/json/')
-      .then((res) => res.json())
-      .then((data) => {
-        const currencyCode = data.currency || 'INR';
-        setUserCurrency(currencyCode);
-        fetch(`https://api.exchangerate.host/latest?base=INR`)
-          .then((res) => res.json())
-          .then((rateData) => {
-            const rate = rateData.rates[currencyCode] || 1;
-            setConversionRate(rate);
-            setSymbol(getCurrencySymbol(currencyCode));
-          })
-          .catch(() => {
-            setConversionRate(1);
-            setSymbol('₹');
-          });
-      });
-
-    if (!document.querySelector('#razorpay-script')) {
-      const script = document.createElement('script');
-      script.id = 'razorpay-script';
-      script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-      script.onload = () => setRazorpayReady(true);
-      script.onerror = () => console.error('Failed to load Razorpay');
-      document.body.appendChild(script);
-    } else {
-      setRazorpayReady(true);
-    }
-
     fetchActivePlan();
   }, []);
 
@@ -68,75 +35,12 @@ const Subscription = () => {
       const res = await axios.get(`${BASE_URL}/api/user/profile`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-
       if (res.data.subscription) {
         setSubscription(res.data.subscription);
       }
     } catch (err) {
       console.error('Failed to fetch active plan:', err);
     }
-  };
-
-  const getCurrencySymbol = (code) => {
-    const symbols = {
-      INR: '₹',
-      USD: '$',
-      EUR: '€',
-      GBP: '£',
-      AUD: 'A$',
-      CAD: 'C$',
-      JPY: '¥',
-    };
-    return symbols[code] || code;
-  };
-
-  const formatPrice = (priceInINR) => {
-    const localPrice = (priceInINR * conversionRate).toFixed(2);
-    return `${symbol}${localPrice}`;
-  };
-
-  const handlePayment = (amountINR, note) => {
-    if (!razorpayReady || typeof window.Razorpay !== 'function') {
-      alert('Razorpay is not ready yet. Please wait a moment and try again.');
-      return;
-    }
-
-    const planType = note.toLowerCase().includes('monthly')
-      ? 'monthly'
-      : note.toLowerCase().includes('yearly')
-      ? 'yearly'
-      : null;
-
-    const token = localStorage.getItem('token');
-    const options = {
-      key: 'rzp_test_Rpneo8pLUN0fHF',
-      amount: amountINR * 100,
-      currency: 'INR',
-      name: 'MatchMingle',
-      description: note,
-      handler: async function (response) {
-        alert(`✅ Payment successful!\nPayment ID: ${response.razorpay_payment_id}`);
-        if (planType) {
-          try {
-            const result = await axios.post(
-              `${BASE_URL}/api/user/subscribe`,
-              { plan: planType },
-              { headers: { Authorization: `Bearer ${token}` } }
-            );
-            if (result.data.subscription) {
-              setSubscription(result.data.subscription);
-            }
-          } catch (err) {
-            console.error('Failed to save subscription:', err);
-            alert('Payment succeeded but subscription save failed.');
-          }
-        }
-      },
-      theme: { color: '#3498db' },
-    };
-
-    const rzp = new window.Razorpay(options);
-    rzp.open();
   };
 
   const formatDate = (dateStr) => {
@@ -148,6 +52,23 @@ const Subscription = () => {
     });
   };
 
+  const handlePayPalApprove = async (planType) => {
+    try {
+      const token = localStorage.getItem('token');
+      const res = await axios.post(
+        `${BASE_URL}/api/user/subscribe`,
+        { plan: planType },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      if (res.data.subscription) {
+        setSubscription(res.data.subscription);
+      }
+    } catch (err) {
+      console.error('Subscription saving failed:', err);
+      alert('Payment succeeded but subscription update failed.');
+    }
+  };
+
   return (
     <div className="subscription-container">
       <div className="subscription-home-button" onClick={() => navigate('/dashboard')}>
@@ -156,11 +77,7 @@ const Subscription = () => {
 
       <div className="subscription-header">
         <h2>Unlock Premium Features</h2>
-        <p>Prices shown in your local currency for your convenience</p>
-        <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded mb-6" role="alert">
-  <p className="font-bold">Notice</p>
-  <p>Payments are temporarily disabled. Subscription purchases will be available in 1–3 days.</p>
-</div>
+        <p>Pay in USD via PayPal — global support</p>
       </div>
 
       {subscription ? (
@@ -180,12 +97,41 @@ const Subscription = () => {
               <Crown className="premium-icon" />
               <h3>{plan.name}</h3>
               <p>{plan.description}</p>
-              <p className="plan-price">{formatPrice(plan.price)}</p>
-              <button
-                className="subscribe-btn"
-                onClick={() => handlePayment(plan.price, `${plan.name} Plan`)}>
-                Subscribe
-              </button>
+              <p className="plan-price">${plan.price.toFixed(2)}</p>
+              {selectedPlan === plan.name ? (
+                <PayPalButtons
+                  style={{ layout: 'vertical' }}
+                  createOrder={(data, actions) => {
+                    return actions.order.create({
+                      purchase_units: [
+                        {
+                          amount: {
+                            value: plan.price.toFixed(2),
+                            currency_code: 'USD',
+                          },
+                          description: `${plan.name} Plan`,
+                        },
+                      ],
+                    });
+                  }}
+                  onApprove={async (data, actions) => {
+                    await actions.order.capture();
+                    await handlePayPalApprove(plan.name.toLowerCase());
+                    alert('✅ Payment successful via PayPal!');
+                  }}
+                  onError={(err) => {
+                    console.error('PayPal error:', err);
+                    alert('❌ PayPal payment failed.');
+                  }}
+                />
+              ) : (
+                <button
+                  className="subscribe-btn"
+                  onClick={() => setSelectedPlan(plan.name)}
+                >
+                  Subscribe
+                </button>
+              )}
             </div>
           ))}
         </div>

@@ -118,8 +118,8 @@
 }
 
 .modal-photo {
-  width: 100%;
-  max-height: 300px;
+  width: auto;
+  max-height: auto;
   object-fit: cover;
   border-radius: 8px;
   margin-bottom: 20px;
