@@ -9,9 +9,9 @@ function Profile() {
   const [user, setUser] = useState(null);
   const [images, setImages] = useState([]); // New uploads
   const [imagePreviews, setImagePreviews] = useState([]); // URLs for preview
-  const [existingPhotos, setExistingPhotos] = useState([]); // Already saved photos
+  const [existingPhotos, setExistingPhotos] = useState([]); // Saved on server
   const [hobbies, setHobbies] = useState([]);
-  const [habits, setHabits] = useState({ smoking: '', drinking: '' });
+  const [habits, setHabits] = useState({ smoking: 'None', drinking: 'None' });
   const [relationshipType, setRelationshipType] = useState('');
   const [bio, setBio] = useState('');
   const [message, setMessage] = useState('');
@@ -22,59 +22,63 @@ function Profile() {
 
   const availableHobbies = ['Reading', 'Traveling', 'Gaming', 'Music', 'Cooking', 'Sports'];
   const habitOptions = ['None', 'Occasionally', 'Regular'];
-  const relationshipOptions = ['Serious Relationship', 'Dating', 'Situationships', 'Friendships', 'Just Companionship'];
+  const relationshipOptions = [
+    'Serious Relationship',
+    'Dating',
+    'Situationships',
+    'Friendships',
+    'Just Companionship'
+  ];
 
-  // For profile photo slideshow
-  const [currentPhoto, setCurrentPhoto] = useState(0);
+  const [currentPhoto, setCurrentPhoto] = useState(0); // slideshow index
 
+  // Fetch profile data
   useEffect(() => {
-  axios
-    .get(`${BASE_URL}/api/user/profile`, {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-    .then((res) => {
-      const data = res.data;
-      const savedPhotos = data.photos || [];
+    axios
+      .get(`${BASE_URL}/api/user/profile`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        const data = res.data;
+        const savedPhotos = data.photos || [];
 
-      setUser(data);
-      setHobbies(data.hobbies || []);
-      setHabits({
-        smoking: data.smoking || 'None',
-        drinking: data.drinking || 'None'
-      });
-      setRelationshipType(data.relationshipType || '');
-      setBio(data.bio || '');
-      setLocation({
-        country: data.country || '',
-        state: data.state || '',
-        city: data.city || '',
-      });
+        setUser(data);
+        setHobbies(data.hobbies || []);
+        setHabits({
+          smoking: data.smoking || 'None',
+          drinking: data.drinking || 'None',
+        });
+        setRelationshipType(data.relationshipType || '');
+        setBio(data.bio || '');
+        setLocation({
+          country: data.country || '',
+          state: data.state || '',
+          city: data.city || '',
+        });
 
-      // Make sure all saved images have a full URL for loading
-      const previewUrls = savedPhotos.map((p) =>
-        p.startsWith('http')
-          ? p
-          : `${BASE_URL}/${p.replace(/\\/g, '/')}`
-      );
+        // Ensure all existing photos have full URLs
+        const previewUrls = savedPhotos.map((p) =>
+          p.startsWith('http') ? p : `${BASE_URL}/${p.replace(/\\/g, '/')}`
+        );
 
-      setExistingPhotos(savedPhotos);
-      setImagePreviews(previewUrls);
-    })
-    .catch(() => setMessage('❌ Failed to fetch user'));
-}, [token]);
+        setExistingPhotos(savedPhotos);
+        setImagePreviews(previewUrls);
+      })
+      .catch(() => setMessage('❌ Failed to fetch user'));
+  }, [token]);
 
-
-  // Cycle photos for slideshow
+  // Auto slideshow
   useEffect(() => {
     if (imagePreviews.length > 1) {
       const timer = setInterval(() => {
         setCurrentPhoto((prev) => (prev + 1) % imagePreviews.length);
-      }, 2000);
+      }, 3000);
       return () => clearInterval(timer);
     }
   }, [imagePreviews]);
 
   const calculateAge = (dob) => {
+    if (!dob) return '';
     const birthDate = new Date(dob);
     const today = new Date();
     let age = today.getFullYear() - birthDate.getFullYear();
@@ -110,7 +114,8 @@ function Profile() {
       updatedNew.splice(localIndex, 1);
       setImages(updatedNew);
     }
-    setCurrentPhoto((prev) => prev >= updatedPreviews.length ? 0 : prev);
+
+    setCurrentPhoto((prev) => (prev >= updatedPreviews.length ? 0 : prev));
   };
 
   const handleHobbyToggle = (hobby) => {
@@ -171,7 +176,7 @@ function Profile() {
           {imagePreviews.length > 0 ? (
             <img
               src={imagePreviews[currentPhoto]}
-              alt="Profile"
+              alt={`Profile ${currentPhoto}`}
               className="profile-slideshow-img"
             />
           ) : (
