@@ -28,29 +28,41 @@ function Profile() {
   const [currentPhoto, setCurrentPhoto] = useState(0);
 
   useEffect(() => {
-    axios
-      .get(`${BASE_URL}/api/user/profile`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((res) => {
-        const data = res.data;
-        const savedPhotos = data.photos || [];
-        setUser(data);
-        setHobbies(data.hobbies || []);
-        setHabits({ smoking: data.smoking || 'None', drinking: data.drinking || 'None' });
-        setRelationshipType(data.relationshipType || '');
-        setBio(data.bio || '');
-        setLocation({
-          country: data.country || '',
-          state: data.state || '',
-          city: data.city || '',
-        });
-        setExistingPhotos(savedPhotos);
-        const previewUrls = savedPhotos.map((p) => `${BASE_URL}/${p.replace(/\\/g, '/')}`);
-        setImagePreviews(previewUrls);
-      })
-      .catch(() => setMessage('❌ Failed to fetch user'));
-  }, [token]);
+  axios
+    .get(`${BASE_URL}/api/user/profile`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    .then((res) => {
+      const data = res.data;
+      const savedPhotos = data.photos || [];
+
+      setUser(data);
+      setHobbies(data.hobbies || []);
+      setHabits({
+        smoking: data.smoking || 'None',
+        drinking: data.drinking || 'None'
+      });
+      setRelationshipType(data.relationshipType || '');
+      setBio(data.bio || '');
+      setLocation({
+        country: data.country || '',
+        state: data.state || '',
+        city: data.city || '',
+      });
+
+      // Make sure all saved images have a full URL for loading
+      const previewUrls = savedPhotos.map((p) =>
+        p.startsWith('http')
+          ? p
+          : `${BASE_URL}/${p.replace(/\\/g, '/')}`
+      );
+
+      setExistingPhotos(savedPhotos);
+      setImagePreviews(previewUrls);
+    })
+    .catch(() => setMessage('❌ Failed to fetch user'));
+}, [token]);
+
 
   // Cycle photos for slideshow
   useEffect(() => {
