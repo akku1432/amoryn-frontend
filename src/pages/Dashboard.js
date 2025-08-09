@@ -339,8 +339,8 @@ function Dashboard() {
           </div>
         </div>
       )}
-
-      🔹 NEW: Incomplete Profile Modal
+{/* 
+      🔹 NEW: Incomplete Profile Modal */}
       {showIncompleteProfileModal && (
         <div className="modal-overlay" onClick={() => setShowIncompleteProfileModal(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
