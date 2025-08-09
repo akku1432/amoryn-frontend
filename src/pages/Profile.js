@@ -7,7 +7,7 @@ import './Profile.css';
 
 function Profile() {
   const [user, setUser] = useState(null);
-  const [images, setImages] = useState([]); // New upload
+  const [images, setImages] = useState([]); // New uploads
   const [imagePreviews, setImagePreviews] = useState([]); // URLs for preview
   const [existingPhotos, setExistingPhotos] = useState([]); // Saved on server
   const [hobbies, setHobbies] = useState([]);
