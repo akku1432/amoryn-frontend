@@ -20,6 +20,12 @@ function Dashboard() {
   const [chatUnreadCount, setChatUnreadCount] = useState(0);
   const [friendRequestsCount, setFriendRequestsCount] = useState(0);
 
+  // First login profile update modal
+  const [showProfileUpdateModal, setShowProfileUpdateModal] = useState(false);
+
+  // NEW: Profile completion modal state
+  const [showIncompleteProfileModal, setShowIncompleteProfileModal] = useState(false);
+
   const token = localStorage.getItem('token');
 
   const handleLogout = () => {
@@ -34,7 +40,7 @@ function Dashboard() {
   // Fetch match users and premium status
   useEffect(() => {
     axios
-            .get(`${BASE_URL}/api/user/match`, { headers: { Authorization: `Bearer ${token}` } })
+      .get(`${BASE_URL}/api/user/match`, { headers: { Authorization: `Bearer ${token}` } })
       .then((res) => {
         setUsers(res.data.users || []);
         setIsPremium(res.data.isPremium || false);
@@ -51,7 +57,6 @@ function Dashboard() {
       });
       setFriendRequestsCount(res.data.length || 0);
     } catch (err) {
-      // Clear count if error
       setFriendRequestsCount(0);
     }
   };
@@ -60,7 +65,7 @@ function Dashboard() {
     fetchFriendRequests();
   }, [token]);
 
-  // Fetch unread chat messages counts and sum total unread
+  // Fetch unread chat messages counts
   useEffect(() => {
     if (!token) return;
 
@@ -79,19 +84,12 @@ function Dashboard() {
     fetchUnreadChats();
   }, [token]);
 
-  // Socket listeners for notifications
+  // Socket listeners
   useEffect(() => {
     if (!socket) return;
 
-    const onNewMessage = (data) => {
-      console.log('Dashboard received new-message event:', data);
-      setChatUnreadCount((prev) => prev + 1);
-    };
-
-    const onNewLike = (data) => {
-      console.log('Dashboard received new-like event:', data);
-      setFriendRequestsCount((prev) => prev + 1);
-    };
+    const onNewMessage = () => setChatUnreadCount((prev) => prev + 1);
+    const onNewLike = () => setFriendRequestsCount((prev) => prev + 1);
 
     socket.on('new-message', onNewMessage);
     socket.on('new-like', onNewLike);
@@ -102,13 +100,50 @@ function Dashboard() {
     };
   }, [socket]);
 
-  // Clear chat notification on clicking Chats link
+  // First login profile update check
+  useEffect(() => {
+    const checkProfileUpdate = async () => {
+      try {
+        const res = await axios.get(`${BASE_URL}/api/user/me`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (!res.data.profileUpdated) {
+          setShowProfileUpdateModal(true);
+        }
+      } catch (err) {
+        console.error('Failed to check profile update status:', err);
+      }
+    };
+    if (token) checkProfileUpdate();
+  }, [token]);
+
+  // 🔹 NEW: Profile completion check
+  useEffect(() => {
+    const checkProfileCompletion = async () => {
+      try {
+        const res = await axios.get(`${BASE_URL}/api/user/me`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        // Example check — adjust field list based on your backend profile model
+        const { name, dob, gender, bio, photos } = res.data;
+        if (!name || !dob || !gender || !bio || !photos || photos.length === 0) {
+          setShowIncompleteProfileModal(true);
+        }
+      } catch (err) {
+        console.error('Failed to check profile completion:', err);
+      }
+    };
+
+    if (token) checkProfileCompletion();
+  }, [token]);
+  // 🔹 END NEW CODE
+
   const handleGoToChats = () => {
     setChatUnreadCount(0);
     navigate('/chats');
   };
 
-  // Clear friend requests notification on clicking Friends link
   const handleGoToFriends = () => {
     setFriendRequestsCount(0);
     navigate('/friends');
@@ -169,7 +204,6 @@ function Dashboard() {
     setSelectedUser(null);
   };
 
-  // Helper to cap badge number and show '99+' if large count
   const renderBadgeCount = (count) => (count > 99 ? '99+' : count);
 
   return (
@@ -184,13 +218,10 @@ function Dashboard() {
           to="/friends"
           onClick={handleGoToFriends}
           style={{ position: 'relative' }}
-          aria-label={`Friends, ${friendRequestsCount} new requests`}
         >
           Friends
           {friendRequestsCount > 0 && (
-            <span className="notification-badge" aria-live="polite">
-              {renderBadgeCount(friendRequestsCount)}
-            </span>
+            <span className="notification-badge">{renderBadgeCount(friendRequestsCount)}</span>
           )}
         </Link>
 
@@ -198,13 +229,10 @@ function Dashboard() {
           to="/chats"
           onClick={handleGoToChats}
           style={{ position: 'relative' }}
-          aria-label={`Chats, ${chatUnreadCount} unread messages`}
         >
           Chats
           {chatUnreadCount > 0 && (
-            <span className="notification-badge" aria-live="polite">
-              {renderBadgeCount(chatUnreadCount)}
-            </span>
+            <span className="notification-badge">{renderBadgeCount(chatUnreadCount)}</span>
           )}
         </Link>
         <Link to="/Faq">FAQ</Link>
@@ -235,12 +263,8 @@ function Dashboard() {
               <h4>{user.name}</h4>
               <p>{calculateAge(user.dob)} years</p>
               <div className="like-dislike-buttons">
-                <button className="like" onClick={() => handleAction(user._id, 'like')}>
-                  ❤️
-                </button>
-                <button className="dislike" onClick={() => handleAction(user._id, 'dislike')}>
-                  ❌
-                </button>
+                <button className="like" onClick={() => handleAction(user._id, 'like')}>❤️</button>
+                <button className="dislike" onClick={() => handleAction(user._id, 'dislike')}>❌</button>
               </div>
             </div>
           ))}
@@ -251,9 +275,6 @@ function Dashboard() {
       {selectedUser && (
         <div className="modal-overlay" onClick={() => setSelectedUser(null)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <span className="modal-close" onClick={() => setSelectedUser(null)}>
-              
-            </span>
             <h3>
               {selectedUser.name} - {calculateAge(selectedUser.dob)} yrs
             </h3>
@@ -266,33 +287,16 @@ function Dashboard() {
               alt="Profile"
               className="modal-photo"
             />
-            <p>
-              <strong>Gender:</strong> {selectedUser.gender}
-            </p>
-            <p>
-              <strong>Bio:</strong> {selectedUser.bio}
-            </p>
-            <p>
-              <strong>Hobbies:</strong> {selectedUser.hobbies?.join(', ')}
-            </p>
-            <p>
-              <strong>Drinking:</strong> {selectedUser.drinking}
-            </p>
-            <p>
-              <strong>Smoking:</strong> {selectedUser.smoking}
-            </p>
-            <p>
-              <strong>Relationship Type:</strong> {selectedUser.relationshipType}
-            </p>
-            <p>
-              <strong>Location:</strong> {selectedUser.city}, {selectedUser.state},{' '}
-              {selectedUser.country}
-            </p>
+            <p><strong>Gender:</strong> {selectedUser.gender}</p>
+            <p><strong>Bio:</strong> {selectedUser.bio}</p>
+            <p><strong>Hobbies:</strong> {selectedUser.hobbies?.join(', ')}</p>
+            <p><strong>Drinking:</strong> {selectedUser.drinking}</p>
+            <p><strong>Smoking:</strong> {selectedUser.smoking}</p>
+            <p><strong>Relationship Type:</strong> {selectedUser.relationshipType}</p>
+            <p><strong>Location:</strong> {selectedUser.city}, {selectedUser.state}, {selectedUser.country}</p>
 
             <div className="modal-buttons">
-              <button className="message-button" onClick={goToChat}>
-                💬 Message
-              </button>
+              <button className="message-button" onClick={goToChat}>💬 Message</button>
               <button className="video-button" onClick={startVideoCall}>
                 <Video size={20} style={{ marginRight: '6px' }} /> Video Call
               </button>
@@ -320,6 +324,29 @@ function Dashboard() {
             <h3>Premium Feature</h3>
             <p>This feature is only available for Premium users.</p>
             <button onClick={handlePremiumClick}>Upgrade to Premium</button>
+          </div>
+        </div>
+      )}
+
+      {/* First Login Profile Update Modal */}
+      {showProfileUpdateModal && (
+        <div className="modal-overlay" onClick={() => setShowProfileUpdateModal(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <h3>Update Your Profile</h3>
+            <p>We noticed this is your first login. Please update your profile to get better matches!</p>
+            <button onClick={() => navigate('/profile')}>Update Now</button>
+            <button onClick={() => setShowProfileUpdateModal(false)}>Maybe Later</button>
+          </div>
+        </div>
+      )}
+
+      {/* 🔹 NEW: Incomplete Profile Modal */}
+      {showIncompleteProfileModal && (
+        <div className="modal-overlay" onClick={() => setShowIncompleteProfileModal(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <h3>Complete Your Profile</h3>
+            <p>Your profile is incomplete. Complete it to get better matches!</p>
+            <button onClick={() => navigate('/profile')}>Go to Profile</button>
           </div>
         </div>
       )}

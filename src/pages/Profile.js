@@ -56,10 +56,12 @@ function Profile() {
           city: data.city || '',
         });
 
-        // Ensure all existing photos have full URLs
-        const previewUrls = savedPhotos.map((p) =>
-          p.startsWith('http') ? p : `${BASE_URL}/${p.replace(/\\/g, '/')}`
-        );
+        // Ensure all existing photos have full URLs and add a cache-buster
+        const previewUrls = savedPhotos.map((p) => {
+          const base = p.startsWith('http') ? p : `${BASE_URL}/${p.replace(/\\/g, '/')}`;
+          // append cache-buster to avoid stale cached image
+          return `${base}${base.includes('?') ? '&' : '?'}t=${Date.now()}`;
+        });
 
         setExistingPhotos(savedPhotos);
         setImagePreviews(previewUrls);
@@ -178,6 +180,7 @@ function Profile() {
               src={imagePreviews[currentPhoto]}
               alt={`Profile ${currentPhoto}`}
               className="profile-slideshow-img"
+              crossOrigin="anonymous"
             />
           ) : (
             <div className="profile-slideshow-placeholder">No Photo</div>
@@ -197,7 +200,7 @@ function Profile() {
         <div className="photo-upload">
           {imagePreviews.map((src, index) => (
             <div key={index} className="photo-card">
-              <img src={src} alt={`preview-${index}`} />
+              <img src={src} alt={`preview-${index}`} crossOrigin="anonymous" />
               <button type="button" className="delete-btn" onClick={() => removeImage(index)}>
                 <X size={16} />
               </button>
