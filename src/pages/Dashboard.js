@@ -104,7 +104,7 @@ function Dashboard() {
   useEffect(() => {
     const checkProfileUpdate = async () => {
       try {
-        const res = await axios.get(`${BASE_URL}/api/user/me`, {
+        const res = await axios.get(`${BASE_URL}/api/user/profile`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (!res.data.profileUpdated) {
