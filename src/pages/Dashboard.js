@@ -121,7 +121,7 @@ function Dashboard() {
   useEffect(() => {
     const checkProfileCompletion = async () => {
       try {
-        const res = await axios.get(`${BASE_URL}/api/user/me`, {
+        const res = await axios.get(`${BASE_URL}/api/user/profile`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
