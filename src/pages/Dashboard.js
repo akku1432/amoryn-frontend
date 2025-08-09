@@ -329,7 +329,7 @@ function Dashboard() {
       )}
 
       {/* First Login Profile Update Modal */}
-      {showProfileUpdateModal && (
+      {/* {showProfileUpdateModal && (
         <div className="modal-overlay" onClick={() => setShowProfileUpdateModal(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <h3>Update Your Profile</h3>
@@ -338,7 +338,7 @@ function Dashboard() {
             <button onClick={() => setShowProfileUpdateModal(false)}>Maybe Later</button>
           </div>
         </div>
-      )}
+      )} */}
 {/* 
       🔹 NEW: Incomplete Profile Modal */}
       {showIncompleteProfileModal && (
