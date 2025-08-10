@@ -24,7 +24,7 @@
 video {
   width: 320px;
   height: 240px;
-  background: black;
+  background: linear-gradient(to bottom right, #fff0f5, #ffe6e6);
   border-radius: 12px;
   box-shadow: 0 0 12px rgba(0, 255, 255, 0.2);
 }
