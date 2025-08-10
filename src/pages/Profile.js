@@ -7,15 +7,18 @@ import './Profile.css';
 
 function Profile() {
   const [user, setUser] = useState(null);
-  const [images, setImages] = useState([]); // New uploads
-  const [imagePreviews, setImagePreviews] = useState([]); // URLs for preview
-  const [existingPhotos, setExistingPhotos] = useState([]); // Saved on server
+  const [images, setImages] = useState([]);
+  const [imagePreviews, setImagePreviews] = useState([]);
+  const [existingPhotos, setExistingPhotos] = useState([]);
   const [hobbies, setHobbies] = useState([]);
   const [habits, setHabits] = useState({ smoking: 'None', drinking: 'None' });
   const [relationshipType, setRelationshipType] = useState('');
   const [bio, setBio] = useState('');
-  const [message, setMessage] = useState('');
   const [location, setLocation] = useState({ country: '', state: '', city: '' });
+
+  const [currentPhoto, setCurrentPhoto] = useState(0);
+  const [modalMessage, setModalMessage] = useState('');
+  const [showModal, setShowModal] = useState(false);
 
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
@@ -29,8 +32,6 @@ function Profile() {
     'Friendships',
     'Just Companionship'
   ];
-
-  const [currentPhoto, setCurrentPhoto] = useState(0); // slideshow index
 
   // Fetch profile data
   useEffect(() => {
@@ -56,17 +57,18 @@ function Profile() {
           city: data.city || '',
         });
 
-        // Ensure all existing photos have full URLs and add a cache-buster
         const previewUrls = savedPhotos.map((p) => {
           const base = p.startsWith('http') ? p : `${BASE_URL}/${p.replace(/\\/g, '/')}`;
-          // append cache-buster to avoid stale cached image
           return `${base}${base.includes('?') ? '&' : '?'}t=${Date.now()}`;
         });
 
         setExistingPhotos(savedPhotos);
         setImagePreviews(previewUrls);
       })
-      .catch(() => setMessage('❌ Failed to fetch user'));
+      .catch(() => {
+        setModalMessage('❌ Failed to fetch user');
+        setShowModal(true);
+      });
   }, [token]);
 
   // Auto slideshow
@@ -93,7 +95,8 @@ function Profile() {
     const newFiles = Array.from(e.target.files);
     const totalPhotos = imagePreviews.length + newFiles.length;
     if (totalPhotos > 5) {
-      setMessage('❌ You can only upload up to 5 photos.');
+      setModalMessage('❌ You can only upload up to 5 photos.');
+      setShowModal(true);
       return;
     }
     const newPreviews = newFiles.map((file) => URL.createObjectURL(file));
@@ -129,7 +132,8 @@ function Profile() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (imagePreviews.length < 1) {
-      setMessage('❌ Upload at least 1 photo.');
+      setModalMessage('❌ Upload at least 1 photo.');
+      setShowModal(true);
       return;
     }
     const formData = new FormData();
@@ -151,10 +155,11 @@ function Profile() {
           'Content-Type': 'multipart/form-data',
         },
       });
-      setMessage('✅ Profile updated successfully.');
+      setModalMessage('✅ Profile updated successfully.');
+      setShowModal(true);
     } catch (err) {
-      console.error(err);
-      setMessage('❌ Failed to update profile.');
+      setModalMessage('❌ Failed to update profile.');
+      setShowModal(true);
     }
   };
 
@@ -162,6 +167,15 @@ function Profile() {
 
   return (
     <div className="profile-container">
+      {showModal && (
+        <div className="modal-overlay">
+          <div className="modal-box">
+            <p>{modalMessage}</p>
+            <button onClick={() => setShowModal(false)}>OK</button>
+          </div>
+        </div>
+      )}
+
       <div className="top-bar">
         <Home
           size={24}
@@ -187,7 +201,6 @@ function Profile() {
           )}
         </div>
         <div className="profile-basic-info">
-          {message && <p className="message">{message}</p>}
           <p><strong>Name:</strong> {user.name}</p>
           <p><strong>Gender:</strong> {user.gender}</p>
           <p><strong>Date of Birth:</strong> {user.dob?.split('T')[0]}</p>

@@ -1,10 +1,13 @@
+/* === GLOBAL STYLES === */
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
   background: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
   min-height: 100vh;
+  color: #333;
 }
 
+/* === CONTAINER === */
 .profile-container {
   max-width: 900px;
   margin: 40px auto;
@@ -14,13 +17,13 @@ body {
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
 }
 
+/* === HEADER === */
 .top-bar {
   display: flex;
   justify-content: flex-start;
   align-items: center;
 }
 
-/* --- Centered, Stylish Heading --- */
 .profile-page-title {
   text-align: center;
   margin-bottom: 30px;
@@ -29,17 +32,16 @@ body {
   letter-spacing: 1px;
 }
 
-/* --- Tight Two-column Header Row --- */
+/* Tight two-column header row */
 .profile-header-row {
   display: flex;
-  align-items: center;  /* Center text and image together */
-  gap: 0px;            /* SMALLER gap for tight look */
+  align-items: center;
+  gap: 8px; /* slightly more breathing room */
   margin-bottom: 35px;
-  margin-top: 0;
 }
 
 .profile-photo-slideshow {
-  flex: 0 0 90px;
+  flex: 0 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -51,7 +53,7 @@ body {
   height: 120px;
   border-radius: 12px;
   object-fit: cover;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.11);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.11);
   border: 2px solid #ddd;
   background: #f7f7f7;
 }
@@ -66,19 +68,18 @@ body {
 
 .profile-basic-info {
   flex: 1;
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
-  justify-content:baseline;          /* Vertically align with photo */
-  gap: 0px;
+  justify-content: center;
+  gap: 2px;
 }
 
 .profile-basic-info p {
-  margin: 3px 0 3px 0;             /* Very tight spacing */
+  margin: 3px 0;
   font-size: 16px;
-  color: #333;
 }
 
-/* ---- FORM and CONTENT STYLES ---- */
+/* === FORM === */
 .profile-container form {
   margin-top: 20px;
 }
@@ -98,8 +99,15 @@ textarea {
   font-size: 14px;
   border: 1px solid #ccc;
   border-radius: 8px;
-  box-sizing: border-box;
   background-color: #fff;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+textarea:focus {
+  border-color: #009688;
+  outline: none;
 }
 
 textarea {
@@ -107,6 +115,7 @@ textarea {
   min-height: 60px;
 }
 
+/* === PHOTO UPLOAD === */
 .photo-upload {
   display: flex;
   flex-wrap: wrap;
@@ -143,8 +152,35 @@ textarea {
   border-radius: 10px;
   width: 100px;
   height: 100px;
+  transition: background 0.3s ease, border-color 0.3s ease;
 }
 
+.add-photo:hover {
+  background: #c8e6e5;
+  border-color: #00796b;
+}
+
+/* Delete button */
+.delete-btn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: rgba(255, 0, 0, 0.8);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 4px 6px;
+  font-size: 12px;
+  z-index: 2;
+  transition: background 0.3s ease;
+}
+
+.delete-btn:hover {
+  background: rgba(200, 0, 0, 0.9);
+}
+
+/* === TAGS === */
 .tag-box {
   display: flex;
   flex-wrap: wrap;
@@ -162,15 +198,18 @@ textarea {
   transition: all 0.3s ease;
   user-select: none;
 }
+
 .tag:hover {
   background-color: #b2dfdb;
 }
+
 .tag.selected {
   background-color: #00796b;
   color: #fff;
   border-color: #004d40;
 }
 
+/* === BIO INPUT === */
 .bio-input {
   width: 100%;
   padding: 12px;
@@ -183,6 +222,7 @@ textarea {
   box-sizing: border-box;
 }
 
+/* === BUTTONS === */
 .button-wrapper {
   display: flex;
   justify-content: center;
@@ -197,13 +237,15 @@ button {
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background 0.3s ease, transform 0.1s ease;
 }
 
 button:hover {
   background: #00796b;
+  transform: translateY(-2px);
 }
 
+/* === MESSAGES === */
 .message {
   color: green;
   font-weight: bold;
@@ -211,42 +253,65 @@ button:hover {
   text-align: center;
 }
 
-/* Delete button on photo card */
-.photo-card {
-  position: relative;
-}
-.delete-btn {
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  background: rgba(255, 0, 0, 0.7);
-  color: white;
-  border: none;
-  border-radius: 20%;
-  cursor: pointer;
-  padding: 2px 6px;
-  font-size: 5px;
-  line-height: 1;
-  z-index: 2;
-  width: 30px;
+/* === DIALOG BOX (SweetAlert2) === */
+.swal2-popup {
+  border-radius: 12px !important;
+  padding: 20px !important;
+  background-color: #ffffff !important;
+  font-family: 'Segoe UI', sans-serif !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15) !important;
 }
 
-/* --- RESPONSIVE STYLES --- */
+.swal2-title {
+  color: #009688 !important;
+  font-size: 1.2rem !important;
+  font-weight: bold !important;
+}
+
+.swal2-html-container {
+  color: #555 !important;
+  font-size: 0.95rem !important;
+}
+
+.swal2-confirm {
+  background-color: #009688 !important;
+  color: #fff !important;
+  border-radius: 20px !important; /* pill shape */
+  padding: 10px 24px !important;
+  font-size: 0.95rem !important;
+  font-weight: bold !important;
+  border: none !important;
+  cursor: pointer !important;
+  transition: background 0.3s ease, transform 0.1s ease !important;
+}
+
+.swal2-confirm:hover {
+  background-color: #00796b !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Blurred overlay effect */
+.swal2-container {
+  backdrop-filter: blur(6px);
+  background-color: rgba(0, 0, 0, 0.3) !important;
+}
+
+
+/* === RESPONSIVE === */
 @media screen and (max-width: 800px) {
   .profile-header-row {
     flex-direction: column;
     align-items: center;
     gap: 12px;
   }
-  .profile-photo-slideshow,
   .profile-slideshow-img,
   .profile-slideshow-placeholder {
-    width: 70px;
-    height: 70px;
+    width: 90px;
+    height: 90px;
     border-radius: 10px;
   }
   .profile-page-title {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
   }
 }
 
