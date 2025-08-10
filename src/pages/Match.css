@@ -30,8 +30,8 @@
 
 .match-card img {
   width: 100%;
-  height: auto;
-  object-fit: fill;
+  height: 140px;
+  object-fit: cover;
   border-radius: 8px;
 }
 
@@ -95,8 +95,8 @@
 
 .modal-photo {
   width: auto;
-  height: 500px;
-  object-fit: fill;
+  height: 300px;
+  object-fit: contain;
   border-radius: 12px;
   margin-bottom: 20px;
   border: 1px solid #eee;
