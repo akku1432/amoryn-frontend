@@ -95,7 +95,7 @@
 
 .modal-photo {
   width: auto;
-  height: 500px;
+  height: auto;
   object-fit: contain;
   border-radius: 12px;
   margin-bottom: 20px;
