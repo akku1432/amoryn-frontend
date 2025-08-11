@@ -41,7 +41,7 @@ const Profile = () => {
 
     const fetchProfile = async () => {
       try {
-        const res = await axios.get("/api/user/profile", {
+        const res = await axios.get(`${BASE_URL}/api/user/profile`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -132,7 +132,7 @@ const Profile = () => {
         data.append("profileImage", profileImage);
       }
 
-      await axios.put("/api/user/profile", data, {
+      await axios.put(`${BASE_URL}/api/user/profile`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
@@ -153,7 +153,7 @@ const Profile = () => {
       return;
     }
     try {
-      await axios.delete("/api/user/delete", {
+      await axios.delete(`${BASE_URL}/api/user/delete`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       alert("Your account has been deleted.");
