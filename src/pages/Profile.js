@@ -13,6 +13,7 @@ const Profile = () => {
     hobbies: "",
     smoking: "",
     drinking: "",
+    relationshipType: "",
     bio: "",
   });
 
@@ -22,6 +23,20 @@ const Profile = () => {
   const [loading, setLoading] = useState(false);
 
   const token = localStorage.getItem("token");
+
+  // Predefined options
+  const hobbiesOptions = [
+    "Traveling", "Cooking", "Music", "Dancing",
+    "Reading", "Sports", "Gaming", "Fitness",
+    "Photography", "Movies", "Art", "Outdoors"
+  ];
+
+  const smokingOptions = ["Non-smoker", "Occasionally", "Regular smoker"];
+  const drinkingOptions = ["Non-drinker", "Occasionally", "Social drinker", "Regular drinker"];
+  const relationshipOptions = [
+    "Friendship", "Casual dating", "Long-term relationship",
+    "Marriage", "Networking", "Travel buddy"
+  ];
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -42,6 +57,7 @@ const Profile = () => {
           hobbies: user.hobbies ? user.hobbies.join(", ") : "",
           smoking: user.smoking || "",
           drinking: user.drinking || "",
+          relationshipType: user.relationshipType || "",
           bio: user.bio || "",
         });
 
@@ -180,29 +196,71 @@ const Profile = () => {
         {/* Hobbies */}
         <div>
           <h4>Hobbies</h4>
-          <input type="text" name="hobbies" value={formData.hobbies} onChange={handleChange} placeholder="Hobbies (comma-separated)" />
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
+            {hobbiesOptions.map((hobby) => (
+              <label key={hobby}>
+                <input
+                  type="radio"
+                  name="hobbies"
+                  value={hobby}
+                  checked={formData.hobbies === hobby}
+                  onChange={handleChange}
+                />{" "}
+                {hobby}
+              </label>
+            ))}
+          </div>
         </div>
 
         {/* Smoking */}
         <div>
           <h4>Smoking</h4>
-          <label>
-            <input type="radio" name="smoking" value="yes" checked={formData.smoking === "yes"} onChange={handleChange} /> Yes
-          </label>
-          <label style={{ marginLeft: "15px" }}>
-            <input type="radio" name="smoking" value="no" checked={formData.smoking === "no"} onChange={handleChange} /> No
-          </label>
+          {smokingOptions.map((option) => (
+            <label key={option} style={{ marginRight: "15px" }}>
+              <input
+                type="radio"
+                name="smoking"
+                value={option}
+                checked={formData.smoking === option}
+                onChange={handleChange}
+              />{" "}
+              {option}
+            </label>
+          ))}
         </div>
 
         {/* Drinking */}
         <div>
           <h4>Drinking</h4>
-          <label>
-            <input type="radio" name="drinking" value="yes" checked={formData.drinking === "yes"} onChange={handleChange} /> Yes
-          </label>
-          <label style={{ marginLeft: "15px" }}>
-            <input type="radio" name="drinking" value="no" checked={formData.drinking === "no"} onChange={handleChange} /> No
-          </label>
+          {drinkingOptions.map((option) => (
+            <label key={option} style={{ marginRight: "15px" }}>
+              <input
+                type="radio"
+                name="drinking"
+                value={option}
+                checked={formData.drinking === option}
+                onChange={handleChange}
+              />{" "}
+              {option}
+            </label>
+          ))}
+        </div>
+
+        {/* Relationship Type */}
+        <div>
+          <h4>Relationship Type</h4>
+          {relationshipOptions.map((option) => (
+            <label key={option} style={{ marginRight: "15px" }}>
+              <input
+                type="radio"
+                name="relationshipType"
+                value={option}
+                checked={formData.relationshipType === option}
+                onChange={handleChange}
+              />{" "}
+              {option}
+            </label>
+          ))}
         </div>
 
         {/* Bio */}
