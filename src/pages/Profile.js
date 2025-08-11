@@ -18,6 +18,7 @@ const Profile = () => {
     bio: "",
   });
 
+  const [age, setAge] = useState("");
   const [profileImage, setProfileImage] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -33,10 +34,11 @@ const Profile = () => {
         });
         const user = res.data;
 
+        const dobFormatted = user.dob ? user.dob.split("T")[0] : "";
         setFormData({
           name: user.name || "",
           gender: user.gender || "",
-          dob: user.dob ? user.dob.split("T")[0] : "",
+          dob: dobFormatted,
           lookingFor: user.lookingFor || "",
           country: user.country || "",
           state: user.state || "",
@@ -47,6 +49,17 @@ const Profile = () => {
           relationshipType: user.relationshipType || "",
           bio: user.bio || "",
         });
+
+        if (dobFormatted) {
+          const birthDate = new Date(dobFormatted);
+          const today = new Date();
+          let calculatedAge = today.getFullYear() - birthDate.getFullYear();
+          const m = today.getMonth() - birthDate.getMonth();
+          if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+            calculatedAge--;
+          }
+          setAge(calculatedAge);
+        }
 
         if (user.profileImage) {
           setPreviewImage(`/uploads/${user.profileImage}`);
@@ -123,7 +136,7 @@ const Profile = () => {
 
       alert("Your account has been deleted.");
       localStorage.removeItem("token");
-      window.location.href = "/"; // Redirect to home/login
+      window.location.href = "/";
     } catch (err) {
       console.error("Error deleting account:", err);
       alert("Failed to delete account.");
@@ -150,56 +163,43 @@ const Profile = () => {
       </div>
 
       <form onSubmit={handleSubmit} className="profile-form">
-        
         {/* Profile Image */}
         <div className="profile-image-section">
           {previewImage ? (
-            <img
-              src={previewImage}
-              alt="Profile"
-              className="profile-preview"
-            />
+            <img src={previewImage} alt="Profile" className="profile-preview" />
           ) : (
             <div className="profile-placeholder">No image selected</div>
           )}
           <input type="file" accept="image/*" onChange={handleImageChange} />
         </div>
 
-        {/* Personal Details */}
-        <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Name" />
-
-        <select name="gender" value={formData.gender} onChange={handleChange}>
+        {/* Read-only details */}
+        <input type="text" name="name" value={formData.name} readOnly placeholder="Name" />
+        <select name="gender" value={formData.gender} disabled>
           <option value="">Select Gender</option>
           <option value="male">Male</option>
           <option value="female">Female</option>
         </select>
+        <input type="date" name="dob" value={formData.dob} readOnly />
+        <input type="text" value={age ? `${age} years old` : ""} readOnly placeholder="Age" />
+        <input type="text" name="lookingFor" value={formData.lookingFor} readOnly placeholder="Looking For" />
 
-        <input type="date" name="dob" value={formData.dob} onChange={handleChange} />
-
-        <input type="text" name="lookingFor" value={formData.lookingFor} onChange={handleChange} placeholder="Looking For" />
-
+        {/* Editable details */}
         <input type="text" name="country" value={formData.country} onChange={handleChange} placeholder="Country" />
-
         <input type="text" name="state" value={formData.state} onChange={handleChange} placeholder="State" />
-
         <input type="text" name="city" value={formData.city} onChange={handleChange} placeholder="City" />
-
         <input type="text" name="hobbies" value={formData.hobbies} onChange={handleChange} placeholder="Hobbies (comma-separated)" />
-
         <select name="smoking" value={formData.smoking} onChange={handleChange}>
           <option value="">Smoking?</option>
           <option value="yes">Yes</option>
           <option value="no">No</option>
         </select>
-
         <select name="drinking" value={formData.drinking} onChange={handleChange}>
           <option value="">Drinking?</option>
           <option value="yes">Yes</option>
           <option value="no">No</option>
         </select>
-
         <input type="text" name="relationshipType" value={formData.relationshipType} onChange={handleChange} placeholder="Relationship Type" />
-
         <textarea name="bio" value={formData.bio} onChange={handleChange} placeholder="Bio" />
 
         <button type="submit" disabled={loading}>
