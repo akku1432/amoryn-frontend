@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import './Profile.css';
+import "./Profile.css";
 
 const Profile = () => {
   const [formData, setFormData] = useState({
@@ -25,7 +25,6 @@ const Profile = () => {
 
   const token = localStorage.getItem("token");
 
-  // Fetch existing user data
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -72,7 +71,6 @@ const Profile = () => {
     fetchProfile();
   }, [token]);
 
-  // Handle text input changes
   const handleChange = (e) => {
     setFormData((prev) => ({
       ...prev,
@@ -80,7 +78,6 @@ const Profile = () => {
     }));
   };
 
-  // Handle image selection
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -89,20 +86,32 @@ const Profile = () => {
     }
   };
 
-  // Submit form
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
       const data = new FormData();
-      for (let key in formData) {
-        if (key === "hobbies") {
-          data.append(key, formData[key].split(",").map((h) => h.trim()));
+      // Append only editable fields
+      const editableFields = [
+        "country",
+        "state",
+        "city",
+        "hobbies",
+        "smoking",
+        "drinking",
+        "relationshipType",
+        "bio",
+      ];
+
+      editableFields.forEach((field) => {
+        if (field === "hobbies") {
+          data.append(field, formData[field].split(",").map((h) => h.trim()));
         } else {
-          data.append(key, formData[key]);
+          data.append(field, formData[field]);
         }
-      }
+      });
+
       if (profileImage) {
         data.append("profileImage", profileImage);
       }
@@ -123,7 +132,6 @@ const Profile = () => {
     }
   };
 
-  // Delete account
   const handleDeleteAccount = async () => {
     if (!window.confirm("Are you sure you want to delete your account? This cannot be undone.")) {
       return;
@@ -173,7 +181,7 @@ const Profile = () => {
           <input type="file" accept="image/*" onChange={handleImageChange} />
         </div>
 
-        {/* Read-only details */}
+        {/* Read-only fields */}
         <input type="text" name="name" value={formData.name} readOnly placeholder="Name" />
         <select name="gender" value={formData.gender} disabled>
           <option value="">Select Gender</option>
@@ -184,7 +192,7 @@ const Profile = () => {
         <input type="text" value={age ? `${age} years old` : ""} readOnly placeholder="Age" />
         <input type="text" name="lookingFor" value={formData.lookingFor} readOnly placeholder="Looking For" />
 
-        {/* Editable details */}
+        {/* Editable fields */}
         <input type="text" name="country" value={formData.country} onChange={handleChange} placeholder="Country" />
         <input type="text" name="state" value={formData.state} onChange={handleChange} placeholder="State" />
         <input type="text" name="city" value={formData.city} onChange={handleChange} placeholder="City" />
