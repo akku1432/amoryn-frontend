@@ -114,12 +114,15 @@ function Match() {
           <div className="match-card" key={user._id}>
             <img
                               src={
-                  user.photos?.length
+                  user.photos && user.photos.length > 0
                     ? `${BASE_URL}${user.photos[0]}`
                     : '/default-user.png'
                 }
                 onError={(e) => {
-                  e.target.src = '/default-user.png';
+                  // Prevent infinite loop by checking if we're already using default image
+                  if (e.target.src !== window.location.origin + '/default-user.png') {
+                    e.target.src = '/default-user.png';
+                  }
                 }}
               alt={user.name}
               onClick={() => setSelectedUser(user)}
@@ -141,12 +144,15 @@ function Match() {
             <h3>{selectedUser.name} - {calculateAge(selectedUser.dob)} yrs</h3>
             <img
                               src={
-                  selectedUser.photos?.length
+                  selectedUser.photos && selectedUser.photos.length > 0
                     ? `${BASE_URL}${selectedUser.photos[0]}`
                     : '/default-user.png'
-                }
+                  }
                 onError={(e) => {
-                  e.target.src = '/default-user.png';
+                  // Prevent infinite loop by checking if we're already using default image
+                  if (e.target.src !== window.location.origin + '/default-user.png') {
+                    e.target.src = '/default-user.png';
+                  }
                 }}
               alt="Profile"
               className="modal-photo"
