@@ -113,11 +113,14 @@ function Match() {
         {matches.map((user) => (
           <div className="match-card" key={user._id}>
             <img
-              src={
-                user.photos?.length
-                  ? `${BASE_URL}/${user.photos[0].replace(/\\/g, '/')}`
-                  : '/default-user.png'
-              }
+                              src={
+                  user.photos?.length
+                    ? `${BASE_URL}${user.photos[0]}`
+                    : '/default-user.png'
+                }
+                onError={(e) => {
+                  e.target.src = '/default-user.png';
+                }}
               alt={user.name}
               onClick={() => setSelectedUser(user)}
             />
@@ -137,11 +140,14 @@ function Match() {
             <span className="modal-close" onClick={() => setSelectedUser(null)}>×</span>
             <h3>{selectedUser.name} - {calculateAge(selectedUser.dob)} yrs</h3>
             <img
-              src={
-                selectedUser.photos?.length
-                  ? `${BASE_URL}/${selectedUser.photos[0].replace(/\\/g, '/')}`
-                  : '/default-user.png'
-              }
+                              src={
+                  selectedUser.photos?.length
+                    ? `${BASE_URL}${selectedUser.photos[0]}`
+                    : '/default-user.png'
+                }
+                onError={(e) => {
+                  e.target.src = '/default-user.png';
+                }}
               alt="Profile"
               className="modal-photo"
             />

@@ -252,11 +252,14 @@ function Dashboard() {
           {users.map((user) => (
             <div className="user-card" key={user._id}>
               <img
-                src={
-                  user.photos?.length
-                    ? `${BASE_URL}/${user.photos[0].replace(/\\/g, '/')}`
-                    : '/default-user.png'
-                }
+                                  src={
+                    user.photos?.length
+                      ? `${BASE_URL}${user.photos[0]}`
+                      : '/default-user.png'
+                  }
+                  onError={(e) => {
+                    e.target.src = '/default-user.png';
+                  }}
                 alt={user.name}
                 onClick={() => setSelectedUser(user)}
               />
@@ -281,9 +284,12 @@ function Dashboard() {
             <img
               src={
                 selectedUser.photos?.length
-                  ? `${BASE_URL}/${selectedUser.photos[0].replace(/\\/g, '/')}`
+                  ? `${BASE_URL}${selectedUser.photos[0]}`
                   : '/default-user.png'
               }
+              onError={(e) => {
+                e.target.src = '/default-user.png';
+              }}
               alt="Profile"
               className="modal-photo"
             />

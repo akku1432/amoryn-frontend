@@ -137,9 +137,12 @@ function Friends() {
           friends.map(friend => (
             <div className="friend-card" key={friend._id}>
               <img
-                src={friend.photos?.[0] ? `${BASE_URL}/${friend.photos[0].replace(/\\/g, '/')}` : '/default-user.png'}
+                src={friend.photos?.[0] ? `${BASE_URL}${friend.photos[0]}` : '/default-user.png'}
                 alt={friend.name}
                 onClick={() => setSelectedUser(friend)}
+                onError={(e) => {
+                  e.target.src = '/default-user.png';
+                }}
               />
               <div className="friend-details">
                 <h4>{friend.name}</h4>
@@ -165,8 +168,11 @@ function Friends() {
           requests.map(user => (
             <div className="friend-card" key={user._id}>
               <img
-                src={user.photos?.[0] ? `${BASE_URL}/${user.photos[0].replace(/\\/g, '/')}` : '/default-user.png'}
+                src={user.photos?.[0] ? `${BASE_URL}${user.photos[0]}` : '/default-user.png'}
                 alt={user.name}
+                onError={(e) => {
+                  e.target.src = '/default-user.png';
+                }}
               />
               <div className="friend-details">
                 <h4>{user.name}</h4>
@@ -189,9 +195,12 @@ function Friends() {
             <span className="modal-close" onClick={() => setSelectedUser(null)}>×</span>
             <h3>{selectedUser.name} - {calculateAge(selectedUser.dob)} yrs</h3>
             <img
-              src={selectedUser.photos?.[0] ? `${BASE_URL}/${selectedUser.photos[0].replace(/\\/g, '/')}` : '/default-user.png'}
+              src={selectedUser.photos?.[0] ? `${BASE_URL}${selectedUser.photos[0]}` : '/default-user.png'}
               alt="Profile"
               className="modal-photo"
+              onError={(e) => {
+                e.target.src = '/default-user.png';
+              }}
             />
             <p><strong>Gender:</strong> {selectedUser.gender}</p>
             <p><strong>Bio:</strong> {selectedUser.bio}</p>
