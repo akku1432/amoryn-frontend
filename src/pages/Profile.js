@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Profile.css";
+import { BASE_URL } from '../utils/config';
 
 const Profile = () => {
   const [formData, setFormData] = useState({
