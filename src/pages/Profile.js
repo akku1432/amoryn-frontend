@@ -10,7 +10,7 @@ const Profile = () => {
     country: "",
     state: "",
     city: "",
-    hobbies: "",
+    hobbies: [],
     smoking: "",
     drinking: "",
     relationshipType: "",
@@ -24,13 +24,11 @@ const Profile = () => {
 
   const token = localStorage.getItem("token");
 
-  // Predefined options
   const hobbiesOptions = [
     "Traveling", "Cooking", "Music", "Dancing",
     "Reading", "Sports", "Gaming", "Fitness",
     "Photography", "Movies", "Art", "Outdoors"
   ];
-
   const smokingOptions = ["Non-smoker", "Occasionally", "Regular smoker"];
   const drinkingOptions = ["Non-drinker", "Occasionally", "Social drinker", "Regular drinker"];
   const relationshipOptions = [
@@ -39,14 +37,19 @@ const Profile = () => {
   ];
 
   useEffect(() => {
+    if (!token) return; // prevent request without token
+
     const fetchProfile = async () => {
       try {
         const res = await axios.get("/api/user/profile", {
           headers: { Authorization: `Bearer ${token}` },
         });
-        const user = res.data;
 
+        if (!res.data) return;
+
+        const user = res.data;
         const dobFormatted = user.dob ? user.dob.split("T")[0] : "";
+
         setFormData({
           name: user.name || "",
           gender: user.gender || "",
@@ -54,13 +57,14 @@ const Profile = () => {
           country: user.country || "",
           state: user.state || "",
           city: user.city || "",
-          hobbies: user.hobbies ? user.hobbies.join(", ") : "",
+          hobbies: Array.isArray(user.hobbies) ? user.hobbies : [],
           smoking: user.smoking || "",
           drinking: user.drinking || "",
           relationshipType: user.relationshipType || "",
           bio: user.bio || "",
         });
 
+        // Calculate age
         if (dobFormatted) {
           const birthDate = new Date(dobFormatted);
           const today = new Date();
@@ -73,7 +77,11 @@ const Profile = () => {
         }
 
         if (user.profileImage) {
-          setPreviewImage(`/uploads/${user.profileImage}`);
+          setPreviewImage(
+            user.profileImage.startsWith("http")
+              ? user.profileImage
+              : `/uploads/${user.profileImage}`
+          );
         }
       } catch (err) {
         console.error("Error fetching profile:", err);
@@ -84,10 +92,19 @@ const Profile = () => {
   }, [token]);
 
   const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
+    const { name, value, type, checked } = e.target;
+
+    if (name === "hobbies") {
+      setFormData((prev) => {
+        if (checked) {
+          return { ...prev, hobbies: [...prev.hobbies, value] };
+        } else {
+          return { ...prev, hobbies: prev.hobbies.filter((h) => h !== value) };
+        }
+      });
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleImageChange = (e) => {
@@ -106,7 +123,7 @@ const Profile = () => {
       const data = new FormData();
       for (let key in formData) {
         if (key === "hobbies") {
-          data.append(key, formData[key].split(",").map((h) => h.trim()));
+          formData.hobbies.forEach((h) => data.append("hobbies[]", h));
         } else {
           data.append(key, formData[key]);
         }
@@ -150,26 +167,13 @@ const Profile = () => {
 
   return (
     <div className="profile-page">
-      <div className="profile-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <div className="profile-header">
         <h2>Edit Profile</h2>
-        <button
-          onClick={handleDeleteAccount}
-          style={{
-            background: "red",
-            color: "white",
-            border: "none",
-            padding: "6px 12px",
-            borderRadius: "4px",
-            cursor: "pointer",
-          }}
-        >
-          Delete Account
-        </button>
+        <button onClick={handleDeleteAccount} className="delete-btn">Delete Account</button>
       </div>
 
       <form onSubmit={handleSubmit} className="profile-form">
-        {/* Profile Image + Basic Info */}
-        <div className="profile-image-section" style={{ textAlign: "center" }}>
+        <div className="profile-image-section">
           {previewImage ? (
             <img src={previewImage} alt="Profile" className="profile-preview" />
           ) : (
@@ -177,7 +181,6 @@ const Profile = () => {
           )}
           <input type="file" accept="image/*" onChange={handleImageChange} />
 
-          {/* Info under image */}
           <input type="text" name="name" value={formData.name} readOnly placeholder="Name" />
           <select name="gender" value={formData.gender} disabled>
             <option value="">Select Gender</option>
@@ -186,24 +189,21 @@ const Profile = () => {
           </select>
           <input type="date" name="dob" value={formData.dob} readOnly />
           <input type="text" value={age ? `${age} years old` : ""} readOnly placeholder="Age" />
-
-          {/* Editable Country/State/City */}
           <input type="text" name="country" value={formData.country} onChange={handleChange} placeholder="Country" />
           <input type="text" name="state" value={formData.state} onChange={handleChange} placeholder="State" />
           <input type="text" name="city" value={formData.city} onChange={handleChange} placeholder="City" />
         </div>
 
-        {/* Hobbies */}
         <div>
           <h4>Hobbies</h4>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
+          <div className="options-wrap">
             {hobbiesOptions.map((hobby) => (
               <label key={hobby}>
                 <input
-                  type="radio"
+                  type="checkbox"
                   name="hobbies"
                   value={hobby}
-                  checked={formData.hobbies === hobby}
+                  checked={formData.hobbies.includes(hobby)}
                   onChange={handleChange}
                 />{" "}
                 {hobby}
@@ -212,58 +212,51 @@ const Profile = () => {
           </div>
         </div>
 
-        {/* Smoking */}
         <div>
           <h4>Smoking</h4>
           {smokingOptions.map((option) => (
-            <label key={option} style={{ marginRight: "15px" }}>
+            <label key={option}>
               <input
                 type="radio"
                 name="smoking"
                 value={option}
                 checked={formData.smoking === option}
                 onChange={handleChange}
-              />{" "}
-              {option}
+              /> {option}
             </label>
           ))}
         </div>
 
-        {/* Drinking */}
         <div>
           <h4>Drinking</h4>
           {drinkingOptions.map((option) => (
-            <label key={option} style={{ marginRight: "15px" }}>
+            <label key={option}>
               <input
                 type="radio"
                 name="drinking"
                 value={option}
                 checked={formData.drinking === option}
                 onChange={handleChange}
-              />{" "}
-              {option}
+              /> {option}
             </label>
           ))}
         </div>
 
-        {/* Relationship Type */}
         <div>
           <h4>Relationship Type</h4>
           {relationshipOptions.map((option) => (
-            <label key={option} style={{ marginRight: "15px" }}>
+            <label key={option}>
               <input
                 type="radio"
                 name="relationshipType"
                 value={option}
                 checked={formData.relationshipType === option}
                 onChange={handleChange}
-              />{" "}
-              {option}
+              /> {option}
             </label>
           ))}
         </div>
 
-        {/* Bio */}
         <div>
           <h4>Bio</h4>
           <textarea name="bio" value={formData.bio} onChange={handleChange} placeholder="Write something about yourself..." />
