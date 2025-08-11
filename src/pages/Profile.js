@@ -140,10 +140,10 @@ const Profile = () => {
         const imageData = new FormData();
         imageData.append("profilePicture", profileImage);
 
+        // Do NOT set Content-Type manually; let the browser set the boundary
         await axios.post(`${BASE_URL}/api/user/profile/picture`, imageData, {
           headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
           },
         });
 
