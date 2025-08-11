@@ -2,6 +2,11 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Profile.css";
 
+const hobbyOptions = ["Reading", "Traveling", "Sports", "Music", "Cooking", "Gaming"];
+const smokingOptions = ["Yes", "No", "Occasionally"];
+const drinkingOptions = ["Yes", "No", "Socially"];
+const relationshipOptions = ["Single", "Married", "In a relationship", "Open", "Complicated"];
+
 const Profile = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -11,7 +16,7 @@ const Profile = () => {
     country: "",
     state: "",
     city: "",
-    hobbies: "",
+    hobbies: [],
     smoking: "",
     drinking: "",
     relationshipType: "",
@@ -42,7 +47,7 @@ const Profile = () => {
           country: user.country || "",
           state: user.state || "",
           city: user.city || "",
-          hobbies: user.hobbies ? user.hobbies.join(", ") : "",
+          hobbies: user.hobbies || [],
           smoking: user.smoking || "",
           drinking: user.drinking || "",
           relationshipType: user.relationshipType || "",
@@ -78,6 +83,15 @@ const Profile = () => {
     }));
   };
 
+  const toggleHobby = (hobby) => {
+    setFormData((prev) => {
+      const hobbies = prev.hobbies.includes(hobby)
+        ? prev.hobbies.filter((h) => h !== hobby)
+        : [...prev.hobbies, hobby];
+      return { ...prev, hobbies };
+    });
+  };
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -92,7 +106,6 @@ const Profile = () => {
 
     try {
       const data = new FormData();
-      // Append only editable fields
       const editableFields = [
         "country",
         "state",
@@ -106,7 +119,7 @@ const Profile = () => {
 
       editableFields.forEach((field) => {
         if (field === "hobbies") {
-          data.append(field, formData[field].split(",").map((h) => h.trim()));
+          data.append(field, JSON.stringify(formData.hobbies));
         } else {
           data.append(field, formData[field]);
         }
@@ -153,25 +166,12 @@ const Profile = () => {
 
   return (
     <div className="profile-page">
-      <div className="profile-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <div className="profile-header">
         <h2>Edit Profile</h2>
-        <button
-          onClick={handleDeleteAccount}
-          style={{
-            background: "red",
-            color: "white",
-            border: "none",
-            padding: "6px 12px",
-            borderRadius: "4px",
-            cursor: "pointer",
-          }}
-        >
-          Delete Account
-        </button>
+        <button onClick={handleDeleteAccount}>Delete Account</button>
       </div>
 
       <form onSubmit={handleSubmit} className="profile-form">
-        {/* Profile Image */}
         <div className="profile-image-section">
           {previewImage ? (
             <img src={previewImage} alt="Profile" className="profile-preview" />
@@ -182,32 +182,55 @@ const Profile = () => {
         </div>
 
         {/* Read-only fields */}
-        <input type="text" name="name" value={formData.name} readOnly placeholder="Name" />
-        <select name="gender" value={formData.gender} disabled>
+        <input type="text" value={formData.name} readOnly />
+        <select value={formData.gender} disabled>
           <option value="">Select Gender</option>
           <option value="male">Male</option>
           <option value="female">Female</option>
         </select>
-        <input type="date" name="dob" value={formData.dob} readOnly />
-        <input type="text" value={age ? `${age} years old` : ""} readOnly placeholder="Age" />
-        <input type="text" name="lookingFor" value={formData.lookingFor} readOnly placeholder="Looking For" />
+        <input type="date" value={formData.dob} readOnly />
+        <input type="text" value={age ? `${age} years old` : ""} readOnly />
+        <input type="text" value={formData.lookingFor} readOnly />
 
         {/* Editable fields */}
         <input type="text" name="country" value={formData.country} onChange={handleChange} placeholder="Country" />
         <input type="text" name="state" value={formData.state} onChange={handleChange} placeholder="State" />
         <input type="text" name="city" value={formData.city} onChange={handleChange} placeholder="City" />
-        <input type="text" name="hobbies" value={formData.hobbies} onChange={handleChange} placeholder="Hobbies (comma-separated)" />
+
+        {/* Hobbies as selectable tags */}
+        <div className="hobbies-container">
+          {hobbyOptions.map((hobby) => (
+            <span
+              key={hobby}
+              className={`hobby-tag ${formData.hobbies.includes(hobby) ? "selected" : ""}`}
+              onClick={() => toggleHobby(hobby)}
+            >
+              {hobby}
+            </span>
+          ))}
+        </div>
+
         <select name="smoking" value={formData.smoking} onChange={handleChange}>
           <option value="">Smoking?</option>
-          <option value="yes">Yes</option>
-          <option value="no">No</option>
+          {smokingOptions.map((opt) => (
+            <option key={opt} value={opt.toLowerCase()}>{opt}</option>
+          ))}
         </select>
+
         <select name="drinking" value={formData.drinking} onChange={handleChange}>
           <option value="">Drinking?</option>
-          <option value="yes">Yes</option>
-          <option value="no">No</option>
+          {drinkingOptions.map((opt) => (
+            <option key={opt} value={opt.toLowerCase()}>{opt}</option>
+          ))}
         </select>
-        <input type="text" name="relationshipType" value={formData.relationshipType} onChange={handleChange} placeholder="Relationship Type" />
+
+        <select name="relationshipType" value={formData.relationshipType} onChange={handleChange}>
+          <option value="">Relationship Type</option>
+          {relationshipOptions.map((opt) => (
+            <option key={opt} value={opt}>{opt}</option>
+          ))}
+        </select>
+
         <textarea name="bio" value={formData.bio} onChange={handleChange} placeholder="Bio" />
 
         <button type="submit" disabled={loading}>
