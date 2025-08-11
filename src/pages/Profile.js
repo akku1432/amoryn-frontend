@@ -2,24 +2,17 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Profile.css";
 
-const hobbyOptions = ["Reading", "Traveling", "Sports", "Music", "Cooking", "Gaming"];
-const smokingOptions = ["Yes", "No", "Occasionally"];
-const drinkingOptions = ["Yes", "No", "Socially"];
-const relationshipOptions = ["Single", "Married", "In a relationship", "Open", "Complicated"];
-
 const Profile = () => {
   const [formData, setFormData] = useState({
     name: "",
     gender: "",
     dob: "",
-    lookingFor: "",
     country: "",
     state: "",
     city: "",
-    hobbies: [],
+    hobbies: "",
     smoking: "",
     drinking: "",
-    relationshipType: "",
     bio: "",
   });
 
@@ -43,14 +36,12 @@ const Profile = () => {
           name: user.name || "",
           gender: user.gender || "",
           dob: dobFormatted,
-          lookingFor: user.lookingFor || "",
           country: user.country || "",
           state: user.state || "",
           city: user.city || "",
-          hobbies: user.hobbies || [],
+          hobbies: user.hobbies ? user.hobbies.join(", ") : "",
           smoking: user.smoking || "",
           drinking: user.drinking || "",
-          relationshipType: user.relationshipType || "",
           bio: user.bio || "",
         });
 
@@ -83,15 +74,6 @@ const Profile = () => {
     }));
   };
 
-  const toggleHobby = (hobby) => {
-    setFormData((prev) => {
-      const hobbies = prev.hobbies.includes(hobby)
-        ? prev.hobbies.filter((h) => h !== hobby)
-        : [...prev.hobbies, hobby];
-      return { ...prev, hobbies };
-    });
-  };
-
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -106,25 +88,13 @@ const Profile = () => {
 
     try {
       const data = new FormData();
-      const editableFields = [
-        "country",
-        "state",
-        "city",
-        "hobbies",
-        "smoking",
-        "drinking",
-        "relationshipType",
-        "bio",
-      ];
-
-      editableFields.forEach((field) => {
-        if (field === "hobbies") {
-          data.append(field, JSON.stringify(formData.hobbies));
+      for (let key in formData) {
+        if (key === "hobbies") {
+          data.append(key, formData[key].split(",").map((h) => h.trim()));
         } else {
-          data.append(field, formData[field]);
+          data.append(key, formData[key]);
         }
-      });
-
+      }
       if (profileImage) {
         data.append("profileImage", profileImage);
       }
@@ -149,12 +119,10 @@ const Profile = () => {
     if (!window.confirm("Are you sure you want to delete your account? This cannot be undone.")) {
       return;
     }
-
     try {
       await axios.delete("/api/user/delete", {
         headers: { Authorization: `Bearer ${token}` },
       });
-
       alert("Your account has been deleted.");
       localStorage.removeItem("token");
       window.location.href = "/";
@@ -166,72 +134,82 @@ const Profile = () => {
 
   return (
     <div className="profile-page">
-      <div className="profile-header">
+      <div className="profile-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <h2>Edit Profile</h2>
-        <button onClick={handleDeleteAccount}>Delete Account</button>
+        <button
+          onClick={handleDeleteAccount}
+          style={{
+            background: "red",
+            color: "white",
+            border: "none",
+            padding: "6px 12px",
+            borderRadius: "4px",
+            cursor: "pointer",
+          }}
+        >
+          Delete Account
+        </button>
       </div>
 
       <form onSubmit={handleSubmit} className="profile-form">
-        <div className="profile-image-section">
+        {/* Profile Image + Basic Info */}
+        <div className="profile-image-section" style={{ textAlign: "center" }}>
           {previewImage ? (
             <img src={previewImage} alt="Profile" className="profile-preview" />
           ) : (
             <div className="profile-placeholder">No image selected</div>
           )}
           <input type="file" accept="image/*" onChange={handleImageChange} />
+
+          {/* Info under image */}
+          <input type="text" name="name" value={formData.name} readOnly placeholder="Name" />
+          <select name="gender" value={formData.gender} disabled>
+            <option value="">Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+          <input type="date" name="dob" value={formData.dob} readOnly />
+          <input type="text" value={age ? `${age} years old` : ""} readOnly placeholder="Age" />
+
+          {/* Editable Country/State/City */}
+          <input type="text" name="country" value={formData.country} onChange={handleChange} placeholder="Country" />
+          <input type="text" name="state" value={formData.state} onChange={handleChange} placeholder="State" />
+          <input type="text" name="city" value={formData.city} onChange={handleChange} placeholder="City" />
         </div>
 
-        {/* Read-only fields */}
-        <input type="text" value={formData.name} readOnly />
-        <select value={formData.gender} disabled>
-          <option value="">Select Gender</option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-        </select>
-        <input type="date" value={formData.dob} readOnly />
-        <input type="text" value={age ? `${age} years old` : ""} readOnly />
-        <input type="text" value={formData.lookingFor} readOnly />
-
-        {/* Editable fields */}
-        <input type="text" name="country" value={formData.country} onChange={handleChange} placeholder="Country" />
-        <input type="text" name="state" value={formData.state} onChange={handleChange} placeholder="State" />
-        <input type="text" name="city" value={formData.city} onChange={handleChange} placeholder="City" />
-
-        {/* Hobbies as selectable tags */}
-        <div className="hobbies-container">
-          {hobbyOptions.map((hobby) => (
-            <span
-              key={hobby}
-              className={`hobby-tag ${formData.hobbies.includes(hobby) ? "selected" : ""}`}
-              onClick={() => toggleHobby(hobby)}
-            >
-              {hobby}
-            </span>
-          ))}
+        {/* Hobbies */}
+        <div>
+          <h4>Hobbies</h4>
+          <input type="text" name="hobbies" value={formData.hobbies} onChange={handleChange} placeholder="Hobbies (comma-separated)" />
         </div>
 
-        <select name="smoking" value={formData.smoking} onChange={handleChange}>
-          <option value="">Smoking?</option>
-          {smokingOptions.map((opt) => (
-            <option key={opt} value={opt.toLowerCase()}>{opt}</option>
-          ))}
-        </select>
+        {/* Smoking */}
+        <div>
+          <h4>Smoking</h4>
+          <label>
+            <input type="radio" name="smoking" value="yes" checked={formData.smoking === "yes"} onChange={handleChange} /> Yes
+          </label>
+          <label style={{ marginLeft: "15px" }}>
+            <input type="radio" name="smoking" value="no" checked={formData.smoking === "no"} onChange={handleChange} /> No
+          </label>
+        </div>
 
-        <select name="drinking" value={formData.drinking} onChange={handleChange}>
-          <option value="">Drinking?</option>
-          {drinkingOptions.map((opt) => (
-            <option key={opt} value={opt.toLowerCase()}>{opt}</option>
-          ))}
-        </select>
+        {/* Drinking */}
+        <div>
+          <h4>Drinking</h4>
+          <label>
+            <input type="radio" name="drinking" value="yes" checked={formData.drinking === "yes"} onChange={handleChange} /> Yes
+          </label>
+          <label style={{ marginLeft: "15px" }}>
+            <input type="radio" name="drinking" value="no" checked={formData.drinking === "no"} onChange={handleChange} /> No
+          </label>
+        </div>
 
-        <select name="relationshipType" value={formData.relationshipType} onChange={handleChange}>
-          <option value="">Relationship Type</option>
-          {relationshipOptions.map((opt) => (
-            <option key={opt} value={opt}>{opt}</option>
-          ))}
-        </select>
-
-        <textarea name="bio" value={formData.bio} onChange={handleChange} placeholder="Bio" />
+        {/* Bio */}
+        <div>
+          <h4>Bio</h4>
+          <textarea name="bio" value={formData.bio} onChange={handleChange} placeholder="Write something about yourself..." />
+        </div>
 
         <button type="submit" disabled={loading}>
           {loading ? "Updating..." : "Update Profile"}
