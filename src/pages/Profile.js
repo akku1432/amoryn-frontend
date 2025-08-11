@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Profile.css";
-import { BASE_URL } from '../utils/config';
+import { BASE_URL } from "../utils/config";
 
 const Profile = () => {
   const [formData, setFormData] = useState({
@@ -26,19 +26,37 @@ const Profile = () => {
   const token = localStorage.getItem("token");
 
   const hobbiesOptions = [
-    "Traveling", "Cooking", "Music", "Dancing",
-    "Reading", "Sports", "Gaming", "Fitness",
-    "Photography", "Movies", "Art", "Outdoors"
+    "Traveling",
+    "Cooking",
+    "Music",
+    "Dancing",
+    "Reading",
+    "Sports",
+    "Gaming",
+    "Fitness",
+    "Photography",
+    "Movies",
+    "Art",
+    "Outdoors",
   ];
   const smokingOptions = ["Non-smoker", "Occasionally", "Regular smoker"];
-  const drinkingOptions = ["Non-drinker", "Occasionally", "Social drinker", "Regular drinker"];
+  const drinkingOptions = [
+    "Non-drinker",
+    "Occasionally",
+    "Social drinker",
+    "Regular drinker",
+  ];
   const relationshipOptions = [
-    "Friendship", "Casual dating", "Long-term relationship",
-    "Marriage", "Networking", "Travel buddy"
+    "Friendship",
+    "Casual dating",
+    "Long-term relationship",
+    "Marriage",
+    "Networking",
+    "Travel buddy",
   ];
 
   useEffect(() => {
-    if (!token) return; // prevent request without token
+    if (!token) return;
 
     const fetchProfile = async () => {
       try {
@@ -65,7 +83,6 @@ const Profile = () => {
           bio: user.bio || "",
         });
 
-        // Calculate age
         if (dobFormatted) {
           const birthDate = new Date(dobFormatted);
           const today = new Date();
@@ -77,12 +94,13 @@ const Profile = () => {
           setAge(calculatedAge);
         }
 
-        if (user.profileImage) {
+        // Use the backend image endpoint if a profile picture exists
+        if (user.profilePicture && user._id) {
           setPreviewImage(
-            user.profileImage.startsWith("http")
-              ? user.profileImage
-              : `/uploads/${user.profileImage}`
+            `${BASE_URL}/api/user/profile/picture/${user._id}`
           );
+        } else {
+          setPreviewImage(null);
         }
       } catch (err) {
         console.error("Error fetching profile:", err);
@@ -100,7 +118,10 @@ const Profile = () => {
         if (checked) {
           return { ...prev, hobbies: [...prev.hobbies, value] };
         } else {
-          return { ...prev, hobbies: prev.hobbies.filter((h) => h !== value) };
+          return {
+            ...prev,
+            hobbies: prev.hobbies.filter((h) => h !== value),
+          };
         }
       });
     } else {
@@ -116,14 +137,14 @@ const Profile = () => {
     }
   };
 
-  // *** UPDATED handleSubmit - send hobbies as array (no stringify) ***
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      // Send hobbies as array directly
-      const hobbiesArray = Array.isArray(formData.hobbies) ? formData.hobbies : [];
+      const hobbiesArray = Array.isArray(formData.hobbies)
+        ? formData.hobbies
+        : [];
 
       const textData = {
         hobbies: hobbiesArray,
@@ -155,11 +176,19 @@ const Profile = () => {
             "Content-Type": "multipart/form-data",
           },
         });
+
+        // Refresh preview from server to ensure we see the stored image
+        setPreviewImage(
+          `${BASE_URL}/api/user/profile/picture/me?t=${Date.now()}`
+        );
       }
 
       alert("Profile updated successfully!");
     } catch (err) {
-      console.error("Error updating profile:", err.response?.data || err.message);
+      console.error(
+        "Error updating profile:",
+        err.response?.data || err.message
+      );
       alert("Failed to update profile.");
     } finally {
       setLoading(false);
@@ -167,7 +196,11 @@ const Profile = () => {
   };
 
   const handleDeleteAccount = async () => {
-    if (!window.confirm("Are you sure you want to delete your account? This cannot be undone.")) {
+    if (
+      !window.confirm(
+        "Are you sure you want to delete your account? This cannot be undone."
+      )
+    ) {
       return;
     }
     try {
@@ -187,7 +220,9 @@ const Profile = () => {
     <div className="profile-page">
       <div className="profile-header">
         <h2>Edit Profile</h2>
-        <button onClick={handleDeleteAccount} className="delete-btn">Delete Account</button>
+        <button onClick={handleDeleteAccount} className="delete-btn">
+          Delete Account
+        </button>
       </div>
 
       <form onSubmit={handleSubmit} className="profile-form">
@@ -199,17 +234,46 @@ const Profile = () => {
           )}
           <input type="file" accept="image/*" onChange={handleImageChange} />
 
-          <input type="text" name="name" value={formData.name} readOnly placeholder="Name" />
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            readOnly
+            placeholder="Name"
+          />
           <select name="gender" value={formData.gender} disabled>
             <option value="">Select Gender</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
           </select>
           <input type="date" name="dob" value={formData.dob} readOnly />
-          <input type="text" value={age ? `${age} years old` : ""} readOnly placeholder="Age" />
-          <input type="text" name="country" value={formData.country} onChange={handleChange} placeholder="Country" />
-          <input type="text" name="state" value={formData.state} onChange={handleChange} placeholder="State" />
-          <input type="text" name="city" value={formData.city} onChange={handleChange} placeholder="City" />
+          <input
+            type="text"
+            value={age ? `${age} years old` : ""}
+            readOnly
+            placeholder="Age"
+          />
+          <input
+            type="text"
+            name="country"
+            value={formData.country}
+            onChange={handleChange}
+            placeholder="Country"
+          />
+          <input
+            type="text"
+            name="state"
+            value={formData.state}
+            onChange={handleChange}
+            placeholder="State"
+          />
+          <input
+            type="text"
+            name="city"
+            value={formData.city}
+            onChange={handleChange}
+            placeholder="City"
+          />
         </div>
 
         <div>
@@ -240,7 +304,8 @@ const Profile = () => {
                 value={option}
                 checked={formData.smoking === option}
                 onChange={handleChange}
-              /> {option}
+              />{" "}
+              {option}
             </label>
           ))}
         </div>
@@ -255,7 +320,8 @@ const Profile = () => {
                 value={option}
                 checked={formData.drinking === option}
                 onChange={handleChange}
-              /> {option}
+              />{" "}
+              {option}
             </label>
           ))}
         </div>
@@ -270,14 +336,20 @@ const Profile = () => {
                 value={option}
                 checked={formData.relationshipType === option}
                 onChange={handleChange}
-              /> {option}
+              />{" "}
+              {option}
             </label>
           ))}
         </div>
 
         <div>
           <h4>Bio</h4>
-          <textarea name="bio" value={formData.bio} onChange={handleChange} placeholder="Write something about yourself..." />
+          <textarea
+            name="bio"
+            value={formData.bio}
+            onChange={handleChange}
+            placeholder="Write something about yourself..."
+          />
         </div>
 
         <button type="submit" disabled={loading}>
