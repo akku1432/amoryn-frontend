@@ -1,12 +1,12 @@
 /* Profile Page Container */
 .profile-page {
-  max-width: 800px;
+  max-width: 900px;
   margin: auto;
   padding: 20px;
-  font-family: Arial, sans-serif;
+  font-family: 'Segoe UI', sans-serif;
+  color: #333;
 }
 
-/* Header */
 .profile-header {
   display: flex;
   justify-content: space-between;
@@ -17,32 +17,28 @@
 
 .profile-header h2 {
   margin: 0;
+  font-size: 1.8rem;
 }
 
 .profile-header button {
-  background: red;
+  background: #d9534f;
   color: white;
   border: none;
-  padding: 8px 14px;
-  border-radius: 5px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.9rem;
   cursor: pointer;
-  font-size: 14px;
+  transition: background 0.2s ease-in-out;
 }
 
 .profile-header button:hover {
-  background: darkred;
+  background: #c9302c;
 }
 
-/* Form */
-.profile-form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-/* Profile Image */
+/* Profile Image Section */
 .profile-image-section {
   text-align: center;
+  margin-bottom: 20px;
 }
 
 .profile-preview {
@@ -50,31 +46,37 @@
   height: 140px;
   object-fit: cover;
   border-radius: 50%;
-  border: 2px solid #ccc;
+  border: 3px solid #ddd;
   margin-bottom: 10px;
 }
 
 .profile-placeholder {
   width: 140px;
   height: 140px;
-  border-radius: 50%;
-  background: #f0f0f0;
   display: flex;
-  justify-content: center;
   align-items: center;
-  color: #777;
+  justify-content: center;
+  background: #f1f1f1;
+  color: #888;
+  border-radius: 50%;
   margin: auto;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
 }
 
-/* Inputs */
-.profile-form input,
+/* Form Styles */
+.profile-form input[type="text"],
+.profile-form input[type="date"],
 .profile-form select,
 .profile-form textarea {
   width: 100%;
   padding: 10px;
+  margin-top: 6px;
+  margin-bottom: 14px;
   border-radius: 6px;
   border: 1px solid #ccc;
-  font-size: 14px;
+  font-size: 0.95rem;
+  box-sizing: border-box;
 }
 
 .profile-form textarea {
@@ -82,63 +84,73 @@
   resize: vertical;
 }
 
-/* Submit Button */
+/* Radio Groups */
+.profile-form h4 {
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.radio-group label {
+  background: #f8f8f8;
+  padding: 6px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  border: 1px solid #ddd;
+  transition: all 0.2s ease-in-out;
+  font-size: 0.9rem;
+}
+
+.radio-group input[type="radio"] {
+  display: none;
+}
+
+.radio-group input[type="radio"]:checked + span {
+  background: #ff4b6e;
+  color: white;
+  border-color: #ff4b6e;
+}
+
+/* Button */
 .profile-form button[type="submit"] {
-  background: #4caf50;
+  background: #ff4b6e;
   color: white;
   border: none;
-  padding: 12px;
+  padding: 10px 18px;
   border-radius: 6px;
+  font-size: 1rem;
   cursor: pointer;
-  font-size: 16px;
+  transition: background 0.2s ease-in-out;
+  margin-top: 10px;
 }
 
 .profile-form button[type="submit"]:hover {
-  background: #45a049;
+  background: #e63e61;
 }
-
-/* Hobbies tag container */
-.hobbies-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.hobby-tag {
-  padding: 6px 12px;
-  border: 1px solid #ccc;
-  border-radius: 20px;
-  background: #f8f8f8;
-  cursor: pointer;
-  font-size: 14px;
-  transition: all 0.2s ease;
-}
-
-.hobby-tag:hover {
-  background: #eee;
-}
-
-.hobby-tag.selected {
-  background: #4caf50;
-  color: white;
-  border-color: #4caf50;
-}
-
 
 /* Responsive Design */
 @media (max-width: 600px) {
   .profile-header {
     flex-direction: column;
+    align-items: flex-start;
     gap: 10px;
   }
 
-  .profile-preview,
-  .profile-placeholder {
-    width: 120px;
-    height: 120px;
+  .profile-form {
+    padding: 10px;
   }
 
-  .profile-form {
-    gap: 12px;
+  .radio-group {
+    gap: 8px;
+  }
+
+  .radio-group label {
+    font-size: 0.85rem;
+    padding: 5px 10px;
   }
 }
