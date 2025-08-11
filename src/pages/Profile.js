@@ -117,37 +117,51 @@ const Profile = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+  e.preventDefault();
+  setLoading(true);
 
-    try {
-      const data = new FormData();
-      for (let key in formData) {
-        if (key === "hobbies") {
-          formData.hobbies.forEach((h) => data.append("hobbies[]", h));
-        } else {
-          data.append(key, formData[key]);
-        }
-      }
-      if (profileImage) {
-        data.append("profileImage", profileImage);
-      }
+  try {
+    // Prepare data for profile text update (no image)
+    const textData = {
+      hobbies: JSON.stringify(formData.hobbies),
+      smoking: formData.smoking,
+      drinking: formData.drinking,
+      relationshipType: formData.relationshipType,
+      bio: formData.bio,
+      country: formData.country,
+      state: formData.state,
+      city: formData.city,
+    };
 
-      await axios.put(`${BASE_URL}/api/user/profile`, data, {
+    // 1) Update text fields
+    await axios.put(`${BASE_URL}/api/user/profile`, textData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    // 2) If new profile image selected, upload it separately
+    if (profileImage) {
+      const imageData = new FormData();
+      imageData.append("profilePicture", profileImage);
+
+      await axios.post(`${BASE_URL}/api/user/profile/picture`, imageData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
         },
       });
-
-      alert("Profile updated successfully!");
-    } catch (err) {
-      console.error("Error updating profile:", err);
-      alert("Failed to update profile.");
-    } finally {
-      setLoading(false);
     }
-  };
+
+    alert("Profile updated successfully!");
+  } catch (err) {
+    console.error("Error updating profile:", err);
+    alert("Failed to update profile.");
+  } finally {
+    setLoading(false);
+  }
+};
 
   const handleDeleteAccount = async () => {
     if (!window.confirm("Are you sure you want to delete your account? This cannot be undone.")) {
