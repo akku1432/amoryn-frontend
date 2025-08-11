@@ -186,7 +186,13 @@ const Profile = () => {
       <form onSubmit={handleSubmit} className="profile-form">
         <div className="profile-image-section">
           {previewImage ? (
-            <img src={previewImage} alt="Profile" className="profile-preview" />
+            <img 
+              src={previewImage} 
+              alt="Profile" 
+              className="profile-preview" 
+              onClick={() => window.open(previewImage, '_blank')}
+              title="Click to view full size"
+            />
           ) : (
             <div className="profile-placeholder">No image selected</div>
           )}
