@@ -1,325 +1,213 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { Home, X } from 'lucide-react';
-import { BASE_URL } from '../utils/config';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import './Profile.css';
 
-function Profile() {
-  const [user, setUser] = useState(null);
-  const [images, setImages] = useState([]);
-  const [imagePreviews, setImagePreviews] = useState([]);
-  const [existingPhotos, setExistingPhotos] = useState([]);
-  const [hobbies, setHobbies] = useState([]);
-  const [habits, setHabits] = useState({ smoking: 'None', drinking: 'None' });
-  const [relationshipType, setRelationshipType] = useState('');
-  const [bio, setBio] = useState('');
-  const [location, setLocation] = useState({ country: '', state: '', city: '' });
+const Profile = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    gender: "",
+    dob: "",
+    lookingFor: "",
+    country: "",
+    state: "",
+    city: "",
+    hobbies: "",
+    smoking: "",
+    drinking: "",
+    relationshipType: "",
+    bio: "",
+  });
 
-  const [currentPhoto, setCurrentPhoto] = useState(0);
-  const [modalMessage, setModalMessage] = useState('');
-  const [showModal, setShowModal] = useState(false);
+  const [profileImage, setProfileImage] = useState(null);
+  const [previewImage, setPreviewImage] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  const token = localStorage.getItem('token');
-  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
 
-  const availableHobbies = ['Reading', 'Traveling', 'Gaming', 'Music', 'Cooking', 'Sports'];
-  const habitOptions = ['None', 'Occasionally', 'Regular'];
-  const relationshipOptions = [
-    'Serious Relationship',
-    'Dating',
-    'Situationships',
-    'Friendships',
-    'Just Companionship'
-  ];
-
-  // Fetch profile data
+  // Fetch existing user data
   useEffect(() => {
-    axios
-      .get(`${BASE_URL}/api/user/profile`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((res) => {
-        const data = res.data;
-        const savedPhotos = data.photos || [];
-
-        setUser(data);
-        setHobbies(data.hobbies || []);
-        setHabits({
-          smoking: data.smoking || 'None',
-          drinking: data.drinking || 'None',
+    const fetchProfile = async () => {
+      try {
+        const res = await axios.get("/api/user/profile", {
+          headers: { Authorization: `Bearer ${token}` },
         });
-        setRelationshipType(data.relationshipType || '');
-        setBio(data.bio || '');
-        setLocation({
-          country: data.country || '',
-          state: data.state || '',
-          city: data.city || '',
-        });
+        const user = res.data;
 
-        const previewUrls = savedPhotos.map((p) => {
-          const base = p.startsWith('http') ? p : `${BASE_URL}/${p.replace(/\\/g, '/')}`;
-          return `${base}${base.includes('?') ? '&' : '?'}t=${Date.now()}`;
+        setFormData({
+          name: user.name || "",
+          gender: user.gender || "",
+          dob: user.dob ? user.dob.split("T")[0] : "",
+          lookingFor: user.lookingFor || "",
+          country: user.country || "",
+          state: user.state || "",
+          city: user.city || "",
+          hobbies: user.hobbies ? user.hobbies.join(", ") : "",
+          smoking: user.smoking || "",
+          drinking: user.drinking || "",
+          relationshipType: user.relationshipType || "",
+          bio: user.bio || "",
         });
 
-        setExistingPhotos(savedPhotos);
-        setImagePreviews(previewUrls);
-      })
-      .catch(() => {
-        setModalMessage('❌ Failed to fetch user');
-        setShowModal(true);
-      });
+        if (user.profileImage) {
+          setPreviewImage(`/uploads/${user.profileImage}`);
+        }
+      } catch (err) {
+        console.error("Error fetching profile:", err);
+      }
+    };
+
+    fetchProfile();
   }, [token]);
 
-  // Auto slideshow
-  useEffect(() => {
-    if (imagePreviews.length > 1) {
-      const timer = setInterval(() => {
-        setCurrentPhoto((prev) => (prev + 1) % imagePreviews.length);
-      }, 3000);
-      return () => clearInterval(timer);
+  // Handle text input changes
+  const handleChange = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  // Handle image selection
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setProfileImage(file);
+      setPreviewImage(URL.createObjectURL(file));
     }
-  }, [imagePreviews]);
-
-  const calculateAge = (dob) => {
-    if (!dob) return '';
-    const birthDate = new Date(dob);
-    const today = new Date();
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const m = today.getMonth() - birthDate.getMonth();
-    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) age--;
-    return age;
   };
 
-  const handleFileChange = (e) => {
-    const newFiles = Array.from(e.target.files);
-    const totalPhotos = imagePreviews.length + newFiles.length;
-    if (totalPhotos > 5) {
-      setModalMessage('❌ You can only upload up to 5 photos.');
-      setShowModal(true);
-      return;
-    }
-    const newPreviews = newFiles.map((file) => URL.createObjectURL(file));
-    setImages((prev) => [...prev, ...newFiles]);
-    setImagePreviews((prev) => [...prev, ...newPreviews]);
-  };
-
-  const removeImage = (index) => {
-    const updatedPreviews = [...imagePreviews];
-    updatedPreviews.splice(index, 1);
-    setImagePreviews(updatedPreviews);
-
-    if (index < existingPhotos.length) {
-      const updatedExisting = [...existingPhotos];
-      updatedExisting.splice(index, 1);
-      setExistingPhotos(updatedExisting);
-    } else {
-      const localIndex = index - existingPhotos.length;
-      const updatedNew = [...images];
-      updatedNew.splice(localIndex, 1);
-      setImages(updatedNew);
-    }
-
-    setCurrentPhoto((prev) => (prev >= updatedPreviews.length ? 0 : prev));
-  };
-
-  const handleHobbyToggle = (hobby) => {
-    setHobbies((prev) =>
-      prev.includes(hobby) ? prev.filter((h) => h !== hobby) : [...prev, hobby]
-    );
-  };
-
+  // Submit form
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (imagePreviews.length < 1) {
-      setModalMessage('❌ Upload at least 1 photo.');
-      setShowModal(true);
-      return;
-    }
-    const formData = new FormData();
-    images.forEach((file) => formData.append('photos', file));
-    formData.append('existingPhotos', JSON.stringify(existingPhotos));
-    formData.append('hobbies', JSON.stringify(hobbies));
-    formData.append('smoking', habits.smoking);
-    formData.append('drinking', habits.drinking);
-    formData.append('relationshipType', relationshipType);
-    formData.append('bio', bio);
-    formData.append('country', location.country);
-    formData.append('state', location.state);
-    formData.append('city', location.city);
+    setLoading(true);
 
     try {
-      await axios.put(`${BASE_URL}/api/user/profile`, formData, {
+      const data = new FormData();
+      for (let key in formData) {
+        if (key === "hobbies") {
+          data.append(key, formData[key].split(",").map((h) => h.trim()));
+        } else {
+          data.append(key, formData[key]);
+        }
+      }
+      if (profileImage) {
+        data.append("profileImage", profileImage);
+      }
+
+      await axios.put("/api/user/profile", data, {
         headers: {
           Authorization: `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data',
+          "Content-Type": "multipart/form-data",
         },
       });
-      setModalMessage('✅ Profile updated successfully.');
-      setShowModal(true);
+
+      alert("Profile updated successfully!");
     } catch (err) {
-      setModalMessage('❌ Failed to update profile.');
-      setShowModal(true);
+      console.error("Error updating profile:", err);
+      alert("Failed to update profile.");
+    } finally {
+      setLoading(false);
     }
   };
 
-  if (!user) return <div>Loading...</div>;
+  // Delete account
+  const handleDeleteAccount = async () => {
+    if (!window.confirm("Are you sure you want to delete your account? This cannot be undone.")) {
+      return;
+    }
+
+    try {
+      await axios.delete("/api/user/delete", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      alert("Your account has been deleted.");
+      localStorage.removeItem("token");
+      window.location.href = "/"; // Redirect to home/login
+    } catch (err) {
+      console.error("Error deleting account:", err);
+      alert("Failed to delete account.");
+    }
+  };
 
   return (
-    <div className="profile-container">
-      {showModal && (
-        <div className="modal-overlay">
-          <div className="modal-box">
-            <p>{modalMessage}</p>
-            <button onClick={() => setShowModal(false)}>OK</button>
-          </div>
-        </div>
-      )}
-
-      <div className="top-bar">
-        <Home
-          size={24}
-          style={{ cursor: 'pointer', color: '#444' }}
-          title="Go to Dashboard"
-          onClick={() => navigate('/dashboard')}
-        />
+    <div className="profile-page">
+      <div className="profile-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <h2>Edit Profile</h2>
+        <button
+          onClick={handleDeleteAccount}
+          style={{
+            background: "red",
+            color: "white",
+            border: "none",
+            padding: "6px 12px",
+            borderRadius: "4px",
+            cursor: "pointer",
+          }}
+        >
+          Delete Account
+        </button>
       </div>
 
-      <h2 className="profile-page-title">Your Profile</h2>
-
-      <div className="profile-header-row">
-        <div className="profile-photo-slideshow">
-          {imagePreviews.length > 0 ? (
+      <form onSubmit={handleSubmit} className="profile-form">
+        
+        {/* Profile Image */}
+        <div className="profile-image-section">
+          {previewImage ? (
             <img
-              src={imagePreviews[currentPhoto]}
-              alt={`Profile ${currentPhoto}`}
-              className="profile-slideshow-img"
-              crossOrigin="anonymous"
+              src={previewImage}
+              alt="Profile"
+              className="profile-preview"
             />
           ) : (
-            <div className="profile-slideshow-placeholder">No Photo</div>
+            <div className="profile-placeholder">No image selected</div>
           )}
-        </div>
-        <div className="profile-basic-info">
-          <p><strong>Name:</strong> {user.name}</p>
-          <p><strong>Gender:</strong> {user.gender}</p>
-          <p><strong>Date of Birth:</strong> {user.dob?.split('T')[0]}</p>
-          <p><strong>Age:</strong> {calculateAge(user.dob)}</p>
-        </div>
-      </div>
-
-      <form onSubmit={handleSubmit}>
-        <label>Upload Photos (max 5):</label>
-        <div className="photo-upload">
-          {imagePreviews.map((src, index) => (
-            <div key={index} className="photo-card">
-              <img src={src} alt={`preview-${index}`} crossOrigin="anonymous" />
-              <button type="button" className="delete-btn" onClick={() => removeImage(index)}>
-                <X size={16} />
-              </button>
-            </div>
-          ))}
-          {imagePreviews.length < 5 && (
-            <label className="photo-card add-photo">
-              +
-              <input
-                type="file"
-                accept="image/*"
-                multiple
-                onChange={handleFileChange}
-                style={{ display: 'none' }}
-              />
-            </label>
-          )}
+          <input type="file" accept="image/*" onChange={handleImageChange} />
         </div>
 
-        <label>Hobbies:</label>
-        <div className="tag-box">
-          {availableHobbies.map((hobby) => (
-            <div
-              key={hobby}
-              className={`tag ${hobbies.includes(hobby) ? 'selected' : ''}`}
-              onClick={() => handleHobbyToggle(hobby)}
-            >
-              {hobby}
-            </div>
-          ))}
-        </div>
+        {/* Personal Details */}
+        <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Name" />
 
-        <label>Drinking:</label>
-        <div className="tag-box">
-          {habitOptions.map((opt) => (
-            <div
-              key={opt}
-              className={`tag ${habits.drinking === opt ? 'selected' : ''}`}
-              onClick={() => setHabits({ ...habits, drinking: opt })}
-            >
-              {opt}
-            </div>
-          ))}
-        </div>
+        <select name="gender" value={formData.gender} onChange={handleChange}>
+          <option value="">Select Gender</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
 
-        <label>Smoking:</label>
-        <div className="tag-box">
-          {habitOptions.map((opt) => (
-            <div
-              key={opt}
-              className={`tag ${habits.smoking === opt ? 'selected' : ''}`}
-              onClick={() => setHabits({ ...habits, smoking: opt })}
-            >
-              {opt}
-            </div>
-          ))}
-        </div>
+        <input type="date" name="dob" value={formData.dob} onChange={handleChange} />
 
-        <label>Relationship Type:</label>
-        <div className="tag-box">
-          {relationshipOptions.map((opt) => (
-            <div
-              key={opt}
-              className={`tag ${relationshipType === opt ? 'selected' : ''}`}
-              onClick={() => setRelationshipType(opt)}
-            >
-              {opt}
-            </div>
-          ))}
-        </div>
+        <input type="text" name="lookingFor" value={formData.lookingFor} onChange={handleChange} placeholder="Looking For" />
 
-        <label>Country:</label>
-        <input
-          type="text"
-          value={location.country}
-          onChange={(e) => setLocation({ ...location, country: e.target.value })}
-        />
+        <input type="text" name="country" value={formData.country} onChange={handleChange} placeholder="Country" />
 
-        <label>State:</label>
-        <input
-          type="text"
-          value={location.state}
-          onChange={(e) => setLocation({ ...location, state: e.target.value })}
-        />
+        <input type="text" name="state" value={formData.state} onChange={handleChange} placeholder="State" />
 
-        <label>City:</label>
-        <input
-          type="text"
-          value={location.city}
-          onChange={(e) => setLocation({ ...location, city: e.target.value })}
-        />
+        <input type="text" name="city" value={formData.city} onChange={handleChange} placeholder="City" />
 
-        <label>Bio:</label>
-        <textarea
-          className="bio-input"
-          placeholder="Tell us something about yourself..."
-          value={bio}
-          onChange={(e) => setBio(e.target.value)}
-        />
+        <input type="text" name="hobbies" value={formData.hobbies} onChange={handleChange} placeholder="Hobbies (comma-separated)" />
 
-        <div className="button-wrapper">
-          <button type="submit">Save Profile</button>
-        </div>
+        <select name="smoking" value={formData.smoking} onChange={handleChange}>
+          <option value="">Smoking?</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+
+        <select name="drinking" value={formData.drinking} onChange={handleChange}>
+          <option value="">Drinking?</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+
+        <input type="text" name="relationshipType" value={formData.relationshipType} onChange={handleChange} placeholder="Relationship Type" />
+
+        <textarea name="bio" value={formData.bio} onChange={handleChange} placeholder="Bio" />
+
+        <button type="submit" disabled={loading}>
+          {loading ? "Updating..." : "Update Profile"}
+        </button>
       </form>
     </div>
   );
-}
+};
 
 export default Profile;
