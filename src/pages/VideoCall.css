@@ -173,38 +173,38 @@
 }
 
 .control-button.muted {
-  background: linear-gradient(135deg, #ff6b6b, #ee5a52);
-  border-color: #ff6b6b;
-  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+  background: linear-gradient(135deg, #ec294d, #d63384);
+  border-color: #ec294d;
+  box-shadow: 0 4px 15px rgba(236, 41, 77, 0.4);
 }
 
 .control-button.muted:hover {
-  background: linear-gradient(135deg, #ee5a52, #d63031);
-  box-shadow: 0 8px 25px rgba(255, 107, 107, 0.5);
+  background: linear-gradient(135deg, #d63384, #ec294d);
+  box-shadow: 0 8px 25px rgba(236, 41, 77, 0.5);
 }
 
 .control-button.off {
-  background: linear-gradient(135deg, #6c757d, #5a6268);
-  border-color: #6c757d;
-  box-shadow: 0 4px 15px rgba(108, 117, 125, 0.4);
+  background: linear-gradient(135deg, #ec294d, #d63384);
+  border-color: #ec294d;
+  box-shadow: 0 4px 15px rgba(236, 41, 77, 0.4);
 }
 
 .control-button.off:hover {
-  background: linear-gradient(135deg, #5a6268, #495057);
-  box-shadow: 0 8px 25px rgba(108, 117, 125, 0.5);
+  background: linear-gradient(135deg, #d63384, #ec294d);
+  box-shadow: 0 8px 25px rgba(236, 41, 77, 0.5);
 }
 
 .control-button.end {
-  background: linear-gradient(135deg, #ff4757, #ff3742);
-  border-color: #ff4757;
-  box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4);
+  background: linear-gradient(135deg, #ec294d, #d63384);
+  border-color: #ec294d;
+  box-shadow: 0 4px 15px rgba(236, 41, 77, 0.4);
   width: 70px;
   height: 70px;
 }
 
 .control-button.end:hover {
-  background: linear-gradient(135deg, #ff3742, #ff4757);
-  box-shadow: 0 8px 25px rgba(255, 71, 87, 0.5);
+  background: linear-gradient(135deg, #d63384, #ec294d);
+  box-shadow: 0 8px 25px rgba(236, 41, 77, 0.5);
   transform: scale(1.15);
 }
 

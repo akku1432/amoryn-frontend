@@ -112,7 +112,7 @@
   font-size: 14px;
   border: none;
   border-radius: 12px;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #ec294d, #d63384);
   color: #fff;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -120,14 +120,14 @@
   align-items: center;
   justify-content: center;
   font-weight: 600;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 15px rgba(236, 41, 77, 0.3);
 }
 
 .friend-actions button:hover,
 .modal-buttons button:hover {
-  background: linear-gradient(135deg, #5a6fd8, #6a4c93);
+  background: linear-gradient(135deg, #d63384, #ec294d);
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 8px 25px rgba(236, 41, 77, 0.4);
 }
 
 .no-friends-msg {
@@ -255,7 +255,7 @@
 .video-button {
   flex: 1 1 auto;
   min-width: 120px;
-  background: linear-gradient(135deg, #d63384, #c44569);
+  background: linear-gradient(135deg, #ec294d, #d63384);
   color: white;
   border: none;
   border-radius: 12px;
@@ -268,13 +268,13 @@
   white-space: nowrap;
   transition: all 0.3s ease;
   font-weight: 600;
-  box-shadow: 0 4px 15px rgba(212, 51, 132, 0.3);
+  box-shadow: 0 4px 15px rgba(236, 41, 77, 0.3);
   max-width: 45%;
 }
 
 .video-button {
-  background: linear-gradient(135deg, #ff6b6b, #ee5a52);
-  box-shadow: 0 4px 15px rgba(238, 90, 82, 0.3);
+  background: linear-gradient(135deg, #ec294d, #d63384);
+  box-shadow: 0 4px 15px rgba(236, 41, 77, 0.3);
 }
 
 .message-button:hover {

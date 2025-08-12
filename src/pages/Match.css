@@ -264,25 +264,25 @@
 }
 
 .message-button {
-  background: linear-gradient(135deg, #d63384, #c44569);
+  background: linear-gradient(135deg, #ec294d, #d63384);
   color: white;
 }
 
 .message-button:hover {
-  background: linear-gradient(135deg, #c44569, #a83a5a);
+  background: linear-gradient(135deg, #d63384, #ec294d);
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(212, 51, 132, 0.4);
+  box-shadow: 0 8px 25px rgba(236, 41, 77, 0.4);
 }
 
 .video-button {
-  background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+  background: linear-gradient(135deg, #ec294d, #d63384);
   color: white;
 }
 
 .video-button:hover {
-  background: linear-gradient(135deg, #ee5a52, #d63031);
+  background: linear-gradient(135deg, #d63384, #ec294d);
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(238, 90, 82, 0.4);
+  box-shadow: 0 8px 25px rgba(236, 41, 77, 0.4);
 }
 
 /* Enhanced Restriction Dialog */

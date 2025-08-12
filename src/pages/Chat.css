@@ -247,7 +247,7 @@
 }
 
 .chat-input button {
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #ec294d, #d63384);
   color: white;
   border: none;
   padding: 15px 25px;
@@ -256,14 +256,14 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 15px rgba(236, 41, 77, 0.3);
   min-width: 100px;
 }
 
 .chat-input button:hover:not(:disabled) {
-  background: linear-gradient(135deg, #5a6fd8, #6a4c93);
+  background: linear-gradient(135deg, #d63384, #ec294d);
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 8px 25px rgba(236, 41, 77, 0.4);
 }
 
 .chat-input button:disabled {

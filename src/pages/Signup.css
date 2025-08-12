@@ -44,7 +44,7 @@
   width: 100%;
   padding: 12px;
   font-size: 16px;
-  background-color: #fc3786;
+  background-color: #ec294d;
   color: white;
   border: none;
   border-radius: 8px;
@@ -53,7 +53,7 @@
 }
 
 .signup-container button:hover {
-  background-color: #990000;
+  background-color: #d63384;
 }
 
 .message {
