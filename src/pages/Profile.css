@@ -5,6 +5,9 @@
   padding: 20px;
   font-family: 'Segoe UI', sans-serif;
   color: #333;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+  padding: 30px 20px;
 }
 
 .profile-header {
@@ -18,6 +21,8 @@
 .profile-header h2 {
   margin: 0;
   font-size: 1.8rem;
+  color: #d63384;
+  font-weight: 700;
 }
 
 .profile-header button {
@@ -37,6 +42,46 @@
   background: linear-gradient(135deg, #c9302c 0%, #a94442 100%);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(217, 83, 79, 0.4);
+}
+
+/* Progress Message Styles */
+.progress-message {
+  padding: 15px 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  font-weight: 500;
+  text-align: center;
+  animation: slideIn 0.3s ease-out;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.progress-message.success {
+  background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.progress-message.error {
+  background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.progress-message.info {
+  background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+  color: #0c5460;
+  border: 1px solid #bee5eb;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Profile Image Section */
@@ -104,6 +149,15 @@
 }
 
 /* Form Styles */
+.profile-form {
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
 .profile-form input[type="text"],
 .profile-form input[type="date"],
 .profile-form select,
@@ -220,12 +274,12 @@
   box-shadow: 0 4px 12px rgba(255, 75, 110, 0.3);
 }
 
-/* Button */
-.profile-form button[type="submit"] {
+/* Enhanced Submit Button */
+.submit-btn {
   background: linear-gradient(135deg, #ff4b6e 0%, #e63e61 100%);
   color: white;
   border: none;
-  padding: 14px 28px;
+  padding: 16px 32px;
   border-radius: 25px;
   font-size: 1.1rem;
   font-weight: 600;
@@ -235,23 +289,48 @@
   box-shadow: 0 4px 12px rgba(255, 75, 110, 0.3);
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
 }
 
-.profile-form button[type="submit"]:hover {
+.submit-btn:hover:not(:disabled) {
   background: linear-gradient(135deg, #e63e61 0%, #d63384 100%);
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(255, 75, 110, 0.4);
 }
 
-.profile-form button[type="submit"]:active {
+.submit-btn:active:not(:disabled) {
   transform: translateY(0);
 }
 
-.profile-form button[type="submit"]:disabled {
+.submit-btn:disabled {
   background: #ccc;
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
+}
+
+/* Loading Spinner */
+.loading-spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top: 3px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 /* Responsive Design */
@@ -274,7 +353,7 @@
   }
 
   .profile-form {
-    padding: 15px;
+    padding: 20px;
   }
 
   .radio-group,
@@ -286,6 +365,11 @@
   .options-wrap label {
     font-size: 0.9rem;
     padding: 8px 14px;
+  }
+
+  .submit-btn {
+    padding: 14px 28px;
+    font-size: 1rem;
   }
 }
 
@@ -301,7 +385,7 @@
   }
 
   .profile-form {
-    padding: 10px;
+    padding: 15px;
   }
 
   .radio-group,
@@ -315,24 +399,8 @@
     padding: 6px 12px;
   }
 
-  .profile-form button[type="submit"] {
+  .submit-btn {
     padding: 12px 24px;
-    font-size: 1rem;
+    font-size: 0.95rem;
   }
-}
-
-/* Additional enhancements */
-.profile-page {
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  min-height: 100vh;
-  padding: 30px 20px;
-}
-
-.profile-form {
-  background: white;
-  padding: 30px;
-  border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
 }

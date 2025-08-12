@@ -22,6 +22,7 @@ const Profile = () => {
   const [profileImage, setProfileImage] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [updateProgress, setUpdateProgress] = useState("");
 
   const token = localStorage.getItem("token");
 
@@ -116,44 +117,57 @@ const Profile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setUpdateProgress("Updating profile...");
 
     try {
-      const textData = {
-        hobbies: Array.isArray(formData.hobbies) ? formData.hobbies : [],
-        smoking: formData.smoking || "",
-        drinking: formData.drinking || "",
-        relationshipType: formData.relationshipType || "",
-        bio: formData.bio || "",
-        country: formData.country || "",
-        state: formData.state || "",
-        city: formData.city || "",
-      };
+      // Create FormData for both text and image
+      const formDataToSend = new FormData();
+      
+      // Add text data
+      formDataToSend.append('hobbies', JSON.stringify(Array.isArray(formData.hobbies) ? formData.hobbies : []));
+      formDataToSend.append('smoking', formData.smoking || "");
+      formDataToSend.append('drinking', formData.drinking || "");
+      formDataToSend.append('relationshipType', formData.relationshipType || "");
+      formDataToSend.append('bio', formData.bio || "");
+      formDataToSend.append('country', formData.country || "");
+      formDataToSend.append('state', formData.state || "");
+      formDataToSend.append('city', formData.city || "");
 
-      await axios.put(`${BASE_URL}/api/user/profile`, textData, {
+      // Add image if selected
+      if (profileImage) {
+        formDataToSend.append('profilePicture', profileImage);
+        setUpdateProgress("Uploading profile picture...");
+      }
+
+      // Single API call to update everything
+      await axios.put(`${BASE_URL}/api/user/profile`, formDataToSend, {
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
+          'Content-Type': 'multipart/form-data',
         },
       });
 
+      setUpdateProgress("Profile updated successfully!");
+      
+      // Update preview image if new image was uploaded
       if (profileImage) {
-        const imageData = new FormData();
-        imageData.append("profilePicture", profileImage);
-
-        // Do NOT set Content-Type manually; let the browser set the boundary
-        await axios.post(`${BASE_URL}/api/user/profile/picture`, imageData, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
         setPreviewImage(`${BASE_URL}/api/user/profile/picture/me?t=${Date.now()}`);
+        setProfileImage(null);
       }
 
-      alert("Profile updated successfully!");
+      // Clear progress after 2 seconds
+      setTimeout(() => {
+        setUpdateProgress("");
+      }, 2000);
+
     } catch (err) {
       console.error("Error updating profile:", err.response?.data || err.message);
-      alert("Failed to update profile.");
+      setUpdateProgress("Failed to update profile. Please try again.");
+      
+      // Clear error message after 3 seconds
+      setTimeout(() => {
+        setUpdateProgress("");
+      }, 3000);
     } finally {
       setLoading(false);
     }
@@ -182,6 +196,13 @@ const Profile = () => {
         <h2>Edit Profile</h2>
         <button onClick={handleDeleteAccount} className="delete-btn">Delete Account</button>
       </div>
+
+      {/* Progress indicator */}
+      {updateProgress && (
+        <div className={`progress-message ${updateProgress.includes('successfully') ? 'success' : updateProgress.includes('Failed') ? 'error' : 'info'}`}>
+          {updateProgress}
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} className="profile-form">
         <div className="profile-image-section">
@@ -279,8 +300,15 @@ const Profile = () => {
           <textarea name="bio" value={formData.bio} onChange={handleChange} placeholder="Write something about yourself..." />
         </div>
 
-        <button type="submit" disabled={loading}>
-          {loading ? "Updating..." : "Update Profile"}
+        <button type="submit" disabled={loading} className="submit-btn">
+          {loading ? (
+            <span className="loading-spinner">
+              <div className="spinner"></div>
+              Updating...
+            </span>
+          ) : (
+            "Update Profile"
+          )}
         </button>
       </form>
     </div>
