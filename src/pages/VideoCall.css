@@ -258,13 +258,13 @@
   .video-call-container h2 {
     font-size: 28px;
     margin-bottom: 15px;
-  }
+}
 
-  .call-timer {
+.call-timer {
     padding: 10px 20px;
-    font-size: 16px;
+  font-size: 16px;
     margin-bottom: 25px;
-  }
+}
 
   .video-wrapper {
     grid-template-columns: 1fr;
