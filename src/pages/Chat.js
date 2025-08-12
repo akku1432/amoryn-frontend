@@ -51,6 +51,9 @@ function Chat() {
       })
       .then((res) => {
         let users = res.data;
+        console.log('Raw conversations data:', users);
+        console.log('First user photo field:', users[0]?.photo);
+        console.log('First user photos array:', users[0]?.photos);
 
         // If redirected to chat with a specific user
         if (location.state?.userId && location.state?.userName) {
@@ -245,10 +248,11 @@ function Chat() {
               <div className="conversation-avatar">
                 {user.photo ? (
                   <img 
-                    src={user.photo.startsWith('http') ? user.photo : `${BASE_URL}/${user.photo.replace(/^\//, '')}`}
+                    src={user.photo}
                     alt={user.name}
                     onError={(e) => {
                       console.error('Failed to load photo:', user.photo);
+                      console.error('User data:', user);
                       e.target.style.display = 'none';
                       e.target.nextSibling.style.display = 'flex';
                     }}
@@ -304,10 +308,11 @@ function Chat() {
                 <div className="chat-user-avatar">
                   {selectedUser.photo ? (
                     <img 
-                      src={selectedUser.photo.startsWith('http') ? selectedUser.photo : `${BASE_URL}/${selectedUser.photo.replace(/^\//, '')}`}
+                      src={selectedUser.photo}
                       alt={selectedUser.name}
                       onError={(e) => {
                         console.error('Failed to load selectedUser photo:', selectedUser.photo);
+                        console.error('SelectedUser data:', selectedUser);
                         e.target.style.display = 'none';
                         e.target.nextSibling.style.display = 'flex';
                       }}
