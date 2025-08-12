@@ -51,9 +51,6 @@ function Chat() {
       })
       .then((res) => {
         let users = res.data;
-        console.log('Raw conversations data:', users);
-        console.log('First user photo field:', users[0]?.photo);
-        console.log('First user photos array:', users[0]?.photos);
 
         // If redirected to chat with a specific user
         if (location.state?.userId && location.state?.userName) {
@@ -65,7 +62,6 @@ function Chat() {
           if (!users.some((u) => u._id === user._id)) {
             users = [user, ...users];
           }
-          console.log('Setting selectedUser from location state:', user);
           setSelectedUser(user);
 
           if (location.state.initiatingCall) {
@@ -100,20 +96,9 @@ function Chat() {
   useEffect(() => {
     if (conversations.length > 0 && !selectedUser) {
       const firstUser = conversations[0];
-      console.log('Setting initial selectedUser:', firstUser);
-      console.log('Initial user photo:', firstUser.photo);
       setSelectedUser(firstUser);
     }
   }, [conversations, selectedUser]);
-
-  // Debug selectedUser changes
-  useEffect(() => {
-    if (selectedUser) {
-      console.log('Selected user changed to:', selectedUser);
-      console.log('Selected user photo:', selectedUser.photo);
-      console.log('Selected user name:', selectedUser.name);
-    }
-  }, [selectedUser]);
 
   // Fetch messages for selected user and clear notifications for that user
   useEffect(() => {
@@ -139,7 +124,6 @@ function Chat() {
     if (!socket) return;
 
     const handleIncomingMessage = (data) => {
-      console.log("Chat page received 'new-message':", data);
       if (selectedUser && selectedUser._id === data.from) {
         setMessages((prev) => [
           ...prev,
@@ -320,30 +304,12 @@ function Chat() {
           <>
             <div className="chat-main-header">
               <div className="chat-user-info">
-                <div className="chat-user-avatar">
-                  {selectedUser.photo ? (
-                    <img 
-                      src={selectedUser.photo}
-                      alt={selectedUser.name}
-                      onError={(e) => {
-                        console.error('Failed to load selectedUser photo:', selectedUser.photo);
-                        console.error('SelectedUser data:', selectedUser);
-                        e.target.style.display = 'none';
-                        e.target.nextSibling.style.display = 'flex';
-                      }}
-                      onLoad={() => {
-                        console.log('Successfully loaded selectedUser photo:', selectedUser.photo);
-                      }}
-                    />
-                  ) : (
-                    <div className="default-avatar" style={{ display: 'flex' }}>
-                      {selectedUser.name?.charAt(0)?.toUpperCase()}
-                    </div>
-                  )}
-                </div>
                 <div className="chat-user-details">
                   <h3>{selectedUser.name}</h3>
-                  <span className="user-status">Online</span>
+                  <div className="status-container">
+                    <span className="status-dot"></span>
+                    <span className="user-status">Online</span>
+                  </div>
                 </div>
               </div>
               

@@ -21,6 +21,8 @@ function Dashboard() {
   // Notification counts state
   const [chatUnreadCount, setChatUnreadCount] = useState(0);
   const [friendRequestsCount, setFriendRequestsCount] = useState(0);
+  const [newChatNotification, setNewChatNotification] = useState(false);
+  const [newFriendNotification, setNewFriendNotification] = useState(false);
 
   // First login profile update modal
   const [showProfileUpdateModal, setShowProfileUpdateModal] = useState(false);
@@ -79,44 +81,94 @@ function Dashboard() {
     }
   };
 
+  // Fetch unread chat messages counts
+  const fetchUnreadChats = async () => {
+    try {
+      const res = await axios.get(`${BASE_URL}/api/chat/unread`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const totalUnread = Object.values(res.data).reduce((acc, val) => acc + val, 0);
+      setChatUnreadCount(totalUnread);
+    } catch (err) {
+      console.error('Failed to fetch unread chat counts:', err);
+      setChatUnreadCount(0);
+    }
+  };
+
   useEffect(() => {
     fetchFriendRequests();
   }, [token]);
 
   // Fetch unread chat messages counts
   useEffect(() => {
-    if (!token) return;
-
-    const fetchUnreadChats = async () => {
-      try {
-        const res = await axios.get(`${BASE_URL}/api/chat/unread`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        const totalUnread = Object.values(res.data).reduce((acc, val) => acc + val, 0);
-        setChatUnreadCount(totalUnread);
-      } catch (err) {
-        console.error('Failed to fetch unread chat counts:', err);
-      }
-    };
-
-    fetchUnreadChats();
+    if (token) {
+      fetchUnreadChats();
+    }
   }, [token]);
 
-  // Socket listeners
+  // Periodic refresh of notification counts (every 30 seconds)
+  useEffect(() => {
+    if (!token) return;
+
+    const interval = setInterval(() => {
+      fetchFriendRequests();
+      fetchUnreadChats();
+    }, 30000); // 30 seconds
+
+    return () => clearInterval(interval);
+  }, [token]);
+
+  // Socket listeners for real-time notifications
   useEffect(() => {
     if (!socket) return;
 
-    const onNewMessage = () => setChatUnreadCount((prev) => prev + 1);
-    const onNewLike = () => setFriendRequestsCount((prev) => prev + 1);
+    // Register user for WebSocket notifications
+    if (userProfile?._id) {
+      socket.emit('register-user', userProfile._id);
+    }
+
+    const onNewMessage = (data) => {
+      // Only increment if it's not from the current user
+      if (data.from !== userProfile?._id) {
+        setChatUnreadCount((prev) => prev + 1);
+        setNewChatNotification(true);
+        // Clear animation after 1 second
+        setTimeout(() => setNewChatNotification(false), 1000);
+      }
+    };
+
+    const onNewLike = (data) => {
+      // Only increment if someone liked the current user
+      if (data.from !== userProfile?._id) {
+        setFriendRequestsCount((prev) => prev + 1);
+        setNewFriendNotification(true);
+        // Clear animation after 1 second
+        setTimeout(() => setNewFriendNotification(false), 1000);
+      }
+    };
+
+    const onMessageRead = () => {
+      // Refresh unread count when messages are read
+      fetchUnreadChats();
+    };
+
+    const onFriendRequestAccepted = () => {
+      // Refresh friend requests count when one is accepted
+      fetchFriendRequests();
+    };
 
     socket.on('new-message', onNewMessage);
     socket.on('new-like', onNewLike);
+    socket.on('message-read', onMessageRead);
+    socket.on('friend-request-accepted', onFriendRequestAccepted);
 
     return () => {
       socket.off('new-message', onNewMessage);
       socket.off('new-like', onNewLike);
+      socket.off('message-read', onMessageRead);
+      socket.off('friend-request-accepted', onFriendRequestAccepted);
     };
-  }, [socket]);
+  }, [socket, userProfile]);
 
   // First login profile update check
   useEffect(() => {
@@ -251,7 +303,9 @@ function Dashboard() {
         >
           Friends
           {friendRequestsCount > 0 && (
-            <span className="notification-badge">{renderBadgeCount(friendRequestsCount)}</span>
+            <span className={`notification-badge ${newFriendNotification ? 'new-notification' : ''}`}>
+              {renderBadgeCount(friendRequestsCount)}
+            </span>
           )}
         </Link>
 
@@ -262,7 +316,9 @@ function Dashboard() {
         >
           Chats
           {chatUnreadCount > 0 && (
-            <span className="notification-badge">{renderBadgeCount(chatUnreadCount)}</span>
+            <span className={`notification-badge ${newChatNotification ? 'new-notification' : ''}`}>
+              {renderBadgeCount(chatUnreadCount)}
+            </span>
           )}
         </Link>
         <Link to="/Faq">FAQ</Link>

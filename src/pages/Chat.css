@@ -235,18 +235,6 @@
   align-items: center;
 }
 
-.chat-user-avatar {
-  margin-right: 15px;
-}
-
-.chat-user-avatar img {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid #e9ecef;
-}
-
 .chat-user-details h3 {
   margin: 0 0 4px 0;
   color: #333;
@@ -258,6 +246,32 @@
   color: #28a745;
   font-size: 14px;
   font-weight: 500;
+}
+
+.status-container {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #28a745;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .chat-actions {
