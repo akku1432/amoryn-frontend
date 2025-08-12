@@ -278,12 +278,19 @@ function Chat() {
             >
               <div className="conversation-avatar">
                 {user.photo ? (
-                  <img src={user.photo} alt={user.name} />
-                ) : (
-                  <div className="default-avatar">
-                    {user.name?.charAt(0)?.toUpperCase()}
-                  </div>
-                )}
+                  <img 
+                    src={user.photo} 
+                    alt={user.name}
+                    onError={(e) => {
+                      console.error('Failed to load photo:', user.photo);
+                      e.target.style.display = 'none';
+                      e.target.nextSibling.style.display = 'flex';
+                    }}
+                  />
+                ) : null}
+                <div className="default-avatar" style={{ display: user.photo ? 'none' : 'flex' }}>
+                  {user.name?.charAt(0)?.toUpperCase()}
+                </div>
                 {chatNotifications[user._id] > 0 && (
                   <span className="notification-badge">
                     {chatNotifications[user._id] > 99 ? '99+' : chatNotifications[user._id]}
@@ -330,12 +337,19 @@ function Chat() {
               <div className="chat-user-info">
                 <div className="chat-user-avatar">
                   {selectedUser.photo ? (
-                    <img src={selectedUser.photo} alt={selectedUser.name} />
-                  ) : (
-                    <div className="default-avatar">
-                      {selectedUser.name?.charAt(0)?.toUpperCase()}
-                    </div>
-                  )}
+                    <img 
+                      src={selectedUser.photo} 
+                      alt={selectedUser.name}
+                      onError={(e) => {
+                        console.error('Failed to load selectedUser photo:', selectedUser.photo);
+                        e.target.style.display = 'none';
+                        e.target.nextSibling.style.display = 'flex';
+                      }}
+                    />
+                  ) : null}
+                  <div className="default-avatar" style={{ display: selectedUser.photo ? 'none' : 'flex' }}>
+                    {selectedUser.name?.charAt(0)?.toUpperCase()}
+                  </div>
                 </div>
                 <div className="chat-user-details">
                   <h3>{selectedUser.name}</h3>

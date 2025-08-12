@@ -137,7 +137,7 @@ function Friends() {
           friends.map(friend => (
             <div className="friend-card" key={friend._id}>
               <img
-                src={friend.photos && friend.photos.length > 0 ? `${BASE_URL}${friend.photos[0]}` : '/default-user.png'}
+                src={friend.photos && friend.photos.length > 0 ? `${BASE_URL}/${friend.photos[0].replace(/^\//, '')}` : '/default-user.png'}
                 alt={friend.name}
                 onClick={() => setSelectedUser(friend)}
                 onError={(e) => {
@@ -171,7 +171,7 @@ function Friends() {
           requests.map(user => (
             <div className="friend-card" key={user._id}>
               <img
-                src={user.photos && user.photos.length > 0 ? `${BASE_URL}${user.photos[0]}` : '/default-user.png'}
+                src={user.photos && user.photos.length > 0 ? `${BASE_URL}/${user.photos[0].replace(/^\//, '')}` : '/default-user.png'}
                 alt={user.name}
                 onError={(e) => {
                   // Prevent infinite loop by checking if we're already using default image
@@ -201,7 +201,7 @@ function Friends() {
             <span className="modal-close" onClick={() => setSelectedUser(null)}>×</span>
             <h3>{selectedUser.name} - {calculateAge(selectedUser.dob)} yrs</h3>
             <img
-              src={selectedUser.photos && selectedUser.photos.length > 0 ? `${BASE_URL}${selectedUser.photos[0]}` : '/default-user.png'}
+              src={selectedUser.photos && selectedUser.photos.length > 0 ? `${BASE_URL}/${selectedUser.photos[0].replace(/^\//, '')}` : '/default-user.png'}
               alt="Profile"
               className="modal-photo"
               onError={(e) => {
