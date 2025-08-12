@@ -150,20 +150,24 @@
   align-items: center;
   z-index: 1000;
   backdrop-filter: blur(5px);
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .modal-content {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px);
-  padding: 40px;
-  border-radius: 25px;
-  max-width: 600px;
+  padding: 30px;
+  border-radius: 20px;
+  max-width: 500px;
   width: 90%;
+  max-height: 90vh;
   text-align: left;
   position: relative;
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
   border: 1px solid rgba(255, 255, 255, 0.3);
   animation: modalSlideIn 0.3s ease-out;
+  overflow-y: auto;
 }
 
 @keyframes modalSlideIn {
@@ -179,19 +183,20 @@
 
 .modal-close {
   position: absolute;
-  top: 20px;
-  right: 20px;
-  font-size: 28px;
+  right: 15px;
+  top: 15px;
+  font-size: 24px;
   cursor: pointer;
   color: #888;
   transition: all 0.3s ease;
-  width: 40px;
-  height: 40px;
+  width: 35px;
+  height: 35px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
   background: rgba(0, 0, 0, 0.05);
+  z-index: 10;
 }
 
 .modal-close:hover {
@@ -201,27 +206,31 @@
 }
 
 .modal-photo {
-  width: auto;
-  max-height: 350px;
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  max-height: 300px;
   object-fit: cover;
-  border-radius: 20px;
-  margin-bottom: 25px;
+  border-radius: 15px;
+  margin-bottom: 20px;
   border: 3px solid #f0f0f0;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
 .modal-content h3 {
   margin-bottom: 15px;
-  font-size: 26px;
-  color: #667eea;
+  font-size: 24px;
+  color: #d63384;
   font-weight: 700;
+  text-align: center;
 }
 
 .modal-content p {
-  font-size: 16px;
+  font-size: 14px;
   color: #444;
-  margin: 8px 0;
-  line-height: 1.5;
+  margin: 6px 0;
+  line-height: 1.4;
+  text-align: center;
 }
 
 .modal-content strong {
@@ -230,31 +239,37 @@
 }
 
 .modal-buttons {
-  margin-top: 30px;
+  margin-top: 25px;
   display: flex;
-  gap: 20px;
+  gap: 15px;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: center;
+  position: sticky;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 15px 0;
+  border-radius: 15px;
 }
 
 .message-button,
 .video-button {
   flex: 1 1 auto;
-  min-width: 140px;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  min-width: 120px;
+  background: linear-gradient(135deg, #d63384, #c44569);
   color: white;
   border: none;
-  border-radius: 15px;
-  padding: 15px 25px;
+  border-radius: 12px;
+  padding: 12px 20px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
   white-space: nowrap;
   transition: all 0.3s ease;
   font-weight: 600;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 15px rgba(212, 51, 132, 0.3);
+  max-width: 45%;
 }
 
 .video-button {
@@ -263,9 +278,9 @@
 }
 
 .message-button:hover {
-  background: linear-gradient(135deg, #5a6fd8, #6a4c93);
+  background: linear-gradient(135deg, #c44569, #a83a5a);
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 8px 25px rgba(212, 51, 132, 0.4);
 }
 
 .video-button:hover {
