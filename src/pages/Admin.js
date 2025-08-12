@@ -27,6 +27,9 @@ function Admin() {
   const [actionLoading, setActionLoading] = useState(false);
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState('');
+  const [showPremiumModal, setShowPremiumModal] = useState(false);
+  const [premiumUserId, setPremiumUserId] = useState(null);
+  const [premiumDuration, setPremiumDuration] = useState('1month');
 
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
@@ -101,28 +104,66 @@ function Admin() {
   };
 
   const handlePremiumToggle = async (userId, currentStatus) => {
+    if (currentStatus) {
+      // Remove premium - no duration needed
+      try {
+        setActionLoading(true);
+        
+        await axios.post(`${BASE_URL}/api/admin/premium`, {
+          userId,
+          action: 'remove'
+        }, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+
+        // Update local state
+        setUsers(prev => prev.map(user => 
+          user._id === userId 
+            ? { ...user, isPremium: false }
+            : user
+        ));
+
+        setMessage('Premium removed from user successfully');
+        setMessageType('success');
+      } catch (err) {
+        setMessage('Failed to remove premium status');
+        setMessageType('error');
+      } finally {
+        setActionLoading(false);
+      }
+    } else {
+      // Add premium - show duration selection modal
+      setPremiumUserId(userId);
+      setPremiumDuration('1month');
+      setShowPremiumModal(true);
+    }
+  };
+
+  const handleAddPremium = async () => {
     try {
       setActionLoading(true);
-      const action = currentStatus ? 'remove' : 'add';
       
       await axios.post(`${BASE_URL}/api/admin/premium`, {
-        userId,
-        action
+        userId: premiumUserId,
+        action: 'add',
+        duration: premiumDuration
       }, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
       // Update local state
       setUsers(prev => prev.map(user => 
-        user._id === userId 
-          ? { ...user, isPremium: !currentStatus }
+        user._id === premiumUserId 
+          ? { ...user, isPremium: true }
           : user
       ));
 
-      setMessage(`Premium ${action === 'add' ? 'added to' : 'removed from'} user successfully`);
+      setMessage(`Premium (${premiumDuration}) added to user successfully`);
       setMessageType('success');
+      setShowPremiumModal(false);
+      setPremiumUserId(null);
     } catch (err) {
-      setMessage('Failed to update premium status');
+      setMessage('Failed to add premium status');
       setMessageType('error');
     } finally {
       setActionLoading(false);
@@ -401,6 +442,65 @@ function Admin() {
                 <p><strong>Hobbies:</strong> {selectedUser.hobbies?.length ? selectedUser.hobbies.join(', ') : 'No hobbies listed'}</p>
                 <p><strong>Joined:</strong> {formatDate(selectedUser.createdAt)}</p>
                 <p><strong>Status:</strong> {getStatusBadge(selectedUser)}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Premium Duration Modal */}
+      {showPremiumModal && premiumUserId && (
+        <div className="modal-overlay" onClick={closePremiumModal}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>Add Premium Access</h2>
+              <button className="close-btn" onClick={closePremiumModal}>×</button>
+            </div>
+            
+            <div className="modal-body">
+              <p>Select the duration for premium access:</p>
+              
+              <div className="duration-options">
+                <label className="duration-option">
+                  <input
+                    type="radio"
+                    name="duration"
+                    value="1month"
+                    checked={premiumDuration === '1month'}
+                    onChange={(e) => setPremiumDuration(e.target.value)}
+                  />
+                  <span className="duration-label">
+                    <strong>1 Month</strong>
+                    <small>30 days of premium access</small>
+                  </span>
+                </label>
+                
+                <label className="duration-option">
+                  <input
+                    type="radio"
+                    name="duration"
+                    value="1year"
+                    checked={premiumDuration === '1year'}
+                    onChange={(e) => setPremiumDuration(e.target.value)}
+                  />
+                  <span className="duration-label">
+                    <strong>1 Year</strong>
+                    <small>365 days of premium access</small>
+                  </span>
+                </label>
+              </div>
+              
+              <div className="modal-actions">
+                <button className="cancel-btn" onClick={closePremiumModal}>
+                  Cancel
+                </button>
+                <button 
+                  className="confirm-btn" 
+                  onClick={handleAddPremium} 
+                  disabled={actionLoading}
+                >
+                  {actionLoading ? 'Adding Premium...' : 'Add Premium'}
+                </button>
               </div>
             </div>
           </div>
