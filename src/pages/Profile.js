@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Profile.css";
 import { BASE_URL } from "../utils/config";
+import { useNavigate } from "react-router-dom";
+import { Home } from "lucide-react";
 
 const Profile = () => {
   const [formData, setFormData] = useState({
@@ -25,6 +27,7 @@ const Profile = () => {
   const [updateProgress, setUpdateProgress] = useState("");
 
   const token = localStorage.getItem("token");
+  const navigate = useNavigate();
 
   const hobbiesOptions = [
     "Traveling", "Cooking", "Music", "Dancing",
@@ -193,8 +196,14 @@ const Profile = () => {
   return (
     <div className="profile-page">
       <div className="profile-header">
-        <h2>Edit Profile</h2>
-        <button onClick={handleDeleteAccount} className="delete-btn">Delete Account</button>
+        <h2>Profile</h2>
+        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+          <button onClick={() => navigate('/dashboard')} className="home-button">
+            <Home size={20} style={{ marginRight: '6px' }} />
+            Home
+          </button>
+          <button onClick={handleDeleteAccount} className="delete-btn">Delete Account</button>
+        </div>
       </div>
 
       {/* Progress indicator */}

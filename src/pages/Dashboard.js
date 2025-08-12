@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import './Dashboard.css';
 import { SocketContext } from '../SocketContext';
-import { Video, BadgePercent } from 'lucide-react';
+import { Video, BadgePercent, Home } from 'lucide-react';
 import { BASE_URL } from '../utils/config';
 
 function Dashboard() {
@@ -252,19 +252,17 @@ function Dashboard() {
           {users.map((user) => (
             <div className="user-card" key={user._id}>
               <img
-                                  src={
-                    user.photos && user.photos.length > 0
-                      ? `${BASE_URL}${user.photos[0]}`
-                      : '/default-user.png'
-                  }
-                  onError={(e) => {
-                    // Prevent infinite loop by checking if we're already using default image
-                    if (e.target.src !== window.location.origin + '/default-user.png') {
-                      e.target.src = '/default-user.png';
-                    }
-                  }}
+                src={
+                  user.photos && user.photos.length > 0
+                    ? `${BASE_URL}${user.photos[0]}`
+                    : 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxjaXJjbGUgY3g9IjEwMCIgY3k9IjgwIiByPSIzMCIgZmlsbD0iI0NDQyIvPjxwYXRoIGQ9Ik0zMCAxNjBDMzAgMTQwIDQwIDEyMCA2MCAxMTBIMTQwQzE2MCAxMjAgMTcwIDE0MCAxNzAgMTYwVjE4MEgzMFYxNjBaIiBmaWxsPSIjQ0NDIi8+Cjwvc3ZnPgo='
+                }
                 alt={user.name}
                 onClick={() => setSelectedUser(user)}
+                onError={(e) => {
+                  // Set to a simple SVG placeholder if image fails to load
+                  e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxjaXJjbGUgY3g9IjEwMCIgY3k9IjgwIiByPSIzMCIgZmlsbD0iI0NDQyIvPjxwYXRoIGQ9Ik0zMCAxNjBDMzAgMTQwIDQwIDEyMCA2MCAxMTBIMTQwQzE2MCAxMjAgMTcwIDE0MCAxNzAgMTYwVjE4MEgzMFYxNjBaIiBmaWxsPSIjQ0NDIi8+Cjwvc3ZnPgo=';
+                }}
               />
               <h4>{user.name}</h4>
               <p>{calculateAge(user.dob)} years</p>
@@ -281,6 +279,7 @@ function Dashboard() {
       {selectedUser && (
         <div className="modal-overlay" onClick={() => setSelectedUser(null)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <span className="modal-close" onClick={() => setSelectedUser(null)}>×</span>
             <h3>
               {selectedUser.name} - {calculateAge(selectedUser.dob)} yrs
             </h3>
@@ -288,16 +287,14 @@ function Dashboard() {
               src={
                 selectedUser.photos && selectedUser.photos.length > 0
                   ? `${BASE_URL}${selectedUser.photos[0]}`
-                  : '/default-user.png'
+                  : 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxjaXJjbGUgY3g9IjEwMCIgY3k9IjgwIiByPSIzMCIgZmlsbD0iI0NDQyIvPjxwYXRoIGQ9Ik0zMCAxNjBDMzAgMTQwIDQwIDEyMCA2MCAxMTBIMTQwQzE2MCAxMjAgMTcwIDE0MCAxNzAgMTYwVjE4MEgzMFYxNjBaIiBmaWxsPSIjQ0NDIi8+Cjwvc3ZnPgo='
               }
-              onError={(e) => {
-                // Prevent infinite loop by checking if we're already using default image
-                if (e.target.src !== window.location.origin + '/default-user.png') {
-                  e.target.src = '/default-user.png';
-                }
-              }}
               alt="Profile"
               className="modal-photo"
+              onError={(e) => {
+                // Set to a simple SVG placeholder if image fails to load
+                e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxjaXJjbGUgY3g9IjEwMCIgY3k9IjgwIiByPSIzMCIgZmlsbD0iI0NDQyIvPjxwYXRoIGQ9Ik0zMCAxNjBDMzAgMTQwIDQwIDEyMCA2MCAxMTBIMTQwQzE2MCAxMjAgMTcwIDE0MCAxNzAgMTYwVjE4MEgzMFYxNjBaIiBmaWxsPSIjQ0NDIi8+Cjwvc3ZnPgo=';
+              }}
             />
             <p><strong>Gender:</strong> {selectedUser.gender}</p>
             <p><strong>Bio:</strong> {selectedUser.bio}</p>

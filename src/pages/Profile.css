@@ -44,6 +44,47 @@
   box-shadow: 0 4px 12px rgba(236, 41, 77, 0.4);
 }
 
+.home-button {
+  background: linear-gradient(135deg, #ec294d, #d63384) !important;
+  color: white !important;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(236, 41, 77, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.home-button:hover {
+  background: linear-gradient(135deg, #d63384, #ec294d) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(236, 41, 77, 0.4);
+}
+
+.delete-btn {
+  background: linear-gradient(135deg, #dc3545, #c82333);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);
+}
+
+.delete-btn:hover {
+  background: linear-gradient(135deg, #c82333, #a71e2a);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);
+}
+
 /* Progress Message Styles */
 .progress-message {
   padding: 15px 20px;
@@ -221,7 +262,7 @@
 }
 
 .radio-group label:hover {
-  border-color: #ff4b6e;
+  border-color: #ec294d;
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -262,7 +303,7 @@
 }
 
 .options-wrap label:hover {
-  border-color: #ff4b6e;
+  border-color: #ec294d;
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
