@@ -3,7 +3,7 @@ import axios from 'axios';
 import './Chat.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { SocketContext } from '../SocketContext';
-import { Video, Home, X, Send, Phone, MoreVertical, RefreshCw } from 'lucide-react';
+import { Video, Home, X, Send, Phone, MoreVertical } from 'lucide-react';
 import { BASE_URL } from '../utils/config';
 
 function Chat() {
@@ -191,25 +191,6 @@ function Chat() {
     setDialogMessage('');
   };
 
-  // Refresh conversations to fix any photo URL issues
-  const refreshConversations = () => {
-    if (token) {
-      axios
-        .get(`${BASE_URL}/api/chat/conversations`, {
-          headers: { Authorization: `Bearer ${token}` },
-        })
-        .then((res) => {
-          setConversations(res.data);
-          if (res.data.length > 0 && !selectedUser) {
-            setSelectedUser(res.data[0]);
-          }
-        })
-        .catch((err) => {
-          console.error('Failed to refresh conversations:', err);
-        });
-    }
-  };
-
   const formatTime = (timestamp) => {
     const date = new Date(timestamp);
     const now = new Date();
@@ -241,13 +222,6 @@ function Chat() {
               title="Go to Dashboard"
             >
               <Home size={20} />
-            </button>
-            <button 
-              className="refresh-button"
-              onClick={refreshConversations}
-              title="Refresh conversations"
-            >
-              <RefreshCw size={20} />
             </button>
           </div>
         </div>
