@@ -205,6 +205,24 @@
 }
 
 /* Responsive Design */
+@media (max-width: 1024px) {
+  .subscription-container {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 25px;
+  }
+
+  .plan-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+  }
+
+  .plan-card {
+    max-width: 300px;
+    padding: 28px;
+  }
+}
+
 @media (max-width: 768px) {
   .subscription-container {
     margin: 20px;
@@ -215,14 +233,20 @@
     font-size: 2rem;
   }
 
+  .subscription-header p {
+    font-size: 1rem;
+  }
+
   .plan-grid {
     grid-template-columns: 1fr;
     gap: 25px;
+    justify-items: center;
   }
 
   .plan-card {
     max-width: 100%;
     padding: 25px;
+    min-width: 280px;
   }
 
   .subscription-home-button {
@@ -241,20 +265,34 @@
   .premium-icon {
     font-size: 2.5rem;
   }
+
+  .subscribe-btn {
+    max-width: 180px;
+  }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
   .subscription-container {
     margin: 15px;
-    padding: 20px;
+    padding: 18px;
   }
 
   .subscription-header h2 {
     font-size: 1.8rem;
+    margin-bottom: 12px;
+  }
+
+  .subscription-header p {
+    font-size: 0.95rem;
+  }
+
+  .plan-grid {
+    gap: 20px;
   }
 
   .plan-card {
-    padding: 20px;
+    padding: 22px;
+    min-width: 260px;
   }
 
   .plan-card h3 {
@@ -262,15 +300,102 @@
   }
 
   .plan-price {
+    font-size: 1.7rem;
+  }
+
+  .premium-icon {
+    font-size: 2.3rem;
+  }
+
+  .subscribe-btn {
+    padding: 14px 28px;
+    font-size: 1rem;
+    max-width: 160px;
+  }
+}
+
+@media (max-width: 480px) {
+  .subscription-container {
+    margin: 10px;
+    padding: 15px;
+  }
+
+  .subscription-header h2 {
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+  }
+
+  .subscription-header p {
+    font-size: 0.9rem;
+  }
+
+  .plan-grid {
+    gap: 18px;
+  }
+
+  .plan-card {
+    padding: 20px;
+    min-width: 240px;
+  }
+
+  .plan-card h3 {
+    font-size: 1.3rem;
+  }
+
+  .plan-price {
     font-size: 1.6rem;
   }
 
   .premium-icon {
-    font-size: 2.2rem;
+    font-size: 2.1rem;
   }
 
   .subscribe-btn {
     padding: 12px 25px;
-    font-size: 1rem;
+    font-size: 0.95rem;
+    max-width: 150px;
+  }
+
+  .subscription-home-button {
+    padding: 10px 16px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .subscription-container {
+    margin: 8px;
+    padding: 12px;
+  }
+
+  .subscription-header h2 {
+    font-size: 1.4rem;
+  }
+
+  .subscription-header p {
+    font-size: 0.85rem;
+  }
+
+  .plan-card {
+    padding: 18px;
+    min-width: 220px;
+  }
+
+  .plan-card h3 {
+    font-size: 1.2rem;
+  }
+
+  .plan-price {
+    font-size: 1.5rem;
+  }
+
+  .premium-icon {
+    font-size: 1.9rem;
+  }
+
+  .subscribe-btn {
+    padding: 10px 22px;
+    font-size: 0.9rem;
+    max-width: 140px;
   }
 }

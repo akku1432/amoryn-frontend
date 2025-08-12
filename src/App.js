@@ -20,6 +20,7 @@ import Faq from './pages/Faq';
 import ContactUs from './pages/ContactUs';
 import CancellationRefund from './pages/CancellationRefund';
 import ShippingPolicy from './pages/ShippingPolicy';
+import Admin from './pages/Admin';
 import { BASE_URL } from './utils/config';
 
 const socket = io(`${BASE_URL}`);
@@ -70,6 +71,7 @@ function App() {
             <Route path="/contact-us" element={<ContactUs />} />
             <Route path="/cancellation-refund" element={<CancellationRefund />} />
             <Route path="/shipping" element={<ShippingPolicy />} />
+            <Route path="/admin" element={<Admin />} />
           </Routes>
         </Router>
       </PayPalScriptProvider>

@@ -3,7 +3,7 @@ import axios from 'axios';
 import './Chat.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { SocketContext } from '../SocketContext';
-import { Video, Home, X } from 'lucide-react';
+import { Video, Home, X, Send, Phone, MoreVertical } from 'lucide-react';
 import { BASE_URL } from '../utils/config';
 
 function Chat() {
@@ -15,6 +15,7 @@ function Chat() {
   const [showDialog, setShowDialog] = useState(false);
   const [dialogMessage, setDialogMessage] = useState('');
   const [chatNotifications, setChatNotifications] = useState({}); // { userId: count }
+  const [userProfile, setUserProfile] = useState(null);
 
   const token = localStorage.getItem('token');
   const location = useLocation();
@@ -27,13 +28,21 @@ function Chat() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  // Fetch user's premium status
+  // Fetch user's premium status and profile
   useEffect(() => {
     axios
       .get(`${BASE_URL}/api/user/profile`, {
         headers: { Authorization: `Bearer ${token}` },
       })
-      .then((res) => setIsPremium(res.data.isPremium || false))
+      .then((res) => {
+        setUserProfile(res.data);
+        // Check if user has active subscription - use the isPremium field from backend
+        const premiumStatus = res.data.isPremium || false;
+        setIsPremium(premiumStatus);
+        console.log('User profile data:', res.data);
+        console.log('Premium status:', premiumStatus);
+        console.log('Subscription data:', res.data.subscription);
+      })
       .catch((err) => console.error('Failed to fetch status:', err));
   }, [token]);
 
@@ -130,7 +139,7 @@ function Chat() {
   // Sending a new message - disabled for non-premium users
   const sendMessage = async () => {
     if (!isPremium) {
-      setDialogMessage('Messaging is only available for Premium members.');
+      setDialogMessage('Messaging is only available for Premium members. Upgrade to start chatting!');
       setShowDialog(true);
       return;
     }
@@ -161,7 +170,7 @@ function Chat() {
   // Video call - disabled for non-premium users
   const handleVideoCall = () => {
     if (!isPremium) {
-      setDialogMessage('Video call is only available for Premium members.');
+      setDialogMessage('Video call is only available for Premium members. Upgrade to start video calling!');
       setShowDialog(true);
       return;
     }
@@ -174,80 +183,190 @@ function Chat() {
     setDialogMessage('');
   };
 
+  const formatTime = (timestamp) => {
+    const date = new Date(timestamp);
+    const now = new Date();
+    const diffInHours = (now - date) / (1000 * 60 * 60);
+    
+    if (diffInHours < 24) {
+      return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    } else if (diffInHours < 48) {
+      return 'Yesterday';
+    } else {
+      return date.toLocaleDateString();
+    }
+  };
+
   return (
     <div className="chat-container">
       <div className="chat-sidebar">
-        <div className="chat-top">
-          <Home
-            size={24}
-            color="#fff"
-            style={{ cursor: 'pointer' }}
-            title="Go to Dashboard"
-            onClick={() => navigate('/dashboard')}
-          />
-        </div>
-        {conversations.length === 0 && <div className="chat-placeholder">No Conversations Yet</div>}
-        {conversations.map((user) => (
-          <div
-            key={user._id}
-            className={`chat-user ${selectedUser?._id === user._id ? 'active' : ''}`}
-            onClick={() => setSelectedUser(user)}
-          >
-            {user.photo ? (
-              <img src={user.photo} alt={user.name} className="user-avatar" />
-            ) : (
-              <div className="user-avatar default-avatar" />
-            )}
-            <strong className="user-name">{user.name}</strong>
-            {chatNotifications[user._id] > 0 && (
-              <span className="notification-badge">
-                {chatNotifications[user._id] > 99 ? '99+' : chatNotifications[user._id]}
+        <div className="chat-header">
+          <h2>Messages</h2>
+          <div className="header-actions">
+            {isPremium && (
+              <span className="premium-badge" title="Premium User">
+                👑 Premium
               </span>
             )}
+            <button 
+              className="home-button"
+              onClick={() => navigate('/dashboard')}
+              title="Go to Dashboard"
+            >
+              <Home size={20} />
+            </button>
           </div>
-        ))}
-      </div>
-      <div className="chat-window">
-        {!selectedUser && <div className="chat-placeholder">Select a user to start chatting</div>}
-        {selectedUser && (
-          <>
-            <div className="chat-header">
-              <span>Chat with {selectedUser.name}</span>
-              <button
-                className="video-call-icon"
-                onClick={handleVideoCall}
-                disabled={!isPremium}
-                title={!isPremium ? 'Upgrade to Premium for video calls' : 'Video Call'}
-              >
-                <Video size={20} />
-              </button>
+        </div>
+        
+        <div className="conversations-list">
+          {conversations.length === 0 && (
+            <div className="chat-placeholder">
+              <p>No conversations yet</p>
+              <small>Start matching to begin chatting!</small>
             </div>
-            <div className="chat-messages">
-              {messages.map((msg, idx) => (
-                <div key={idx} className={`message ${msg.fromSelf ? 'sent' : 'received'}`}>
-                  <div>{msg.message}</div>
-                  <small>{new Date(msg.timestamp).toLocaleTimeString()}</small>
+          )}
+          
+          {conversations.map((user) => (
+            <div
+              key={user._id}
+              className={`conversation-item ${selectedUser?._id === user._id ? 'active' : ''}`}
+              onClick={() => setSelectedUser(user)}
+            >
+              <div className="conversation-avatar">
+                {user.photo ? (
+                  <img src={user.photo} alt={user.name} />
+                ) : (
+                  <div className="default-avatar">
+                    {user.name?.charAt(0)?.toUpperCase()}
+                  </div>
+                )}
+                {chatNotifications[user._id] > 0 && (
+                  <span className="notification-badge">
+                    {chatNotifications[user._id] > 99 ? '99+' : chatNotifications[user._id]}
+                  </span>
+                )}
+              </div>
+              
+              <div className="conversation-info">
+                <div className="conversation-name">{user.name}</div>
+                <div className="conversation-preview">
+                  {chatNotifications[user._id] > 0 ? 
+                    `${chatNotifications[user._id]} new message${chatNotifications[user._id] > 1 ? 's' : ''}` : 
+                    'Tap to start chatting'
+                  }
                 </div>
-              ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="chat-main">
+        {!selectedUser ? (
+          <div className="chat-welcome">
+            <div className="welcome-content">
+              <h2>Welcome to Amoryn Chat</h2>
+              <p>Select a conversation to start messaging</p>
+              {!isPremium && (
+                <div className="premium-notice">
+                  <p>💬 Upgrade to Premium to send messages and make video calls</p>
+                  <button 
+                    className="upgrade-button"
+                    onClick={() => navigate('/subscription')}
+                  >
+                    Upgrade Now
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        ) : (
+          <>
+            <div className="chat-main-header">
+              <div className="chat-user-info">
+                <div className="chat-user-avatar">
+                  {selectedUser.photo ? (
+                    <img src={selectedUser.photo} alt={selectedUser.name} />
+                  ) : (
+                    <div className="default-avatar">
+                      {selectedUser.name?.charAt(0)?.toUpperCase()}
+                    </div>
+                  )}
+                </div>
+                <div className="chat-user-details">
+                  <h3>{selectedUser.name}</h3>
+                  <span className="user-status">Online</span>
+                </div>
+              </div>
+              
+              <div className="chat-actions">
+                <button
+                  className="action-button video-call"
+                  onClick={handleVideoCall}
+                  disabled={!isPremium}
+                  title={!isPremium ? 'Upgrade to Premium for video calls' : 'Video Call'}
+                >
+                  <Video size={20} />
+                </button>
+                <button className="action-button more-options">
+                  <MoreVertical size={20} />
+                </button>
+              </div>
+            </div>
+
+            <div className="chat-messages">
+              {messages.length === 0 ? (
+                <div className="no-messages">
+                  <p>No messages yet</p>
+                  <small>Start the conversation!</small>
+                </div>
+              ) : (
+                messages.map((msg, idx) => (
+                  <div key={idx} className={`message ${msg.fromSelf ? 'sent' : 'received'}`}>
+                    <div className="message-content">{msg.message}</div>
+                    <div className="message-time">{formatTime(msg.timestamp)}</div>
+                  </div>
+                ))
+              )}
               <div ref={messagesEndRef} />
             </div>
-            <div className="chat-input">
-              <input
-                type="text"
-                name='message'
-                placeholder={isPremium ? 'Type your message...' : 'Messaging is for Premium users only.'}
-                value={newMessage}
-                onChange={(e) => setNewMessage(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
-                disabled={!isPremium}
-              />
-              <button onClick={sendMessage} disabled={!isPremium}>
-                Send
-              </button>
+
+            <div className="chat-input-container">
+              <div className="chat-input">
+                <input
+                  type="text"
+                  name='message'
+                  placeholder={isPremium ? 'Type a message...' : 'Upgrade to Premium to send messages'}
+                  value={newMessage}
+                  onChange={(e) => setNewMessage(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
+                  disabled={!isPremium}
+                />
+                <button 
+                  className="send-button"
+                  onClick={sendMessage} 
+                  disabled={!isPremium || !newMessage.trim()}
+                >
+                  <Send size={20} />
+                </button>
+              </div>
+              
+              {!isPremium && (
+                <div className="premium-lock">
+                  <p>🔒 Messaging locked for free users</p>
+                  <button 
+                    className="upgrade-button-small"
+                    onClick={() => navigate('/subscription')}
+                  >
+                    Upgrade
+                  </button>
+                </div>
+              )}
             </div>
           </>
         )}
       </div>
+
       {showDialog && (
         <div className="dialog-overlay">
           <div className="dialog-box">

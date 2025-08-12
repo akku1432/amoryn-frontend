@@ -42,8 +42,22 @@
 
 .dashboard-nav a:hover,
 .dashboard-nav button:hover {
-  background-color: rgba(255, 255, 255, 0.25);
-  transform: scale(1.05);
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Admin Link Styling */
+.admin-link {
+  background: linear-gradient(135deg, #ffd700, #ffed4e) !important;
+  color: #333 !important;
+  font-weight: 700 !important;
+  border: 2px solid #ffd700 !important;
+}
+
+.admin-link:hover {
+  background: linear-gradient(135deg, #ffed4e, #ffd700) !important;
+  transform: translateY(-2px) scale(1.05) !important;
+  box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4) !important;
 }
 
 /* Main dashboard content */
@@ -121,6 +135,7 @@
   margin-bottom: 15px;
   border: 3px solid #f0f0f0;
   transition: all 0.3s ease;
+  display: block;
 }
 
 .user-card:hover img {
@@ -402,6 +417,22 @@
 }
 
 /* Responsive Media Queries */
+@media (max-width: 1024px) {
+  .user-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 20px;
+  }
+
+  .user-card {
+    max-width: 180px;
+    padding: 18px;
+  }
+
+  .user-card img {
+    height: 200px;
+  }
+}
+
 @media (max-width: 768px) {
   .dashboard-header {
     font-size: 32px;
@@ -412,6 +443,8 @@
     gap: 15px;
     padding: 15px;
     margin: 0 15px 20px;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
   .dashboard-content h2 {
@@ -425,6 +458,7 @@
   .user-grid {
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     gap: 20px;
+    padding: 0 15px;
   }
 
   .user-card {
@@ -433,7 +467,9 @@
   }
 
   .user-card img {
-    height: 140px;
+    height: 180px;
+    width: 100%;
+    object-fit: cover;
   }
 
   .like-dislike-buttons button {
@@ -443,10 +479,14 @@
 
   .modal-content {
     padding: 25px;
+    margin: 20px;
+    max-width: 90%;
   }
 
   .modal-photo {
     height: 250px;
+    width: 100%;
+    object-fit: cover;
   }
 
   .modal-buttons {
@@ -460,7 +500,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
   .dashboard-header {
     font-size: 28px;
     padding: 25px 0 10px;
@@ -475,12 +515,13 @@
   .dashboard-nav a,
   .dashboard-nav button {
     font-size: 14px;
-    padding: 10px 18px;
+    padding: 10px 16px;
   }
 
   .user-grid {
     grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
     gap: 15px;
+    padding: 0 10px;
   }
 
   .user-card {
@@ -489,15 +530,21 @@
   }
 
   .user-card img {
-    height: 120px;
+    height: 160px;
+    width: 100%;
+    object-fit: cover;
   }
 
   .modal-content {
     padding: 20px;
+    margin: 15px;
+    max-width: 95%;
   }
 
   .modal-photo {
     height: 200px;
+    width: 100%;
+    object-fit: cover;
   }
 
   .modal-buttons {
@@ -508,6 +555,91 @@
   .video-button {
     padding: 12px 20px;
     font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-header {
+    font-size: 24px;
+    padding: 20px 0 8px;
+  }
+
+  .dashboard-nav {
+    gap: 8px;
+    padding: 10px;
+    margin: 0 8px 12px;
+  }
+
+  .dashboard-nav a,
+  .dashboard-nav button {
+    font-size: 13px;
+    padding: 8px 14px;
+  }
+
+  .dashboard-content h2 {
+    font-size: 28px;
+  }
+
+  .dashboard-content p {
+    font-size: 15px;
+  }
+
+  .user-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 12px;
+    padding: 0 8px;
+  }
+
+  .user-card {
+    max-width: 120px;
+    padding: 10px;
+  }
+
+  .user-card img {
+    height: 140px;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .user-card h4 {
+    font-size: 16px;
+    margin: 8px 0 4px;
+  }
+
+  .user-card p {
+    font-size: 13px;
+    margin: 4px 0 12px;
+  }
+
+  .like-dislike-buttons button {
+    font-size: 16px;
+    padding: 5px 10px;
+  }
+
+  .modal-content {
+    padding: 15px;
+    margin: 10px;
+    max-width: 98%;
+  }
+
+  .modal-photo {
+    height: 180px;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .modal-content h3 {
+    font-size: 20px;
+  }
+
+  .modal-content p {
+    font-size: 13px;
+  }
+
+  .message-button,
+  .video-button {
+    padding: 10px 18px;
+    font-size: 13px;
   }
 }
 

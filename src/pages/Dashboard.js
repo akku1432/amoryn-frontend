@@ -15,6 +15,8 @@ function Dashboard() {
   const [likeCountToday, setLikeCountToday] = useState(0);
   const [showLikeLimitModal, setShowLikeLimitModal] = useState(false);
   const [showPremiumFeatureModal, setShowPremiumFeatureModal] = useState(false);
+  const [showDialog, setShowDialog] = useState(false);
+  const [dialogMessage, setDialogMessage] = useState('');
 
   // Notification counts state
   const [chatUnreadCount, setChatUnreadCount] = useState(0);
@@ -25,6 +27,7 @@ function Dashboard() {
 
   // NEW: Profile completion modal state
   const [showIncompleteProfileModal, setShowIncompleteProfileModal] = useState(false);
+  const [userProfile, setUserProfile] = useState(null);
 
   const token = localStorage.getItem('token');
 
@@ -37,6 +40,11 @@ function Dashboard() {
     navigate('/subscription');
   };
 
+  const closeDialog = () => {
+    setShowDialog(false);
+    setDialogMessage('');
+  };
+
   // Fetch match users and premium status
   useEffect(() => {
     axios
@@ -47,6 +55,16 @@ function Dashboard() {
         setLikeCountToday(res.data.likeCountToday || 0);
       })
       .catch((err) => console.error('Failed to fetch users', err));
+  }, [token]);
+
+  // Fetch user profile for friend checking
+  useEffect(() => {
+    axios
+      .get(`${BASE_URL}/api/user/profile`, { headers: { Authorization: `Bearer ${token}` } })
+      .then((res) => {
+        setUserProfile(res.data);
+      })
+      .catch((err) => console.error('Failed to fetch user profile', err));
   }, [token]);
 
   // Fetch friend requests count
@@ -194,7 +212,19 @@ function Dashboard() {
       setShowPremiumFeatureModal(true);
       return;
     }
+    
+    // Check if users are friends (mutual likes) for video call
     if (!selectedUser) return;
+    
+    // Check if the selected user has liked the current user back
+    const isFriend = selectedUser.likes && selectedUser.likes.includes(userProfile?._id);
+    
+    if (!isFriend) {
+      setDialogMessage('Video calls are only available with friends (mutual likes).');
+      setShowDialog(true);
+      return;
+    }
+    
     const queryParams = new URLSearchParams({
       userId: selectedUser._id,
       userName: selectedUser.name,
@@ -236,6 +266,13 @@ function Dashboard() {
           )}
         </Link>
         <Link to="/Faq">FAQ</Link>
+
+        {/* Admin Link - Only visible for admin users */}
+        {userProfile?.email === 'support@amoryn.in' && (
+          <Link to="/admin" className="admin-link">
+            👑 Admin
+          </Link>
+        )}
 
         <button className="premium-button" onClick={handlePremiumClick}>
           <BadgePercent size={18} style={{ marginRight: '8px' }} /> Go Premium
@@ -333,6 +370,17 @@ function Dashboard() {
             <h3>Premium Feature</h3>
             <p>This feature is only available for Premium users.</p>
             <button onClick={handlePremiumClick}>Upgrade to Premium</button>
+          </div>
+        </div>
+      )}
+
+      {/* Video Call Restriction Dialog */}
+      {showDialog && (
+        <div className="modal-overlay" onClick={closeDialog}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <h3>Video Call Restriction</h3>
+            <p>{dialogMessage}</p>
+            <button onClick={closeDialog}>OK</button>
           </div>
         </div>
       )}

@@ -12,6 +12,7 @@ function Match() {
   const [isPremium, setIsPremium] = useState(false);
   const [dailyLikes, setDailyLikes] = useState(0);
   const [dialogType, setDialogType] = useState('');
+  const [dialogMessage, setDialogMessage] = useState('');
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
 
@@ -87,6 +88,17 @@ function Match() {
       return;
     }
     if (!selectedUser) return;
+    
+    // Check if users are friends (mutual likes) for video call
+    // We need to check if the selected user has liked the current user back
+    // This requires fetching the current user's profile to check mutual likes
+    
+    // For now, we'll show a message that video calls are only for friends
+    // In a real implementation, you'd need to check the friendship status
+    setDialogMessage('Video calls are only available with friends (mutual likes).');
+    setDialogType('friend');
+    return;
+    
     const queryParams = new URLSearchParams({
       userId: selectedUser._id,
       userName: selectedUser.name,
@@ -95,7 +107,10 @@ function Match() {
     setSelectedUser(null);
   };
 
-  const closeDialog = () => setDialogType('');
+  const closeDialog = () => {
+    setDialogType('');
+    setDialogMessage('');
+  };
 
   return (
     <div className="match-container">
@@ -186,6 +201,9 @@ function Match() {
             )}
             {dialogType === 'video' && (
               <p>Video calls are only available to Premium users. Please upgrade to continue.</p>
+            )}
+            {dialogType === 'friend' && (
+              <p>{dialogMessage}</p>
             )}
             <button className="upgrade-btn" onClick={() => navigate('/subscription')}>
               Upgrade to Premium

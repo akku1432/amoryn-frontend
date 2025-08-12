@@ -19,7 +19,13 @@ function Login() {
       const res = await axios.post(`${BASE_URL}/api/auth/login`, formData);
       localStorage.setItem('token', res.data.token);
       setMessage('Login successful');
-      navigate('/dashboard');
+      
+      // Redirect based on user type
+      if (res.data.isAdmin) {
+        navigate('/admin');
+      } else {
+        navigate('/dashboard');
+      }
     } catch (error) {
       setMessage(error.response?.data?.error || 'Login failed');
     }
