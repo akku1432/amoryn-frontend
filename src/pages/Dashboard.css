@@ -1,7 +1,7 @@
 /* Main container with background gradient */
 .dashboard-container {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(to bottom right, #ffe6e6, #fff0f5);
   min-height: 100vh;
   margin: 0;
   padding: 0;
@@ -10,13 +10,11 @@
 /* Header / Brand name */
 .dashboard-header {
   text-align: center;
-  padding: 40px 0 20px;
-  font-size: 42px;
+  padding: 30px 0 10px;
+  font-size: 36px;
   font-weight: bold;
-  color: #ffffff;
+  color: #d63384;
   font-family: 'Segoe Script', cursive;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-  letter-spacing: 2px;
 }
 
 /* Navigation Bar */
@@ -24,65 +22,47 @@
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 20px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  padding: 20px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  margin: 0 20px 30px;
-  border-radius: 20px;
+  gap: 25px;
+  background: linear-gradient(to right, #ff416c, #ff4b2b);
+  padding: 14px 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .dashboard-nav a,
 .dashboard-nav button {
   color: #fff;
   text-decoration: none;
-  font-size: 16px;
-  font-weight: 600;
-  padding: 12px 24px;
-  border-radius: 25px;
+  font-size: 18px;
+  font-weight: 500;
+  padding: 10px 20px;
+  border-radius: 10px;
   transition: all 0.3s ease;
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
-  position: relative;
-  overflow: hidden;
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .dashboard-nav a:hover,
 .dashboard-nav button:hover {
-  background: rgba(255, 255, 255, 0.25);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-}
-
-.dashboard-nav a:active,
-.dashboard-nav button:active {
-  transform: translateY(0);
+  background-color: rgba(255, 255, 255, 0.25);
+  transform: scale(1.05);
 }
 
 /* Main dashboard content */
 .dashboard-content {
   text-align: center;
-  padding: 40px 20px;
-  max-width: 1200px;
-  margin: 0 auto;
+  padding: 60px 20px;
 }
 
 .dashboard-content h2 {
-  font-size: 42px;
-  color: #ffffff;
-  margin-bottom: 30px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-  font-weight: 700;
+  font-size: 36px;
+  color: #d6336c;
+  margin-bottom: 16px;
 }
 
 .dashboard-content p {
   font-size: 18px;
-  color: rgba(255, 255, 255, 0.9);
+  color: #555;
   max-width: 600px;
-  margin: 0 auto 40px;
+  margin: 0 auto;
   line-height: 1.6;
 }
 

@@ -1,16 +1,15 @@
 .match-container {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(to bottom right, #fff0f5, #ffe6e6);
   min-height: 100vh;
   padding: 40px 20px;
   text-align: center;
 }
 
 .match-container h2 {
-  color: #ffffff;
-  font-size: 42px;
-  margin-bottom: 30px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  color: #d6336c;
+  font-size: 36px;
+  margin-bottom: 20px;
   font-weight: 700;
 }
 
@@ -71,7 +70,7 @@
 }
 
 .match-card:hover img {
-  border-color: #667eea;
+  border-color: #d63384;
   transform: scale(1.05);
 }
 

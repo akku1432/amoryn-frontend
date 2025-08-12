@@ -1,6 +1,6 @@
 .video-call-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #111;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -33,7 +33,6 @@
   font-size: 36px;
   margin-bottom: 20px;
   text-align: center;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   font-weight: 700;
   letter-spacing: 1px;
 }
