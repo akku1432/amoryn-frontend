@@ -60,11 +60,12 @@ function Chat() {
           const user = {
             _id: location.state.userId,
             name: location.state.userName,
-            photo: '',
+            photo: location.state.userPhoto || '', // Preserve photo if available
           };
           if (!users.some((u) => u._id === user._id)) {
             users = [user, ...users];
           }
+          console.log('Setting selectedUser from location state:', user);
           setSelectedUser(user);
 
           if (location.state.initiatingCall) {
@@ -98,9 +99,21 @@ function Chat() {
   // Handle initial user selection when conversations are loaded
   useEffect(() => {
     if (conversations.length > 0 && !selectedUser) {
-      setSelectedUser(conversations[0]);
+      const firstUser = conversations[0];
+      console.log('Setting initial selectedUser:', firstUser);
+      console.log('Initial user photo:', firstUser.photo);
+      setSelectedUser(firstUser);
     }
   }, [conversations, selectedUser]);
+
+  // Debug selectedUser changes
+  useEffect(() => {
+    if (selectedUser) {
+      console.log('Selected user changed to:', selectedUser);
+      console.log('Selected user photo:', selectedUser.photo);
+      console.log('Selected user name:', selectedUser.name);
+    }
+  }, [selectedUser]);
 
   // Fetch messages for selected user and clear notifications for that user
   useEffect(() => {
@@ -242,7 +255,9 @@ function Chat() {
               key={user._id}
               className={`conversation-item ${selectedUser?._id === user._id ? 'active' : ''}`}
               onClick={() => {
-                setSelectedUser(user);
+                // Find the complete user object from conversations to ensure all data is available
+                const completeUser = conversations.find(u => u._id === user._id);
+                setSelectedUser(completeUser || user);
               }}
             >
               <div className="conversation-avatar">
@@ -316,11 +331,15 @@ function Chat() {
                         e.target.style.display = 'none';
                         e.target.nextSibling.style.display = 'flex';
                       }}
+                      onLoad={() => {
+                        console.log('Successfully loaded selectedUser photo:', selectedUser.photo);
+                      }}
                     />
-                  ) : null}
-                  <div className="default-avatar" style={{ display: selectedUser.photo ? 'none' : 'flex' }}>
-                    {selectedUser.name?.charAt(0)?.toUpperCase()}
-                  </div>
+                  ) : (
+                    <div className="default-avatar" style={{ display: 'flex' }}>
+                      {selectedUser.name?.charAt(0)?.toUpperCase()}
+                    </div>
+                  )}
                 </div>
                 <div className="chat-user-details">
                   <h3>{selectedUser.name}</h3>
