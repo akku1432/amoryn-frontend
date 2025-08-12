@@ -25,6 +25,8 @@ const Profile = () => {
   const [previewImage, setPreviewImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [updateProgress, setUpdateProgress] = useState("");
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
 
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
@@ -133,8 +135,8 @@ const Profile = () => {
       formDataToSend.append('relationshipType', formData.relationshipType || "");
       formDataToSend.append('bio', formData.bio || "");
       formDataToSend.append('country', formData.country || "");
-      formDataToSend.append('state', formData.state || "");
       formDataToSend.append('city', formData.city || "");
+      formDataToSend.append('state', formData.state || "");
 
       // Add image if selected
       if (profileImage) {
@@ -143,7 +145,7 @@ const Profile = () => {
       }
 
       // Single API call to update everything
-      await axios.put(`${BASE_URL}/api/user/profile`, formDataToSend, {
+      const response = await axios.put(`${BASE_URL}/api/user/profile`, formDataToSend, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',
@@ -154,7 +156,8 @@ const Profile = () => {
       
       // Update preview image if new image was uploaded
       if (profileImage) {
-        setPreviewImage(`${BASE_URL}/api/user/profile/picture/me?t=${Date.now()}`);
+        // Force refresh the image by adding timestamp
+        setPreviewImage(`${BASE_URL}/api/user/profile/picture/${userProfile?._id}?t=${Date.now()}`);
         setProfileImage(null);
       }
 
@@ -177,20 +180,34 @@ const Profile = () => {
   };
 
   const handleDeleteAccount = async () => {
-    if (!window.confirm("Are you sure you want to delete your account? This cannot be undone.")) {
-      return;
-    }
+    setShowDeleteDialog(true);
+  };
+
+  const confirmDeleteAccount = async () => {
+    setDeleteLoading(true);
     try {
       await axios.delete(`${BASE_URL}/api/user/delete`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      alert("Your account has been deleted.");
-      localStorage.removeItem("token");
-      window.location.href = "/";
+      setUpdateProgress("Your account has been deleted successfully.");
+      setTimeout(() => {
+        localStorage.removeItem("token");
+        window.location.href = "/";
+      }, 2000);
     } catch (err) {
       console.error("Error deleting account:", err);
-      alert("Failed to delete account.");
+      setUpdateProgress("Failed to delete account. Please try again.");
+      setTimeout(() => {
+        setUpdateProgress("");
+      }, 3000);
+    } finally {
+      setDeleteLoading(false);
+      setShowDeleteDialog(false);
     }
+  };
+
+  const closeDeleteDialog = () => {
+    setShowDeleteDialog(false);
   };
 
   return (
@@ -320,6 +337,39 @@ const Profile = () => {
           )}
         </button>
       </form>
+
+      {/* Delete Account Confirmation Dialog */}
+      {showDeleteDialog && (
+        <div className="dialog-overlay" onClick={closeDeleteDialog}>
+          <div className="dialog-box" onClick={(e) => e.stopPropagation()}>
+            <h3>Delete Account</h3>
+            <p>Are you sure you want to delete your account? This action cannot be undone.</p>
+            <div className="dialog-actions">
+              <button 
+                className="cancel-btn" 
+                onClick={closeDeleteDialog}
+                disabled={deleteLoading}
+              >
+                Cancel
+              </button>
+              <button 
+                className="delete-confirm-btn" 
+                onClick={confirmDeleteAccount}
+                disabled={deleteLoading}
+              >
+                {deleteLoading ? (
+                  <span className="loading-spinner">
+                    <div className="spinner"></div>
+                    Deleting...
+                  </span>
+                ) : (
+                  "Delete Account"
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

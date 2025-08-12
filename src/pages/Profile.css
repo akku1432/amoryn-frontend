@@ -176,17 +176,40 @@
 /* File input styling */
 .profile-image-section input[type="file"] {
   margin: 15px auto;
-  padding: 8px;
+  padding: 12px 16px;
   border: 2px dashed #ff4b6e;
   border-radius: 8px;
   background: #fff;
   cursor: pointer;
   transition: all 0.3s ease;
+  width: 100%;
+  max-width: 300px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #666;
 }
 
 .profile-image-section input[type="file"]:hover {
   border-color: #e63e61;
   background: #fff5f7;
+}
+
+.profile-image-section input[type="file"]::-webkit-file-upload-button {
+  background: linear-gradient(135deg, #ec294d, #d63384);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-right: 10px;
+  transition: all 0.3s ease;
+}
+
+.profile-image-section input[type="file"]::-webkit-file-upload-button:hover {
+  background: linear-gradient(135deg, #d63384, #ec294d);
+  transform: translateY(-1px);
 }
 
 /* Form Styles */
@@ -374,6 +397,111 @@
   100% { transform: rotate(360deg); }
 }
 
+/* Delete Account Dialog */
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+.dialog-box {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+  animation: dialogSlideIn 0.3s ease-out;
+}
+
+@keyframes dialogSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.dialog-box h3 {
+  color: #dc3545;
+  margin-bottom: 15px;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.dialog-box p {
+  color: #666;
+  margin-bottom: 25px;
+  line-height: 1.5;
+  font-size: 16px;
+}
+
+.dialog-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.cancel-btn {
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  min-width: 100px;
+}
+
+.cancel-btn:hover:not(:disabled) {
+  background: #5a6268;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
+}
+
+.delete-confirm-btn {
+  background: linear-gradient(135deg, #dc3545, #c82333);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  min-width: 100px;
+}
+
+.delete-confirm-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #c82333, #a71e2a);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+}
+
+.cancel-btn:disabled,
+.delete-confirm-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .profile-page {
@@ -397,6 +525,12 @@
     padding: 20px;
   }
 
+  .profile-image-section input[type="file"] {
+    max-width: 100%;
+    padding: 10px 14px;
+    font-size: 0.85rem;
+  }
+
   .radio-group,
   .options-wrap {
     gap: 10px;
@@ -411,6 +545,22 @@
   .submit-btn {
     padding: 14px 28px;
     font-size: 1rem;
+  }
+
+  .dialog-box {
+    padding: 25px;
+    margin: 20px;
+  }
+
+  .dialog-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .cancel-btn,
+  .delete-confirm-btn {
+    width: 100%;
+    min-width: auto;
   }
 }
 
@@ -429,6 +579,11 @@
     padding: 15px;
   }
 
+  .profile-image-section input[type="file"] {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+
   .radio-group,
   .options-wrap {
     gap: 8px;
@@ -443,5 +598,18 @@
   .submit-btn {
     padding: 12px 24px;
     font-size: 0.95rem;
+  }
+
+  .dialog-box {
+    padding: 20px;
+    margin: 15px;
+  }
+
+  .dialog-box h3 {
+    font-size: 20px;
+  }
+
+  .dialog-box p {
+    font-size: 14px;
   }
 }
