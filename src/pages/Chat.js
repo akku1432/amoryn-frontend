@@ -54,6 +54,7 @@ function Chat() {
       })
       .then((res) => {
         let users = res.data;
+        console.log('Fetched conversations:', users);
 
         // If redirected to chat with a specific user
         if (location.state?.userId && location.state?.userName) {
@@ -71,12 +72,16 @@ function Chat() {
             navigate(`/video-call?userId=${user._id}&userName=${user.name}`);
           }
         } else if (users.length > 0 && !selectedUser) {
+          // Only set selectedUser if none is currently selected
           setSelectedUser(users[0]);
         }
 
         setConversations(users);
       })
-      .catch((err) => console.error('Failed to load conversations:', err));
+      .catch((err) => {
+        console.error('Failed to load conversations:', err);
+        console.error('Error details:', err.response?.data || err.message);
+      });
 
     // NEW: Fetch unread messages count per user to initialize notifications
     axios
@@ -89,12 +94,26 @@ function Chat() {
       .catch((err) => {
         console.error('Failed to load unread counts:', err);
       });
-  }, [token, location, socket, navigate, selectedUser]);
+  }, [token, location, socket, navigate]); // Removed selectedUser dependency
+
+  // Handle initial user selection when conversations are loaded
+  useEffect(() => {
+    if (conversations.length > 0 && !selectedUser) {
+      console.log('Setting initial selected user:', conversations[0]);
+      setSelectedUser(conversations[0]);
+    }
+  }, [conversations, selectedUser]);
+
+  // Debug selectedUser changes
+  useEffect(() => {
+    console.log('Selected user changed to:', selectedUser);
+  }, [selectedUser]);
 
   // Fetch messages for selected user and clear notifications for that user
   useEffect(() => {
     if (!selectedUser) return;
 
+    console.log('Fetching messages for user:', selectedUser);
     axios
       .get(`${BASE_URL}/api/chat/messages/${selectedUser._id}`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -215,6 +234,21 @@ function Chat() {
             >
               <Home size={20} />
             </button>
+            {/* Test button for debugging */}
+            <button 
+              onClick={() => {
+                console.log('Test button clicked');
+                console.log('Current conversations:', conversations);
+                console.log('Current selectedUser:', selectedUser);
+                if (conversations.length > 0) {
+                  console.log('Setting test user:', conversations[0]);
+                  setSelectedUser(conversations[0]);
+                }
+              }}
+              style={{ background: '#ff6b6b', color: 'white', padding: '8px 12px', borderRadius: '4px', border: 'none', cursor: 'pointer' }}
+            >
+              Test Select
+            </button>
           </div>
         </div>
         
@@ -226,11 +260,21 @@ function Chat() {
             </div>
           )}
           
+          {/* Debug info */}
+          <div style={{ padding: '10px', fontSize: '12px', color: '#666', borderBottom: '1px solid #eee' }}>
+            Conversations: {conversations.length} | Selected: {selectedUser?.name || 'None'}
+          </div>
+          
           {conversations.map((user) => (
             <div
               key={user._id}
               className={`conversation-item ${selectedUser?._id === user._id ? 'active' : ''}`}
-              onClick={() => setSelectedUser(user)}
+              onClick={() => {
+                console.log('User clicked:', user);
+                console.log('Current selectedUser:', selectedUser);
+                console.log('Setting selectedUser to:', user);
+                setSelectedUser(user);
+              }}
             >
               <div className="conversation-avatar">
                 {user.photo ? (
