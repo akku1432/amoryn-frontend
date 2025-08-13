@@ -133,6 +133,8 @@
   background: #fafafa;
   border-radius: 12px;
   border: 1px solid #e0e0e0;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 .profile-preview {
@@ -187,6 +189,8 @@
   text-align: center;
   font-size: 0.9rem;
   color: #666;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .profile-image-section input[type="file"]:hover {
@@ -218,6 +222,8 @@
   padding: 30px;
   border-radius: 16px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  box-sizing: border-box;
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
@@ -507,6 +513,7 @@
   .profile-page {
     padding: 15px;
     max-width: 100%;
+    overflow-x: hidden;
   }
 
   .profile-header {
@@ -527,8 +534,11 @@
 
   .profile-image-section input[type="file"] {
     max-width: 100%;
+    width: 100%;
     padding: 10px 14px;
     font-size: 0.85rem;
+    box-sizing: border-box;
+    overflow: hidden;
   }
 
   .radio-group,
@@ -567,6 +577,7 @@
 @media (max-width: 600px) {
   .profile-page {
     padding: 10px;
+    overflow-x: hidden;
   }
 
   .profile-preview,
@@ -582,6 +593,10 @@
   .profile-image-section input[type="file"] {
     padding: 8px 12px;
     font-size: 0.8rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
   }
 
   .radio-group,

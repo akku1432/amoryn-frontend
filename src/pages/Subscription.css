@@ -6,8 +6,9 @@
   border-radius: 25px;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
   position: relative;
-  overflow-x: hidden;
+  overflow: hidden;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-sizing: border-box;
 }
 
 .subscription-header {
@@ -36,6 +37,7 @@
   gap: 30px;
   width: 100%;
   justify-items: center;
+  overflow: hidden;
 }
 
 /* Plan Card */
@@ -56,6 +58,7 @@
   align-items: center;
   position: relative;
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 .plan-card::before {
@@ -202,6 +205,7 @@
   width: 100%;
   max-width: 200px;
   margin: 0 auto;
+  overflow: hidden;
 }
 
 /* Responsive Design */
@@ -227,6 +231,7 @@
   .subscription-container {
     margin: 20px;
     padding: 20px;
+    overflow: hidden;
   }
 
   .subscription-header h2 {
@@ -241,12 +246,14 @@
     grid-template-columns: 1fr;
     gap: 25px;
     justify-items: center;
+    overflow: hidden;
   }
 
   .plan-card {
     max-width: 100%;
     padding: 25px;
-    min-width: 280px;
+    min-width: auto;
+    width: 100%;
   }
 
   .subscription-home-button {
@@ -269,12 +276,17 @@
   .subscribe-btn {
     max-width: 180px;
   }
+
+  .paypal-buttons {
+    max-width: 180px;
+  }
 }
 
 @media (max-width: 600px) {
   .subscription-container {
     margin: 15px;
     padding: 18px;
+    overflow: hidden;
   }
 
   .subscription-header h2 {
@@ -288,11 +300,13 @@
 
   .plan-grid {
     gap: 20px;
+    overflow: hidden;
   }
 
   .plan-card {
     padding: 22px;
-    min-width: 260px;
+    min-width: auto;
+    width: 100%;
   }
 
   .plan-card h3 {
@@ -312,12 +326,17 @@
     font-size: 1rem;
     max-width: 160px;
   }
+
+  .paypal-buttons {
+    max-width: 160px;
+  }
 }
 
 @media (max-width: 480px) {
   .subscription-container {
     margin: 10px;
     padding: 15px;
+    overflow: hidden;
   }
 
   .subscription-header h2 {
@@ -331,11 +350,13 @@
 
   .plan-grid {
     gap: 18px;
+    overflow: hidden;
   }
 
   .plan-card {
     padding: 20px;
-    min-width: 240px;
+    min-width: auto;
+    width: 100%;
   }
 
   .plan-card h3 {
@@ -356,6 +377,10 @@
     max-width: 150px;
   }
 
+  .paypal-buttons {
+    max-width: 150px;
+  }
+
   .subscription-home-button {
     padding: 10px 16px;
     font-size: 0.9rem;
@@ -366,6 +391,7 @@
   .subscription-container {
     margin: 8px;
     padding: 12px;
+    overflow: hidden;
   }
 
   .subscription-header h2 {
@@ -378,7 +404,8 @@
 
   .plan-card {
     padding: 18px;
-    min-width: 220px;
+    min-width: auto;
+    width: 100%;
   }
 
   .plan-card h3 {
@@ -397,5 +424,59 @@
     padding: 10px 22px;
     font-size: 0.9rem;
     max-width: 140px;
+  }
+
+  .paypal-buttons {
+    max-width: 140px;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 320px) {
+  .subscription-container {
+    margin: 5px;
+    padding: 10px;
+    overflow: hidden;
+  }
+
+  .subscription-header h2 {
+    font-size: 1.3rem;
+  }
+
+  .subscription-header p {
+    font-size: 0.8rem;
+  }
+
+  .plan-card {
+    padding: 15px;
+    min-width: auto;
+    width: 100%;
+  }
+
+  .plan-card h3 {
+    font-size: 1.1rem;
+  }
+
+  .plan-price {
+    font-size: 1.4rem;
+  }
+
+  .premium-icon {
+    font-size: 1.8rem;
+  }
+
+  .subscribe-btn {
+    padding: 8px 20px;
+    font-size: 0.85rem;
+    max-width: 130px;
+  }
+
+  .paypal-buttons {
+    max-width: 130px;
+  }
+
+  .subscription-home-button {
+    padding: 8px 14px;
+    font-size: 0.85rem;
   }
 }
