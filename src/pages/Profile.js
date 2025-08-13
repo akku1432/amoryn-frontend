@@ -56,7 +56,7 @@ const Profile = () => {
       setUserId(user._id);
       const dobFormatted = user.dob ? user.dob.split("T")[0] : "";
 
-      setFormData({
+      const newFormData = {
         name: user.name || "",
         gender: user.gender || "",
         dob: dobFormatted,
@@ -68,7 +68,11 @@ const Profile = () => {
         drinking: user.drinking || "",
         relationshipType: Array.isArray(user.relationshipType) ? user.relationshipType : [],
         bio: user.bio || "",
-      });
+      };
+
+      console.log("Fetched profile data:", user);
+      console.log("Setting form data:", newFormData);
+      setFormData(newFormData);
 
       if (dobFormatted) {
         const birthDate = new Date(dobFormatted);
@@ -99,15 +103,24 @@ const Profile = () => {
   const handleChange = (e) => {
     const { name, value, checked } = e.target;
 
+    console.log("handleChange called:", { name, value, checked, type: e.target.type });
+
     if (name === "hobbies" || name === "relationshipType") {
       setFormData((prev) => {
+        console.log("Previous form data:", prev);
+        console.log("Previous value for", name, ":", prev[name]);
+        
         const newValue = checked 
           ? [...prev[name], value]
           : prev[name].filter((item) => item !== value);
         
         console.log(`${name} updated:`, newValue); // Debug log
         console.log(`Form data after ${name} change:`, { ...prev, [name]: newValue }); // Additional debug
-        return { ...prev, [name]: newValue };
+        
+        const updatedFormData = { ...prev, [name]: newValue };
+        console.log("Final updated form data:", updatedFormData);
+        
+        return updatedFormData;
       });
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
@@ -321,6 +334,7 @@ const Profile = () => {
         <div>
           <h4>Relationship Type (Select up to 2) - {formData.relationshipType.length}/2</h4>
           <div className="options-wrap">
+            {console.log("Current formData.relationshipType:", formData.relationshipType)}
             {relationshipOptions.map((option) => {
               const isChecked = formData.relationshipType.includes(option);
               console.log(`Relationship option ${option}:`, { isChecked, relationshipType: formData.relationshipType });
