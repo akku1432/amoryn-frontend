@@ -69,7 +69,7 @@ const Profile = () => {
           hobbies: Array.isArray(user.hobbies) ? user.hobbies : [],
           smoking: user.smoking || "",
           drinking: user.drinking || "",
-          relationshipType: user.relationshipType || "",
+          relationshipType: Array.isArray(user.relationshipType) ? user.relationshipType : [],
           bio: user.bio || "",
         });
 
@@ -100,12 +100,12 @@ const Profile = () => {
   const handleChange = (e) => {
     const { name, value, checked } = e.target;
 
-    if (name === "hobbies") {
+    if (name === "hobbies" || name === "relationshipType") {
       setFormData((prev) => {
         if (checked) {
-          return { ...prev, hobbies: [...prev.hobbies, value] };
+          return { ...prev, [name]: [...prev[name], value] };
         } else {
-          return { ...prev, hobbies: prev.hobbies.filter((h) => h !== value) };
+          return { ...prev, [name]: prev[name].filter((item) => item !== value) };
         }
       });
     } else {
@@ -134,7 +134,7 @@ const Profile = () => {
       formDataToSend.append('hobbies', JSON.stringify(Array.isArray(formData.hobbies) ? formData.hobbies : []));
       formDataToSend.append('smoking', formData.smoking || "");
       formDataToSend.append('drinking', formData.drinking || "");
-      formDataToSend.append('relationshipType', formData.relationshipType || "");
+      formDataToSend.append('relationshipType', JSON.stringify(Array.isArray(formData.relationshipType) ? formData.relationshipType : []));
       formDataToSend.append('bio', formData.bio || "");
       formDataToSend.append('country', formData.country || "");
       formDataToSend.append('city', formData.city || "");
@@ -315,16 +315,17 @@ const Profile = () => {
         </div>
 
         <div>
-          <h4>Relationship Type</h4>
+          <h4>Relationship Type (Select up to 2) - {formData.relationshipType.length}/2</h4>
           <div className="options-wrap">
             {relationshipOptions.map((option) => (
               <label key={option}>
                 <input
-                  type="radio"
+                  type="checkbox"
                   name="relationshipType"
                   value={option}
-                  checked={formData.relationshipType === option}
+                  checked={formData.relationshipType.includes(option)}
                   onChange={handleChange}
+                  disabled={!formData.relationshipType.includes(option) && formData.relationshipType.length >= 2}
                 />
                 <span>{option}</span>
               </label>

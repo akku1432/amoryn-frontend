@@ -329,6 +329,8 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  position: relative;
+  overflow: hidden;
 }
 
 .options-wrap label span {
@@ -347,12 +349,40 @@
   display: none;
 }
 
+.options-wrap input[type="checkbox"]:disabled + span {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: #f5f5f5;
+  color: #999;
+  border-color: #ddd;
+  transform: scale(0.95);
+}
+
+.options-wrap label:has(input:disabled) {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
 .options-wrap input[type="checkbox"]:checked + span,
 .options-wrap input[type="radio"]:checked + span {
-  background: #ec294d;
+  background: linear-gradient(135deg, #ec294d, #d63384);
   color: white;
   border-color: #ec294d;
   box-shadow: 0 4px 12px rgba(236, 41, 77, 0.3);
+  transform: scale(1.05);
+  animation: optionSelected 0.3s ease-out;
+}
+
+@keyframes optionSelected {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1.05);
+  }
 }
 
 /* Enhanced Submit Button */
