@@ -337,7 +337,7 @@ const Profile = () => {
         </div>
 
         <div>
-          <h4>Relationship Type (Select up to 2) - {formData.relationshipType.length}/2</h4>
+          <h4>Relationship Type</h4>
           <div className="options-wrap">
             {console.log("Current formData.relationshipType:", formData.relationshipType)}
             {relationshipOptions.map((option) => {
