@@ -44,56 +44,55 @@ const Profile = () => {
     "Marriage", "Networking", "Travel buddy"
   ];
 
+  const fetchProfile = async () => {
+    try {
+      const res = await axios.get(`${BASE_URL}/api/user/profile`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if (!res.data) return;
+
+      const user = res.data;
+      setUserId(user._id);
+      const dobFormatted = user.dob ? user.dob.split("T")[0] : "";
+
+      setFormData({
+        name: user.name || "",
+        gender: user.gender || "",
+        dob: dobFormatted,
+        country: user.country || "",
+        state: user.state || "",
+        city: user.city || "",
+        hobbies: Array.isArray(user.hobbies) ? user.hobbies : [],
+        smoking: user.smoking || "",
+        drinking: user.drinking || "",
+        relationshipType: Array.isArray(user.relationshipType) ? user.relationshipType : [],
+        bio: user.bio || "",
+      });
+
+      if (dobFormatted) {
+        const birthDate = new Date(dobFormatted);
+        const today = new Date();
+        let calculatedAge = today.getFullYear() - birthDate.getFullYear();
+        const m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+          calculatedAge--;
+        }
+        setAge(calculatedAge);
+      }
+
+      if (user.profilePicture && user._id) {
+        setPreviewImage(`${BASE_URL}/api/user/profile/picture/${user._id}`);
+      } else {
+        setPreviewImage(null);
+      }
+    } catch (err) {
+      console.error("Error fetching profile:", err);
+    }
+  };
+
   useEffect(() => {
     if (!token) return;
-
-    const fetchProfile = async () => {
-      try {
-        const res = await axios.get(`${BASE_URL}/api/user/profile`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
-        if (!res.data) return;
-
-        const user = res.data;
-        setUserId(user._id);
-        const dobFormatted = user.dob ? user.dob.split("T")[0] : "";
-
-        setFormData({
-          name: user.name || "",
-          gender: user.gender || "",
-          dob: dobFormatted,
-          country: user.country || "",
-          state: user.state || "",
-          city: user.city || "",
-          hobbies: Array.isArray(user.hobbies) ? user.hobbies : [],
-          smoking: user.smoking || "",
-          drinking: user.drinking || "",
-          relationshipType: Array.isArray(user.relationshipType) ? user.relationshipType : [],
-          bio: user.bio || "",
-        });
-
-        if (dobFormatted) {
-          const birthDate = new Date(dobFormatted);
-          const today = new Date();
-          let calculatedAge = today.getFullYear() - birthDate.getFullYear();
-          const m = today.getMonth() - birthDate.getMonth();
-          if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-            calculatedAge--;
-          }
-          setAge(calculatedAge);
-        }
-
-        if (user.profilePicture && user._id) {
-          setPreviewImage(`${BASE_URL}/api/user/profile/picture/${user._id}`);
-        } else {
-          setPreviewImage(null);
-        }
-      } catch (err) {
-        console.error("Error fetching profile:", err);
-      }
-    };
-
     fetchProfile();
   }, [token]);
 
