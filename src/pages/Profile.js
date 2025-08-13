@@ -27,6 +27,7 @@ const Profile = () => {
   const [updateProgress, setUpdateProgress] = useState("");
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
+  const [userId, setUserId] = useState(null);
 
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
@@ -55,6 +56,7 @@ const Profile = () => {
         if (!res.data) return;
 
         const user = res.data;
+        setUserId(user._id);
         const dobFormatted = user.dob ? user.dob.split("T")[0] : "";
 
         setFormData({
@@ -157,7 +159,7 @@ const Profile = () => {
       // Update preview image if new image was uploaded
       if (profileImage) {
         // Force refresh the image by adding timestamp
-        setPreviewImage(`${BASE_URL}/api/user/profile/picture/${userProfile?._id}?t=${Date.now()}`);
+        setPreviewImage(`${BASE_URL}/api/user/profile/picture/${userId}?t=${Date.now()}`);
         setProfileImage(null);
       }
 

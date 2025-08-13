@@ -238,6 +238,11 @@ function Admin() {
     setSelectedUser(null);
   };
 
+  const closePremiumModal = () => {
+    setShowPremiumModal(false);
+    setPremiumUserId(null);
+  };
+
   const handleLogout = () => {
     localStorage.removeItem('token');
     navigate('/login');
