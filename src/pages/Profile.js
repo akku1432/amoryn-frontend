@@ -102,11 +102,12 @@ const Profile = () => {
 
     if (name === "hobbies" || name === "relationshipType") {
       setFormData((prev) => {
-        if (checked) {
-          return { ...prev, [name]: [...prev[name], value] };
-        } else {
-          return { ...prev, [name]: prev[name].filter((item) => item !== value) };
-        }
+        const newValue = checked 
+          ? [...prev[name], value]
+          : prev[name].filter((item) => item !== value);
+        
+        console.log(`${name} updated:`, newValue); // Debug log
+        return { ...prev, [name]: newValue };
       });
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
@@ -162,6 +163,9 @@ const Profile = () => {
         setPreviewImage(`${BASE_URL}/api/user/profile/picture/${userId}?t=${Date.now()}`);
         setProfileImage(null);
       }
+
+      // Refresh profile data to ensure UI reflects the updated state
+      await fetchProfile();
 
       // Clear progress after 2 seconds
       setTimeout(() => {
@@ -271,8 +275,8 @@ const Profile = () => {
                   value={hobby}
                   checked={formData.hobbies.includes(hobby)}
                   onChange={handleChange}
-                />{" "}
-                {hobby}
+                />
+                <span>{hobby}</span>
               </label>
             ))}
           </div>

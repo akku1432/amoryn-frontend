@@ -333,6 +333,11 @@
   overflow: hidden;
 }
 
+.options-wrap label:has(input:checked) {
+  border-color: #ec294d;
+  box-shadow: 0 4px 15px rgba(236, 41, 77, 0.2);
+}
+
 .options-wrap label span {
   color: inherit;
   font-weight: inherit;
@@ -368,22 +373,49 @@
   background: linear-gradient(135deg, #ec294d, #d63384);
   color: white;
   border-color: #ec294d;
-  box-shadow: 0 4px 12px rgba(236, 41, 77, 0.3);
+  box-shadow: 0 6px 20px rgba(236, 41, 77, 0.4);
   transform: scale(1.05);
-  animation: optionSelected 0.3s ease-out;
+  animation: optionSelected 0.3s ease-out, pulseGlow 2s ease-in-out infinite;
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.options-wrap input[type="checkbox"]:checked + span::before,
+.options-wrap input[type="radio"]:checked + span::before {
+  content: '✓';
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  background: #fff;
+  color: #ec294d;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 @keyframes optionSelected {
   0% {
     transform: scale(1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   }
   50% {
     transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(236, 41, 77, 0.5);
   }
   100% {
     transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(236, 41, 77, 0.4);
   }
 }
+
+
 
 /* Enhanced Submit Button */
 .submit-btn {
