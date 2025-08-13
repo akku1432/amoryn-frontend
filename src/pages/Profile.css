@@ -288,6 +288,9 @@
   font-weight: 500;
   color: #555;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .radio-group label:hover {
@@ -301,13 +304,18 @@
 }
 
 .radio-group input[type="radio"]:checked + span {
-  background: #ec294d;
-  color: white;
+  background: linear-gradient(135deg, #ec294d, #d63384);
+  color: white !important;
   border-color: #ec294d;
-  box-shadow: 0 4px 12px rgba(236, 41, 77, 0.3);
+  box-shadow: 0 6px 20px rgba(236, 41, 77, 0.4);
+  transform: scale(1.05);
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  animation: optionSelected 0.3s ease-out;
+  z-index: 1;
 }
 
-/* Checkbox styling for hobbies */
+/* Checkbox styling for hobbies and other options */
 .options-wrap {
   display: flex;
   flex-wrap: wrap;
@@ -333,14 +341,13 @@
   overflow: hidden;
 }
 
-.options-wrap label:has(input:checked) {
-  border-color: #ec294d;
-  box-shadow: 0 4px 15px rgba(236, 41, 77, 0.2);
-}
-
 .options-wrap label span {
   color: inherit;
   font-weight: inherit;
+  transition: all 0.3s ease;
+  border-radius: 20px;
+  padding: 8px 12px;
+  min-width: fit-content;
 }
 
 .options-wrap label:hover {
@@ -349,38 +356,56 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* Hover effect for selected options */
+.options-wrap label:has(input:checked):hover {
+  border-color: #d63384;
+  box-shadow: 0 6px 20px rgba(236, 41, 77, 0.3);
+  transform: translateY(-2px) scale(1.02);
+}
+
 .options-wrap input[type="checkbox"],
 .options-wrap input[type="radio"] {
   display: none;
 }
 
-.options-wrap input[type="checkbox"]:disabled + span {
-  opacity: 0.5;
-  cursor: not-allowed;
-  background: #f5f5f5;
-  color: #999;
-  border-color: #ddd;
-  transform: scale(0.95);
-}
-
-.options-wrap label:has(input:disabled) {
-  cursor: not-allowed;
-  opacity: 0.7;
-}
-
+/* Selected state styling */
 .options-wrap input[type="checkbox"]:checked + span,
 .options-wrap input[type="radio"]:checked + span {
   background: linear-gradient(135deg, #ec294d, #d63384);
-  color: white;
+  color: white !important;
   border-color: #ec294d;
   box-shadow: 0 6px 20px rgba(236, 41, 77, 0.4);
   transform: scale(1.05);
-  animation: optionSelected 0.3s ease-out, pulseGlow 2s ease-in-out infinite;
   font-weight: 600;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
   position: relative;
+  animation: optionSelected 0.3s ease-out;
+  z-index: 1;
 }
 
+/* Enhanced label styling for selected options */
+.options-wrap label:has(input:checked) {
+  border-color: #ec294d;
+  box-shadow: 0 4px 15px rgba(236, 41, 77, 0.2);
+  transform: translateY(-1px);
+}
+
+/* Force selected state visibility */
+.options-wrap input[type="checkbox"]:checked + span,
+.options-wrap input[type="radio"]:checked + span,
+.radio-group input[type="radio"]:checked + span {
+  background: linear-gradient(135deg, #ec294d, #d63384) !important;
+  color: white !important;
+  border-color: #ec294d !important;
+  box-shadow: 0 6px 20px rgba(236, 41, 77, 0.4) !important;
+  transform: scale(1.05) !important;
+  font-weight: 600 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* Checkmark for selected options */
 .options-wrap input[type="checkbox"]:checked + span::before,
 .options-wrap input[type="radio"]:checked + span::before {
   content: '✓';
@@ -398,6 +423,21 @@
   font-size: 12px;
   font-weight: bold;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Disabled state styling */
+.options-wrap input[type="checkbox"]:disabled + span {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: #f5f5f5;
+  color: #999 !important;
+  border-color: #ddd;
+  transform: scale(0.95);
+}
+
+.options-wrap label:has(input:disabled) {
+  cursor: not-allowed;
+  opacity: 0.7;
 }
 
 @keyframes optionSelected {
