@@ -154,6 +154,11 @@ const Profile = () => {
       formDataToSend.append('city', formData.city || "");
       formDataToSend.append('state', formData.state || "");
 
+      // Debug: Log what we're sending to the server
+      console.log("Sending to server - relationshipType:", formData.relationshipType);
+      console.log("Sending to server - JSON relationshipType:", JSON.stringify(Array.isArray(formData.relationshipType) ? formData.relationshipType : []));
+      console.log("Complete form data being sent:", formData);
+
       // Add image if selected
       if (profileImage) {
         formDataToSend.append('profilePicture', profileImage);
@@ -168,6 +173,30 @@ const Profile = () => {
         },
       });
 
+      // Log the complete server response
+      console.log("Complete server response:", response.data);
+      console.log("Response status:", response.status);
+      console.log("Response headers:", response.headers);
+
+      // Check if the server response includes updated data
+      if (response.data && response.data.subscription) {
+        console.log("Server response includes subscription update:", response.data.subscription);
+      }
+
+      // Update local state with server response if available, otherwise keep current form data
+      if (response.data && response.data.user) {
+        console.log("Server returned updated user data:", response.data.user);
+        // Update specific fields that might have changed on the server
+        if (response.data.user.relationshipType) {
+          setFormData(prev => ({
+            ...prev,
+            relationshipType: Array.isArray(response.data.user.relationshipType) 
+              ? response.data.user.relationshipType 
+              : prev.relationshipType
+          }));
+        }
+      }
+
       setUpdateProgress("Profile updated successfully!");
       
       // Update preview image if new image was uploaded
@@ -177,8 +206,9 @@ const Profile = () => {
         setProfileImage(null);
       }
 
-      // Refresh profile data to ensure UI reflects the updated state
-      await fetchProfile();
+      // Don't refresh profile data - keep the current form state
+      // The form data is already updated locally
+      console.log("Profile updated successfully. Current form data:", formData);
 
       // Clear progress after 2 seconds
       setTimeout(() => {
