@@ -280,47 +280,56 @@ const Profile = () => {
 
         <div>
           <h4>Smoking</h4>
-          {smokingOptions.map((option) => (
-            <label key={option}>
-              <input
-                type="radio"
-                name="smoking"
-                value={option}
-                checked={formData.smoking === option}
-                onChange={handleChange}
-              /> {option}
-            </label>
-          ))}
+          <div className="options-wrap">
+            {smokingOptions.map((option) => (
+              <label key={option}>
+                <input
+                  type="radio"
+                  name="smoking"
+                  value={option}
+                  checked={formData.smoking === option}
+                  onChange={handleChange}
+                />
+                <span>{option}</span>
+              </label>
+            ))}
+          </div>
         </div>
 
         <div>
           <h4>Drinking</h4>
-          {drinkingOptions.map((option) => (
-            <label key={option}>
-              <input
-                type="radio"
-                name="drinking"
-                value={option}
-                checked={formData.drinking === option}
-                onChange={handleChange}
-              /> {option}
-            </label>
+          <div className="options-wrap">
+            {drinkingOptions.map((option) => (
+              <label key={option}>
+                <input
+                  type="radio"
+                  name="drinking"
+                  value={option}
+                  checked={formData.drinking === option}
+                  onChange={handleChange}
+                />
+                <span>{option}</span>
+              </label>
           ))}
+          </div>
         </div>
 
         <div>
           <h4>Relationship Type</h4>
-          {relationshipOptions.map((option) => (
-            <label key={option}>
-              <input
-                type="radio"
-                name="relationshipType"
-                value={option}
-                checked={formData.relationshipType === option}
-                onChange={handleChange}
-              /> {option}
-            </label>
-          ))}
+          <div className="options-wrap">
+            {relationshipOptions.map((option) => (
+              <label key={option}>
+                <input
+                  type="radio"
+                  name="relationshipType"
+                  value={option}
+                  checked={formData.relationshipType === option}
+                  onChange={handleChange}
+                />
+                <span>{option}</span>
+              </label>
+            ))}
+          </div>
         </div>
 
         <div>
