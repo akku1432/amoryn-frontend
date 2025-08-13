@@ -368,20 +368,7 @@
   display: none;
 }
 
-/* Selected state styling */
-.options-wrap input[type="checkbox"]:checked + span,
-.options-wrap input[type="radio"]:checked + span {
-  background: linear-gradient(135deg, #ec294d, #d63384);
-  color: white !important;
-  border-color: #ec294d;
-  box-shadow: 0 6px 20px rgba(236, 41, 77, 0.4);
-  transform: scale(1.05);
-  font-weight: 600;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-  position: relative;
-  animation: optionSelected 0.3s ease-out;
-  z-index: 1;
-}
+
 
 /* Enhanced label styling for selected options */
 .options-wrap label:has(input:checked) {
@@ -390,7 +377,7 @@
   transform: translateY(-1px);
 }
 
-/* Force selected state visibility */
+/* Force selected state visibility - HIGH PRIORITY */
 .options-wrap input[type="checkbox"]:checked + span,
 .options-wrap input[type="radio"]:checked + span,
 .radio-group input[type="radio"]:checked + span {
@@ -403,6 +390,7 @@
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
   position: relative !important;
   z-index: 1 !important;
+  display: block !important;
 }
 
 /* Checkmark for selected options */
@@ -423,6 +411,99 @@
   font-size: 12px;
   font-weight: bold;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Additional specificity for relationship type and hobbies */
+.options-wrap input[type="checkbox"]:checked + span {
+  background: linear-gradient(135deg, #ec294d, #d63384) !important;
+  color: white !important;
+  border-color: #ec294d !important;
+  box-shadow: 0 6px 20px rgba(236, 41, 77, 0.4) !important;
+  transform: scale(1.05) !important;
+  font-weight: 600 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+  position: relative !important;
+  z-index: 1 !important;
+  display: block !important;
+}
+
+/* Ultra-specific selectors to ensure styling works */
+.options-wrap input[name="relationshipType"]:checked + span,
+.options-wrap input[name="hobbies"]:checked + span {
+  background: linear-gradient(135deg, #ec294d, #d63384) !important;
+  color: white !important;
+  border-color: #ec294d !important;
+  box-shadow: 0 6px 20px rgba(236, 41, 77, 0.4) !important;
+  transform: scale(1.05) !important;
+  font-weight: 600 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+  position: relative !important;
+  z-index: 1 !important;
+  display: block !important;
+}
+
+/* Debug styling - make sure relationship type is visible */
+.options-wrap input[name="relationshipType"]:checked + span {
+  background: linear-gradient(135deg, #ec294d, #d63384) !important;
+  color: white !important;
+  border-color: #ec294d !important;
+  box-shadow: 0 6px 20px rgba(236, 41, 77, 0.4) !important;
+  transform: scale(1.05) !important;
+  font-weight: 600 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+  position: relative !important;
+  z-index: 1 !important;
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Force relationship type styling with maximum specificity */
+.options-wrap input[type="checkbox"][name="relationshipType"]:checked + span {
+  background: linear-gradient(135deg, #ec294d, #d63384) !important;
+  color: white !important;
+  border-color: #ec294d !important;
+  box-shadow: 0 6px 20px rgba(236, 41, 77, 0.4) !important;
+  transform: scale(1.05) !important;
+  font-weight: 600 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+  position: relative !important;
+  z-index: 1 !important;
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Additional debugging - target relationship type specifically */
+.options-wrap input[name="relationshipType"]:checked + span {
+  background: linear-gradient(135deg, #ec294d, #d63384) !important;
+  color: white !important;
+  border-color: #ec294d !important;
+  box-shadow: 0 6px 20px rgba(236, 41, 77, 0.4) !important;
+  transform: scale(1.05) !important;
+  font-weight: 600 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+  position: relative !important;
+  z-index: 1 !important;
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Final attempt - use attribute selectors for maximum specificity */
+input[type="checkbox"][name="relationshipType"]:checked + span {
+  background: linear-gradient(135deg, #ec294d, #d63384) !important;
+  color: white !important;
+  border-color: #ec294d !important;
+  box-shadow: 0 6px 20px rgba(236, 41, 77, 0.4) !important;
+  transform: scale(1.05) !important;
+  font-weight: 600 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+  position: relative !important;
+  z-index: 1 !important;
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 /* Disabled state styling */

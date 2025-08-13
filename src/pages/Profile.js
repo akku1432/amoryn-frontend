@@ -106,6 +106,7 @@ const Profile = () => {
           : prev[name].filter((item) => item !== value);
         
         console.log(`${name} updated:`, newValue); // Debug log
+        console.log(`Form data after ${name} change:`, { ...prev, [name]: newValue }); // Additional debug
         return { ...prev, [name]: newValue };
       });
     } else {
@@ -320,19 +321,23 @@ const Profile = () => {
         <div>
           <h4>Relationship Type (Select up to 2) - {formData.relationshipType.length}/2</h4>
           <div className="options-wrap">
-            {relationshipOptions.map((option) => (
-              <label key={option}>
-                <input
-                  type="checkbox"
-                  name="relationshipType"
-                  value={option}
-                  checked={formData.relationshipType.includes(option)}
-                  onChange={handleChange}
-                  disabled={!formData.relationshipType.includes(option) && formData.relationshipType.length >= 2}
-                />
-                <span>{option}</span>
-              </label>
-            ))}
+            {relationshipOptions.map((option) => {
+              const isChecked = formData.relationshipType.includes(option);
+              console.log(`Relationship option ${option}:`, { isChecked, relationshipType: formData.relationshipType });
+              return (
+                <label key={option}>
+                  <input
+                    type="checkbox"
+                    name="relationshipType"
+                    value={option}
+                    checked={isChecked}
+                    onChange={handleChange}
+                    disabled={!isChecked && formData.relationshipType.length >= 2}
+                  />
+                  <span>{option}</span>
+                </label>
+              );
+            })}
           </div>
         </div>
 
