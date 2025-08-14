@@ -24,8 +24,7 @@ function Dashboard() {
   const [newChatNotification, setNewChatNotification] = useState(false);
   const [newFriendNotification, setNewFriendNotification] = useState(false);
 
-  // First login profile update modal
-  const [showProfileUpdateModal, setShowProfileUpdateModal] = useState(false);
+
 
   // NEW: Profile completion modal state
   const [showIncompleteProfileModal, setShowIncompleteProfileModal] = useState(false);
@@ -170,22 +169,7 @@ function Dashboard() {
     };
   }, [socket, userProfile]);
 
-  // First login profile update check
-  useEffect(() => {
-    const checkProfileUpdate = async () => {
-      try {
-        const res = await axios.get(`${BASE_URL}/api/user/profile`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        if (!res.data.profileUpdated) {
-          setShowProfileUpdateModal(true);
-        }
-      } catch (err) {
-        console.error('Failed to check profile update status:', err);
-      }
-    };
-    if (token) checkProfileUpdate();
-  }, [token]);
+
 
   // 🔹 NEW: Profile completion check
   useEffect(() => {
@@ -195,10 +179,32 @@ function Dashboard() {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        // Example check — adjust field list based on your backend profile model
-        const { name, dob, gender, bio, photos } = res.data;
-        if (!name || !dob || !gender || !bio || !photos || photos.length === 0) {
+        // Check all required fields based on backend profile completion logic
+        const { 
+          hobbies, 
+          smoking, 
+          drinking, 
+          relationshipType, 
+          bio, 
+          country, 
+          state, 
+          city 
+        } = res.data;
+        
+        const isProfileComplete = 
+          hobbies && hobbies.length > 0 &&
+          smoking && smoking.trim() !== '' &&
+          drinking && drinking.trim() !== '' &&
+          relationshipType && relationshipType.length > 0 &&
+          bio && bio.trim() !== '' &&
+          country && country.trim() !== '' &&
+          state && state.trim() !== '' &&
+          city && city.trim() !== '';
+        
+        if (!isProfileComplete) {
           setShowIncompleteProfileModal(true);
+        } else {
+          setShowIncompleteProfileModal(false);
         }
       } catch (err) {
         console.error('Failed to check profile completion:', err);
@@ -441,19 +447,7 @@ function Dashboard() {
         </div>
       )}
 
-      {/* First Login Profile Update Modal */}
-      {/* {showProfileUpdateModal && (
-        <div className="modal-overlay" onClick={() => setShowProfileUpdateModal(false)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <h3>Update Your Profile</h3>
-            <p>We noticed this is your first login. Please update your profile to get better matches!</p>
-            <button onClick={() => navigate('/profile')}>Update Now</button>
-            <button onClick={() => setShowProfileUpdateModal(false)}>Maybe Later</button>
-          </div>
-        </div>
-      )} */}
-{/* 
-      🔹 NEW: Incomplete Profile Modal */}
+      {/* Incomplete Profile Modal */}
       {showIncompleteProfileModal && (
         <div className="modal-overlay" onClick={() => setShowIncompleteProfileModal(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
