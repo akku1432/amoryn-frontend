@@ -307,10 +307,6 @@ function Admin() {
           <h1>Admin Dashboard</h1>
         </div>
         <div className="admin-actions">
-          <button className="home-button" onClick={() => navigate('/dashboard')}>
-            <Home size={20} />
-            Dashboard
-          </button>
           <button className="logout-button" onClick={handleLogout}>
             <LogOut size={20} />
             Logout
