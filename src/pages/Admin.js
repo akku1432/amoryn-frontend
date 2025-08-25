@@ -30,6 +30,10 @@ function Admin() {
   const [showPremiumModal, setShowPremiumModal] = useState(false);
   const [premiumUserId, setPremiumUserId] = useState(null);
   const [premiumDuration, setPremiumDuration] = useState('1month');
+  const [newUsers, setNewUsers] = useState([]);
+  const [showNewUsers, setShowNewUsers] = useState(false);
+  const [referralCodes, setReferralCodes] = useState([]);
+  const [showReferralCodes, setShowReferralCodes] = useState(false);
 
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
@@ -38,6 +42,8 @@ function Admin() {
     // Check if user is admin
     checkAdminStatus();
     fetchUsers();
+    fetchNewUsers();
+    fetchReferralCodes();
   }, []);
 
   useEffect(() => {
@@ -73,6 +79,28 @@ function Admin() {
       setMessageType('error');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchNewUsers = async () => {
+    try {
+      const res = await axios.get(`${BASE_URL}/api/admin/new-users`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setNewUsers(res.data.users || []);
+    } catch (err) {
+      console.error('Failed to fetch new users:', err);
+    }
+  };
+
+  const fetchReferralCodes = async () => {
+    try {
+      const res = await axios.get(`${BASE_URL}/api/admin/referral-codes`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setReferralCodes(res.data.referralCodes || []);
+    } catch (err) {
+      console.error('Failed to fetch referral codes:', err);
     }
   };
 
@@ -307,6 +335,142 @@ function Admin() {
           <h3>Suspended Users</h3>
           <p>{users.filter(u => u.isSuspended).length}</p>
         </div>
+        <div className="stat-card">
+          <h3>New Users (30d)</h3>
+          <p>{newUsers.length}</p>
+        </div>
+      </div>
+
+      {/* New Users with Referral Codes Section */}
+      <div className="new-users-section">
+        <div className="section-header">
+          <h2>🎁 New Users with Referral Codes</h2>
+          <button 
+            className="toggle-button"
+            onClick={() => setShowNewUsers(!showNewUsers)}
+          >
+            {showNewUsers ? 'Hide' : 'Show'} New Users
+          </button>
+        </div>
+        
+        {showNewUsers && (
+          <div className="new-users-container">
+            {newUsers.length === 0 ? (
+              <p className="no-users">No new users in the last 30 days</p>
+            ) : (
+              <div className="new-users-grid">
+                {newUsers.map(user => (
+                  <div key={user._id} className="new-user-card">
+                    <div className="user-header">
+                      <div className="user-avatar">
+                        {user.profilePicture ? (
+                          <img src={`${BASE_URL}/api/user/profile/picture/${user._id}`} alt={user.name} />
+                        ) : (
+                          <div className="default-avatar">
+                            {user.name?.charAt(0)?.toUpperCase() || 'U'}
+                          </div>
+                        )}
+                      </div>
+                      <div className="user-info">
+                        <h4>{user.name || 'N/A'}</h4>
+                        <p>{user.email}</p>
+                        <small>Joined: {formatDate(user.createdAt)}</small>
+                      </div>
+                    </div>
+                    
+                    <div className="referral-info">
+                      {user.referralCode ? (
+                        <div className="referral-badge">
+                          <span className="referral-label">Referral Code:</span>
+                          <span className="referral-code">{user.referralCode}</span>
+                        </div>
+                      ) : (
+                        <div className="no-referral">No Referral Code</div>
+                      )}
+                      
+                      {user.isReferralPremium && (
+                        <div className="premium-info">
+                          <span className="premium-badge">24hr Premium</span>
+                          {user.referralPremiumExpiry && (
+                            <small>Expires: {formatDate(user.referralPremiumExpiry)}</small>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                    
+                    <div className="user-status">
+                      {getStatusBadge(user)}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* Referral Codes Management Section */}
+      <div className="referral-codes-section">
+        <div className="section-header">
+          <h2>🎯 Referral Codes Management</h2>
+          <button 
+            className="toggle-button"
+            onClick={() => setShowReferralCodes(!showReferralCodes)}
+          >
+            {showReferralCodes ? 'Hide' : 'Show'} Referral Codes
+          </button>
+        </div>
+        
+        {showReferralCodes && (
+          <div className="referral-codes-container">
+            {referralCodes.length === 0 ? (
+              <p className="no-codes">No referral codes have been used yet</p>
+            ) : (
+              <div className="referral-codes-grid">
+                {referralCodes.map((codeData, index) => (
+                  <div key={index} className="referral-code-card">
+                    <div className="code-header">
+                      <h3 className="code-title">{codeData.code}</h3>
+                      <div className="code-stats">
+                        <span className="stat-badge usage">
+                          {codeData.usageCount} {codeData.usageCount === 1 ? 'User' : 'Users'}
+                        </span>
+                        <span className="stat-badge active">
+                          {codeData.activeUsers} Active
+                        </span>
+                      </div>
+                    </div>
+                    
+                    <div className="code-details">
+                      <p><strong>Total Usage:</strong> {codeData.usageCount}</p>
+                      <p><strong>Active Premium:</strong> {codeData.activeUsers}</p>
+                      <p><strong>Success Rate:</strong> {codeData.usageCount > 0 ? Math.round((codeData.activeUsers / codeData.usageCount) * 100) : 0}%</p>
+                    </div>
+                    
+                    <div className="code-users">
+                      <h4>Recent Users:</h4>
+                      <div className="users-list">
+                        {codeData.users.slice(0, 3).map((user, userIndex) => (
+                          <div key={userIndex} className="user-item">
+                            <span className="user-name">{user.name || 'N/A'}</span>
+                            <span className="user-email">{user.email}</span>
+                            <span className="user-date">{formatDate(user.createdAt)}</span>
+                            {user.isReferralPremium && user.referralPremiumExpiry && new Date(user.referralPremiumExpiry) > new Date() && (
+                              <span className="premium-active">⭐ Active</span>
+                            )}
+                          </div>
+                        ))}
+                        {codeData.users.length > 3 && (
+                          <p className="more-users">+{codeData.users.length - 3} more users</p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       <div className="admin-controls">

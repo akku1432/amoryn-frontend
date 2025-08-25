@@ -12,6 +12,7 @@ function Signup() {
     dob: '',
     lookingFor: '',
     password: '',
+    referralCode: '', // Added referral code field
   });
   const [acceptTerms, setAcceptTerms] = useState(false);
   const [message, setMessage] = useState('');
@@ -73,6 +74,15 @@ function Signup() {
           <option value="both">Both</option>
         </select>
         <input type="password" name="password" placeholder="Password" onChange={handleChange} required />
+        
+        {/* Referral Code Field */}
+        <input 
+          type="text" 
+          name="referralCode" 
+          placeholder="Referral Code (Optional)" 
+          onChange={handleChange}
+          value={formData.referralCode}
+        />
 
         <div className="terms-checkbox">
           <input
