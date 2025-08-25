@@ -18,6 +18,37 @@ function Dashboard() {
   const [showDialog, setShowDialog] = useState(false);
   const [dialogMessage, setDialogMessage] = useState('');
 
+  // NEW: Referral premium status
+  const [isReferralPremium, setIsReferralPremium] = useState(false);
+  const [referralPremiumExpiry, setReferralPremiumExpiry] = useState(null);
+  const [timeRemaining, setTimeRemaining] = useState('');
+  const [showExpiredModal, setShowExpiredModal] = useState(false);
+
+  // Countdown timer for referral premium
+  useEffect(() => {
+    if (isReferralPremium && referralPremiumExpiry) {
+      const timer = setInterval(() => {
+        const now = new Date();
+        const expiry = new Date(referralPremiumExpiry);
+        const diff = expiry - now;
+        
+        if (diff <= 0) {
+          setTimeRemaining('Expired');
+          setIsReferralPremium(false);
+          setShowExpiredModal(true);
+          clearInterval(timer);
+        } else {
+          const hours = Math.floor(diff / (1000 * 60 * 60));
+          const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+          setTimeRemaining(`${hours}h ${minutes}m ${seconds}s`);
+        }
+      }, 1000);
+      
+      return () => clearInterval(timer);
+    }
+  }, [isReferralPremium, referralPremiumExpiry]);
+
   // Notification counts state
   const [chatUnreadCount, setChatUnreadCount] = useState(0);
   const [friendRequestsCount, setFriendRequestsCount] = useState(0);
@@ -64,6 +95,9 @@ function Dashboard() {
       .get(`${BASE_URL}/api/user/profile`, { headers: { Authorization: `Bearer ${token}` } })
       .then((res) => {
         setUserProfile(res.data);
+        // Set referral premium status
+        setIsReferralPremium(res.data.isReferralPremium || false);
+        setReferralPremiumExpiry(res.data.referralPremiumExpiry || null);
       })
       .catch((err) => console.error('Failed to fetch user profile', err));
   }, [token]);
@@ -337,7 +371,11 @@ function Dashboard() {
         )}
 
         <button className="premium-button" onClick={handlePremiumClick}>
-          <BadgePercent size={18} style={{ marginRight: '8px' }} /> Go Premium
+          <BadgePercent size={18} style={{ marginRight: '8px' }} /> 
+          {isReferralPremium && referralPremiumExpiry && new Date(referralPremiumExpiry) > new Date() 
+            ? 'Premium Active' 
+            : 'Go Premium'
+          }
         </button>
         <button className="logout-button" onClick={handleLogout}>
           Logout
@@ -346,6 +384,23 @@ function Dashboard() {
 
       <div className="dashboard-content">
         <h2>Welcome to Amoryn</h2>
+
+        {/* Referral Premium Status Display */}
+        {isReferralPremium && referralPremiumExpiry && (
+          <div className="referral-premium-banner">
+            <div className="premium-icon">🎁</div>
+            <div className="premium-info">
+              <h3>24-Hour Premium Access Active!</h3>
+              <p>You're enjoying premium features thanks to your referral code.</p>
+              <p className="expiry-info">
+                Time Remaining: <span className="countdown">{timeRemaining}</span>
+              </p>
+              <p className="expiry-info">
+                Expires: {new Date(referralPremiumExpiry).toLocaleString()}
+              </p>
+            </div>
+          </div>
+        )}
 
         <div className="user-grid">
           {users.map((user) => (
@@ -454,6 +509,31 @@ function Dashboard() {
             <h3>Complete Your Profile</h3>
             <p>Your profile is incomplete. Complete it to get better matches!</p>
             <button onClick={() => navigate('/profile')}>Go to Profile</button>
+          </div>
+        </div>
+      )}
+
+      {/* Referral Premium Expired Modal */}
+      {showExpiredModal && (
+        <div className="modal-overlay" onClick={() => setShowExpiredModal(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="expired-modal-header">
+              <span className="expired-icon">⏰</span>
+              <h3>Premium Access Expired</h3>
+            </div>
+            <p>Your 24-hour premium access from the referral code has expired.</p>
+            <p>To continue enjoying premium features, please purchase a subscription plan.</p>
+            <div className="modal-actions">
+              <button className="secondary-btn" onClick={() => setShowExpiredModal(false)}>
+                Maybe Later
+              </button>
+              <button className="primary-btn" onClick={() => {
+                setShowExpiredModal(false);
+                handlePremiumClick();
+              }}>
+                Get Premium Now
+              </button>
+            </div>
           </div>
         </div>
       )}
