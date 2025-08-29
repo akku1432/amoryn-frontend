@@ -392,6 +392,14 @@ function Admin() {
                           )}
                         </div>
                       )}
+                      
+                      {user.isPremium && user.subscriptionPlan && (
+                        <div className="subscription-info">
+                          <span className="subscription-badge">
+                            {user.subscriptionPlan === 'monthly' ? '📅 Monthly' : '📅 Yearly'} Premium
+                          </span>
+                        </div>
+                      )}
                     </div>
                     
                     <div className="user-status">

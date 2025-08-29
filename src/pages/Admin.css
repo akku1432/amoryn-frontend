@@ -789,8 +789,8 @@
 
 .new-users-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* Increased minimum width */
+  gap: 25px; /* Increased gap between cards */
 }
 
 .new-user-card {
@@ -800,6 +800,7 @@
   padding: 20px;
   transition: all 0.3s ease;
   position: relative;
+  min-height: 200px; /* Ensure minimum height to prevent overlap */
 }
 
 .new-user-card:hover {
@@ -813,6 +814,7 @@
   align-items: center;
   gap: 15px;
   margin-bottom: 15px;
+  flex-wrap: wrap; /* Allow wrapping on small screens */
 }
 
 .user-avatar {
@@ -841,17 +843,26 @@
   font-weight: bold;
 }
 
+.user-info {
+  flex: 1;
+  min-width: 0; /* Allow text to wrap */
+}
+
 .user-info h4 {
   margin: 0 0 5px 0;
   color: #333;
   font-size: 16px;
   font-weight: 600;
+  word-wrap: break-word; /* Break long names */
+  overflow-wrap: break-word;
 }
 
 .user-info p {
   margin: 0 0 5px 0;
   color: #666;
   font-size: 14px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .user-info small {
@@ -861,6 +872,9 @@
 
 .referral-info {
   margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Consistent spacing between elements */
 }
 
 .referral-badge {
@@ -871,13 +885,15 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 8px;
   font-size: 12px;
   font-weight: 600;
+  flex-wrap: wrap; /* Allow wrapping */
+  word-break: break-word;
 }
 
 .referral-label {
   opacity: 0.8;
+  white-space: nowrap; /* Keep label on one line */
 }
 
 .referral-code {
@@ -886,6 +902,7 @@
   border-radius: 10px;
   font-weight: bold;
   font-family: monospace;
+  word-break: break-all; /* Break long codes */
 }
 
 .no-referral {
@@ -894,22 +911,23 @@
   padding: 8px 12px;
   border-radius: 20px;
   font-size: 12px;
+  font-weight: 600;
   text-align: center;
 }
 
 .premium-info {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 4px;
 }
 
 .premium-badge {
   background: linear-gradient(135deg, #28a745, #20c997);
   color: white;
   padding: 6px 12px;
-  border-radius: 15px;
-  font-size: 11px;
-  font-weight: bold;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
   text-align: center;
   display: inline-block;
 }
@@ -920,9 +938,25 @@
   text-align: center;
 }
 
+.subscription-info {
+  margin-top: 4px;
+}
+
+.subscription-badge {
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+  display: inline-block;
+  width: 100%;
+}
+
 .user-status {
-  display: flex;
-  justify-content: center;
+  margin-top: auto; /* Push to bottom of card */
+  padding-top: 10px;
 }
 
 /* Responsive Design for New Users Section */
@@ -948,6 +982,7 @@
   
   .new-user-card {
     padding: 15px;
+    min-height: 180px; /* Slightly smaller on mobile */
   }
   
   .user-header {
@@ -959,6 +994,15 @@
   .user-avatar {
     width: 60px;
     height: 60px;
+  }
+  
+  .referral-info {
+    gap: 6px; /* Tighter spacing on mobile */
+  }
+  
+  .subscription-badge {
+    font-size: 11px;
+    padding: 5px 10px;
   }
 }
 
@@ -973,13 +1017,27 @@
   
   .new-user-card {
     padding: 12px;
+    min-height: 160px; /* Even smaller on very small screens */
   }
   
   .referral-badge,
   .no-referral,
-  .premium-badge {
-    font-size: 11px;
-    padding: 6px 10px;
+  .premium-badge,
+  .subscription-badge {
+    font-size: 10px;
+    padding: 5px 8px;
+  }
+  
+  .user-info h4 {
+    font-size: 14px;
+  }
+  
+  .user-info p {
+    font-size: 12px;
+  }
+  
+  .user-info small {
+    font-size: 10px;
   }
 }
 
