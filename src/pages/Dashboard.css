@@ -442,17 +442,20 @@
   }
 
   .dashboard-content {
-    padding: 10px !important;
+    padding: 0 !important;
+    margin: 0 !important;
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    min-height: calc(100vh - 200px);
+    align-items: center;
+    min-height: calc(100vh - 160px);
   }
 
   .dashboard-content h2 {
-    margin: 10px 0 20px 0;
-    font-size: 28px;
+    margin: 0 0 30px 0 !important;
+    font-size: 24px !important;
+    padding: 0 20px;
   }
 
   .user-grid {
@@ -461,20 +464,22 @@
     align-items: center;
     justify-content: center;
     gap: 0;
-    padding: 10px;
+    padding: 0 20px;
     max-width: 100%;
+    width: 100%;
     flex: 1;
   }
 
   .user-card {
     width: 100%;
-    max-width: 320px;
+    max-width: 300px;
     margin: 0 auto;
     padding: 20px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
     border-radius: 25px;
     position: relative;
-    max-height: calc(100vh - 250px);
+    height: auto;
+    max-height: calc(100vh - 200px);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -493,7 +498,7 @@
   }
 
   .user-card img {
-    height: 280px;
+    height: 250px;
     width: 100%;
     object-fit: cover;
     border-radius: 20px;
@@ -559,17 +564,7 @@
     margin-bottom: 20px;
   }
 
-  /* Mobile swipe gesture hints */
-  .user-card::after {
-    content: "👆 Tap to view details";
-    position: absolute;
-    bottom: -30px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 12px;
-    color: #999;
-    white-space: nowrap;
-  }
+  /* Mobile swipe gesture hints - removed for better centering */
 
   /* Mobile navigation buttons */
   .mobile-nav-buttons {

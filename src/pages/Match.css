@@ -378,16 +378,19 @@
 /* Mobile-first single profile view */
 @media (max-width: 768px) {
   .match-container {
-    padding: 10px !important;
+    padding: 0 !important;
+    margin: 0 !important;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
   }
 
   .match-container h2 {
-    margin: 10px 0 20px 0;
-    font-size: 28px;
+    margin: 0 0 30px 0 !important;
+    font-size: 24px !important;
+    padding: 0 20px;
   }
 
   .match-grid {
@@ -396,19 +399,21 @@
     align-items: center;
     justify-content: center;
     gap: 0;
-    padding: 10px;
+    padding: 0 20px;
     max-width: 100%;
+    width: 100%;
     flex: 1;
   }
 
   .match-card {
     width: 100%;
-    max-width: 320px;
+    max-width: 300px;
     margin: 0 auto;
     padding: 20px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
     border-radius: 25px;
     position: relative;
+    height: auto;
     max-height: calc(100vh - 200px);
     display: flex;
     flex-direction: column;
@@ -428,7 +433,7 @@
   }
 
   .match-card img {
-    height: 280px;
+    height: 250px;
     width: 100%;
     object-fit: cover;
     border-radius: 20px;
@@ -494,17 +499,7 @@
     margin-bottom: 20px;
   }
 
-  /* Mobile swipe gesture hints */
-  .match-card::after {
-    content: "👆 Tap to view details";
-    position: absolute;
-    bottom: -30px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 12px;
-    color: #999;
-    white-space: nowrap;
-  }
+  /* Mobile swipe gesture hints - removed for better centering */
 
   /* Mobile navigation buttons */
   .mobile-nav-buttons {
