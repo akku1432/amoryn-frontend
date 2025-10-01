@@ -13,8 +13,30 @@ function Match() {
   const [dailyLikes, setDailyLikes] = useState(0);
   const [dialogType, setDialogType] = useState('');
   const [dialogMessage, setDialogMessage] = useState('');
+  
+  // Mobile single profile view state
+  const [currentProfileIndex, setCurrentProfileIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+  
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
+
+  // Detect mobile screen size
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Reset current profile index when matches change
+  useEffect(() => {
+    setCurrentProfileIndex(0);
+  }, [matches]);
 
   useEffect(() => {
     const fetchMatches = async () => {
@@ -34,6 +56,19 @@ function Match() {
     fetchMatches();
   }, [token]);
 
+  // Mobile navigation functions
+  const nextProfile = () => {
+    if (currentProfileIndex < matches.length - 1) {
+      setCurrentProfileIndex(prev => prev + 1);
+    }
+  };
+
+  const previousProfile = () => {
+    if (currentProfileIndex > 0) {
+      setCurrentProfileIndex(prev => prev - 1);
+    }
+  };
+
   const handleAction = async (targetUserId, action) => {
     if (action === 'like' && !isPremium && dailyLikes >= 10) {
       setDialogType('like');
@@ -46,6 +81,16 @@ function Match() {
         { targetUserId, action },
         { headers: { Authorization: `Bearer ${token}` } }
       );
+
+      // On mobile, move to next profile after action
+      if (isMobile) {
+        if (currentProfileIndex < matches.length - 1) {
+          setCurrentProfileIndex(prev => prev + 1);
+        } else {
+          // If it's the last profile, reset to first or show empty state
+          setCurrentProfileIndex(0);
+        }
+      }
 
       setMatches((prev) => prev.filter((u) => u._id !== targetUserId));
 
@@ -125,29 +170,81 @@ function Match() {
 
       <h2>Find Your Match</h2>
       <div className="match-grid">
-        {matches.map((user) => (
-          <div className="match-card" key={user._id}>
-            <img
-              src={
-                user.photos && user.photos.length > 0
-                  ? `${BASE_URL}/${user.photos[0].replace(/^\//, '')}`
-                  : 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxjaXJjbGUgY3g9IjEwMCIgY3k9IjgwIiByPSIzMCIgZmlsbD0iI0NDQyIvPjxwYXRoIGQ9Ik0zMCAxNjBDMzAgMTQwIDQwIDEyMCA2MCAxMTBIMTQwQzE2MCAxMjAgMTcwIDE0MCAxNzAgMTYwVjE4MEgzMFYxNjBaIiBmaWxsPSIjQ0NDIi8+Cjwvc3ZnPgo='
-              }
-              alt={user.name}
-              onClick={() => setSelectedUser(user)}
-              onError={(e) => {
-                // Set to a simple SVG placeholder if image fails to load
-                e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxjaXJjbGUgY3g9IjEwMCIgY3k9IjgwIiByPSIzMCIgZmlsbD0iI0NDQyIvPjxwYXRoIGQ9Ik0zMCAxNjBDMzAgMTQwIDQwIDEyMCA2MCAxMTBIMTQwQzE2MCAxMjAgMTcwIDE0MCAxNzAgMTYwVjE4MEgzMFYxNjBaIiBmaWxsPSIjQ0NDIi8+Cjwvc3ZnPgo=';
-              }}
-            />
-            <h4>{user.name}</h4>
-            <p>{calculateAge(user.dob)} years</p>
-            <div className="like-dislike-buttons">
-              <button className="like" onClick={() => handleAction(user._id, 'like')}>❤️</button>
-              <button className="dislike" onClick={() => handleAction(user._id, 'dislike')}>❌</button>
+        {isMobile ? (
+          // Mobile: Show only current profile
+          matches.length > 0 && currentProfileIndex < matches.length ? (
+            <div className="match-card" key={matches[currentProfileIndex]._id}>
+              <img
+                src={
+                  matches[currentProfileIndex].photos && matches[currentProfileIndex].photos.length > 0
+                    ? `${BASE_URL}/${matches[currentProfileIndex].photos[0].replace(/^\//, '')}`
+                    : 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxjaXJjbGUgY3g9IjEwMCIgY3k9IjgwIiByPSIzMCIgZmlsbD0iI0NDQyIvPjxwYXRoIGQ9Ik0zMCAxNjBDMzAgMTQwIDQwIDEyMCA2MCAxMTBIMTQwQzE2MCAxMjAgMTcwIDE0MCAxNzAgMTYwVjE4MEgzMFYxNjBaIiBmaWxsPSIjQ0NDIi8+Cjwvc3ZnPgo='
+                }
+                alt={matches[currentProfileIndex].name}
+                onClick={() => setSelectedUser(matches[currentProfileIndex])}
+                onError={(e) => {
+                  e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxjaXJjbGUgY3g9IjEwMCIgY3k9IjgwIiByPSIzMCIgZmlsbD0iI0NDQyIvPjxwYXRoIGQ9Ik0zMCAxNjBDMzAgMTQwIDQwIDEyMCA2MCAxMTBIMTQwQzE2MCAxMjAgMTcwIDE0MCAxNzAgMTYwVjE4MEgzMFYxNjBaIiBmaWxsPSIjQ0NDIi8+Cjwvc3ZnPgo=';
+                }}
+              />
+              <h4>{matches[currentProfileIndex].name}</h4>
+              <p>{calculateAge(matches[currentProfileIndex].dob)} years</p>
+              <div className="like-dislike-buttons">
+                <button className="like" onClick={() => handleAction(matches[currentProfileIndex]._id, 'like')}>❤️</button>
+                <button className="dislike" onClick={() => handleAction(matches[currentProfileIndex]._id, 'dislike')}>❌</button>
+              </div>
+              
+              {/* Mobile navigation buttons */}
+              <div className="mobile-nav-buttons">
+                <button 
+                  className="nav-btn prev-btn" 
+                  onClick={previousProfile}
+                  disabled={currentProfileIndex === 0}
+                >
+                  ← Previous
+                </button>
+                <span className="profile-counter">
+                  {currentProfileIndex + 1} of {matches.length}
+                </span>
+                <button 
+                  className="nav-btn next-btn" 
+                  onClick={nextProfile}
+                  disabled={currentProfileIndex >= matches.length - 1}
+                >
+                  Next →
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
+          ) : (
+            <div className="no-profiles-message">
+              <h3>No more profiles to show</h3>
+              <p>Check back later for new matches!</p>
+            </div>
+          )
+        ) : (
+          // Desktop: Show all profiles in grid
+          matches.map((user) => (
+            <div className="match-card" key={user._id}>
+              <img
+                src={
+                  user.photos && user.photos.length > 0
+                    ? `${BASE_URL}/${user.photos[0].replace(/^\//, '')}`
+                    : 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxjaXJjbGUgY3g9IjEwMCIgY3k9IjgwIiByPSIzMCIgZmlsbD0iI0NDQyIvPjxwYXRoIGQ9Ik0zMCAxNjBDMzAgMTQwIDQwIDEyMCA2MCAxMTBIMTQwQzE2MCAxMjAgMTcwIDE0MCAxNzAgMTYwVjE4MEgzMFYxNjBaIiBmaWxsPSIjQ0NDIi8+Cjwvc3ZnPgo='
+                }
+                alt={user.name}
+                onClick={() => setSelectedUser(user)}
+                onError={(e) => {
+                  e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxjaXJjbGUgY3g9IjEwMCIgY3k9IjgwIiByPSIzMCIgZmlsbD0iI0NDQyIvPjxwYXRoIGQ9Ik0zMCAxNjBDMzAgMTQwIDQwIDEyMCA2MCAxMTBIMTQwQzE2MCAxMjAgMTcwIDE0MCAxNzAgMTYwVjE4MEgzMFYxNjBaIiBmaWxsPSIjQ0NDIi8+Cjwvc3ZnPgo=';
+                }}
+              />
+              <h4>{user.name}</h4>
+              <p>{calculateAge(user.dob)} years</p>
+              <div className="like-dislike-buttons">
+                <button className="like" onClick={() => handleAction(user._id, 'like')}>❤️</button>
+                <button className="dislike" onClick={() => handleAction(user._id, 'dislike')}>❌</button>
+              </div>
+            </div>
+          ))
+        )}
       </div>
 
       {selectedUser && (
