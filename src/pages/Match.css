@@ -378,11 +378,16 @@
 /* Mobile-first single profile view */
 @media (max-width: 768px) {
   .match-container {
-    padding: 20px;
+    padding: 10px !important;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
+  }
+
+  .match-container h2 {
+    margin: 10px 0 20px 0;
+    font-size: 28px;
   }
 
   .match-grid {
@@ -391,20 +396,20 @@
     align-items: center;
     justify-content: center;
     gap: 0;
-    padding: 20px;
+    padding: 10px;
     max-width: 100%;
     flex: 1;
   }
 
   .match-card {
     width: 100%;
-    max-width: 350px;
+    max-width: 320px;
     margin: 0 auto;
-    padding: 25px;
+    padding: 20px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
     border-radius: 25px;
     position: relative;
-    min-height: 500px;
+    max-height: calc(100vh - 200px);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -423,11 +428,11 @@
   }
 
   .match-card img {
-    height: 350px;
+    height: 280px;
     width: 100%;
     object-fit: cover;
     border-radius: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
   }
 
   .match-card h4 {
@@ -506,8 +511,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 25px;
-    padding: 20px 0 10px;
+    margin-top: 15px;
+    padding: 15px 0 5px;
     border-top: 1px solid #eee;
   }
 

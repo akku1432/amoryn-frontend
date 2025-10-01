@@ -442,11 +442,17 @@
   }
 
   .dashboard-content {
-    padding: 20px;
+    padding: 10px !important;
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    min-height: calc(100vh - 200px);
+  }
+
+  .dashboard-content h2 {
+    margin: 10px 0 20px 0;
+    font-size: 28px;
   }
 
   .user-grid {
@@ -455,20 +461,20 @@
     align-items: center;
     justify-content: center;
     gap: 0;
-    padding: 20px;
+    padding: 10px;
     max-width: 100%;
     flex: 1;
   }
 
   .user-card {
     width: 100%;
-    max-width: 350px;
+    max-width: 320px;
     margin: 0 auto;
-    padding: 25px;
+    padding: 20px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
     border-radius: 25px;
     position: relative;
-    min-height: 500px;
+    max-height: calc(100vh - 250px);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -487,11 +493,11 @@
   }
 
   .user-card img {
-    height: 350px;
+    height: 280px;
     width: 100%;
     object-fit: cover;
     border-radius: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
   }
 
   .user-card h4 {
@@ -570,8 +576,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 25px;
-    padding: 20px 0 10px;
+    margin-top: 15px;
+    padding: 15px 0 5px;
     border-top: 1px solid #eee;
   }
 
