@@ -379,7 +379,7 @@
 @media (max-width: 768px) {
   .match-container {
     padding: 20px;
-    min-height: calc(100vh - 100px);
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -391,7 +391,7 @@
     align-items: center;
     justify-content: center;
     gap: 0;
-    padding: 0 20px;
+    padding: 20px;
     max-width: 100%;
     flex: 1;
   }

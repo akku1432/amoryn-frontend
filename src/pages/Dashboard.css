@@ -435,9 +435,15 @@
 
 /* Mobile-first single profile view */
 @media (max-width: 768px) {
+  .dashboard-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
   .dashboard-content {
     padding: 20px;
-    min-height: calc(100vh - 200px);
+    flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -449,7 +455,7 @@
     align-items: center;
     justify-content: center;
     gap: 0;
-    padding: 0 20px;
+    padding: 20px;
     max-width: 100%;
     flex: 1;
   }
