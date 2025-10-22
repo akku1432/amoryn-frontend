@@ -232,20 +232,6 @@ function Match() {
               onTouchMove={onTouchMove}
               onTouchEnd={onTouchEnd}
             >
-              {/* Previous profile preview (blurred) */}
-              {currentProfileIndex > 0 && (
-                <div className="profile-preview profile-preview-left">
-                  <img
-                    src={
-                      matches[currentProfileIndex - 1].photos && matches[currentProfileIndex - 1].photos.length > 0
-                        ? `${BASE_URL}/${matches[currentProfileIndex - 1].photos[0].replace(/^\//, '')}`
-                        : 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxjaXJjbGUgY3g9IjEwMCIgY3k9IjgwIiByPSIzMCIgZmlsbD0iI0NDQyIvPjxwYXRoIGQ9Ik0zMCAxNjBDMzAgMTQwIDQwIDEyMCA2MCAxMTBIMTQwQzE2MCAxMjAgMTcwIDE0MCAxNzAgMTYwVjE4MEgzMFYxNjBaIiBmaWxsPSIjQ0NDIi8+Cjwvc3ZnPgo='
-                    }
-                    alt="Previous"
-                  />
-                </div>
-              )}
-
               {/* Current profile */}
               <div 
                 className={`match-card match-card-active ${swipeDirection ? `swipe-${swipeDirection}` : ''}`}
@@ -280,17 +266,18 @@ function Match() {
               </div>
             </div>
 
-            {/* Next profile preview (blurred) */}
+            {/* Swipe indicators */}
+            {currentProfileIndex > 0 && (
+              <div className="swipe-indicator swipe-indicator-left">
+                <span>←</span>
+                <p>Swipe left</p>
+              </div>
+            )}
+            
             {currentProfileIndex < matches.length - 1 && (
-              <div className="profile-preview profile-preview-right">
-                <img
-                  src={
-                    matches[currentProfileIndex + 1].photos && matches[currentProfileIndex + 1].photos.length > 0
-                      ? `${BASE_URL}/${matches[currentProfileIndex + 1].photos[0].replace(/^\//, '')}`
-                      : 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxjaXJjbGUgY3g9IjEwMCIgY3k9IjgwIiByPSIzMCIgZmlsbD0iI0NDQyIvPjxwYXRoIGQ9Ik0zMCAxNjBDMzAgMTQwIDQwIDEyMCA2MCAxMTBIMTQwQzE2MCAxMjAgMTcwIDE0MCAxNzAgMTYwVjE4MEgzMFYxNjBaIiBmaWxsPSIjQ0NDIi8+Cjwvc3ZnPgo='
-                  }
-                  alt="Next"
-                />
+              <div className="swipe-indicator swipe-indicator-right">
+                <span>→</span>
+                <p>Swipe right</p>
               </div>
             )}
           </div>
