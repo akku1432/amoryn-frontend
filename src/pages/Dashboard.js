@@ -26,6 +26,8 @@ function Dashboard() {
   // Swipe state
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
+  const [swipeDirection, setSwipeDirection] = useState(null);
+  const [dragOffset, setDragOffset] = useState(0);
 
   // NEW: Referral premium status
   const [isReferralPremium, setIsReferralPremium] = useState(false);
@@ -321,31 +323,63 @@ function Dashboard() {
     return age;
   };
 
-  // Swipe gesture handlers
-  const minSwipeDistance = 50;
+  // Enhanced swipe gesture handlers with visual feedback
+  const minSwipeDistance = 75;
 
   const onTouchStart = (e) => {
     setTouchEnd(null);
     setTouchStart(e.targetTouches[0].clientX);
+    setSwipeDirection(null);
   };
 
   const onTouchMove = (e) => {
-    setTouchEnd(e.targetTouches[0].clientX);
+    const currentTouch = e.targetTouches[0].clientX;
+    setTouchEnd(currentTouch);
+    
+    if (touchStart) {
+      const diff = currentTouch - touchStart;
+      setDragOffset(diff);
+      
+      // Visual feedback during drag
+      if (Math.abs(diff) > 10) {
+        if (diff > 0) {
+          setSwipeDirection('right');
+        } else {
+          setSwipeDirection('left');
+        }
+      }
+    }
   };
 
   const onTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
+    if (!touchStart || !touchEnd) {
+      setDragOffset(0);
+      setSwipeDirection(null);
+      return;
+    }
     
     const distance = touchStart - touchEnd;
     const isLeftSwipe = distance > minSwipeDistance;
     const isRightSwipe = distance < -minSwipeDistance;
     
     if (isLeftSwipe && currentProfileIndex < users.length - 1) {
-      setCurrentProfileIndex(prev => prev + 1);
-    }
-    
-    if (isRightSwipe && currentProfileIndex > 0) {
-      setCurrentProfileIndex(prev => prev - 1);
+      setSwipeDirection('left-complete');
+      setTimeout(() => {
+        setCurrentProfileIndex(prev => prev + 1);
+        setDragOffset(0);
+        setSwipeDirection(null);
+      }, 200);
+    } else if (isRightSwipe && currentProfileIndex > 0) {
+      setSwipeDirection('right-complete');
+      setTimeout(() => {
+        setCurrentProfileIndex(prev => prev - 1);
+        setDragOffset(0);
+        setSwipeDirection(null);
+      }, 200);
+    } else {
+      // Snap back if swipe not far enough
+      setDragOffset(0);
+      setSwipeDirection(null);
     }
   };
 
@@ -547,7 +581,14 @@ function Dashboard() {
                 )}
 
                 {/* Current profile */}
-                <div className="user-card user-card-active" key={users[currentProfileIndex]._id}>
+                <div 
+                  className={`user-card user-card-active ${swipeDirection ? `swipe-${swipeDirection}` : ''}`}
+                  style={{
+                    transform: `translateX(${dragOffset}px) rotate(${dragOffset * 0.03}deg)`,
+                    transition: dragOffset === 0 ? 'transform 0.3s ease-out' : 'none'
+                  }}
+                  key={users[currentProfileIndex]._id}
+                >
                 <img
                   src={
                     users[currentProfileIndex].photos && users[currentProfileIndex].photos.length > 0
