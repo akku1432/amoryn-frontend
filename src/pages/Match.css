@@ -375,6 +375,41 @@
   transform: translateY(-2px);
 }
 
+/* Tablet view - show 2 profiles side by side */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .match-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    max-width: 750px;
+    padding: 0 20px;
+    justify-items: center;
+  }
+
+  .match-card {
+    max-width: 340px;
+    width: 100%;
+    padding: 20px;
+  }
+
+  .match-card img {
+    height: 280px;
+  }
+
+  .match-card h4 {
+    font-size: 20px;
+  }
+
+  .match-card p {
+    font-size: 16px;
+  }
+
+  .like-dislike-buttons button {
+    font-size: 22px;
+    padding: 10px 18px;
+  }
+}
+
 /* Mobile-first single profile view */
 @media (max-width: 768px) {
   .match-container {

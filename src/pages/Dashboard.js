@@ -426,80 +426,68 @@ function Dashboard() {
       <div className="dashboard-header">Amoryn</div>
 
       <div className="dashboard-nav">
+        <Link to="/profile">Profile</Link>
+        <Link to="/match">Match</Link>
+
+        <Link
+          to="/friends"
+          onClick={handleGoToFriends}
+          style={{ position: 'relative' }}
+        >
+          Friends
+          {friendRequestsCount > 0 && (
+            <span className={`notification-badge ${newFriendNotification ? 'new-notification' : ''}`}>
+              {renderBadgeCount(friendRequestsCount)}
+            </span>
+          )}
+        </Link>
+
+        <Link
+          to="/chats"
+          onClick={handleGoToChats}
+          style={{ position: 'relative' }}
+        >
+          Chats
+          {chatUnreadCount > 0 && (
+            <span className={`notification-badge ${newChatNotification ? 'new-notification' : ''}`}>
+              {renderBadgeCount(chatUnreadCount)}
+            </span>
+          )}
+        </Link>
+        <Link to="/Faq">FAQ</Link>
+
+        {/* Admin Link - Only visible for admin users */}
+        {userProfile?.email === 'support@amoryn.in' && (
+          <Link to="/admin" className="admin-link">
+            👑 Admin
+          </Link>
+        )}
+
+        <button className="premium-button" onClick={handlePremiumClick}>
+          <BadgePercent size={18} style={{ marginRight: '8px' }} /> 
+          {isReferralPremium && referralPremiumExpiry && new Date(referralPremiumExpiry) > new Date() 
+            ? 'Premium Active' 
+            : 'Go Premium'
+          }
+        </button>
+        
+        {/* Show Logout button if authenticated, Login button if not */}
         {isAuthenticated ? (
-          <>
-            <Link to="/profile">Profile</Link>
-            <Link to="/match">Match</Link>
-
-            <Link
-              to="/friends"
-              onClick={handleGoToFriends}
-              style={{ position: 'relative' }}
-            >
-              Friends
-              {friendRequestsCount > 0 && (
-                <span className={`notification-badge ${newFriendNotification ? 'new-notification' : ''}`}>
-                  {renderBadgeCount(friendRequestsCount)}
-                </span>
-              )}
-            </Link>
-
-            <Link
-              to="/chats"
-              onClick={handleGoToChats}
-              style={{ position: 'relative' }}
-            >
-              Chats
-              {chatUnreadCount > 0 && (
-                <span className={`notification-badge ${newChatNotification ? 'new-notification' : ''}`}>
-                  {renderBadgeCount(chatUnreadCount)}
-                </span>
-              )}
-            </Link>
-            <Link to="/Faq">FAQ</Link>
-
-            {/* Admin Link - Only visible for admin users */}
-            {userProfile?.email === 'support@amoryn.in' && (
-              <Link to="/admin" className="admin-link">
-                👑 Admin
-              </Link>
-            )}
-
-            <button className="premium-button" onClick={handlePremiumClick}>
-              <BadgePercent size={18} style={{ marginRight: '8px' }} /> 
-              {isReferralPremium && referralPremiumExpiry && new Date(referralPremiumExpiry) > new Date() 
-                ? 'Premium Active' 
-                : 'Go Premium'
-              }
-            </button>
-            <button className="logout-button" onClick={handleLogout}>
-              Logout
-            </button>
-          </>
+          <button className="logout-button" onClick={handleLogout}>
+            Logout
+          </button>
         ) : (
-          <>
-            <Link to="/">Home</Link>
-            <Link to="/Faq">FAQ</Link>
-            <button className="premium-button" onClick={() => setShowLoginModal(true)}>
-              Login
-            </button>
-            <Link to="/signup">
-              <button className="logout-button">Sign Up</button>
-            </Link>
-          </>
+          <button className="logout-button" onClick={() => setShowLoginModal(true)}>
+            Login
+          </button>
         )}
       </div>
 
       <div className="dashboard-content">
-        <h2>{isAuthenticated ? 'Welcome to Amoryn' : 'Explore Amazing Profiles'}</h2>
-        {!isAuthenticated && (
-          <p style={{ textAlign: 'center', color: '#666', marginBottom: '20px' }}>
-            Login or sign up to like profiles and connect with people
-          </p>
-        )}
+        <h2>Welcome to Amoryn</h2>
 
         {/* Referral Premium Status Display */}
-        {isAuthenticated && isReferralPremium && referralPremiumExpiry && (
+        {isReferralPremium && referralPremiumExpiry && (
           <div className="referral-premium-banner">
             <div className="premium-icon">🎁</div>
             <div className="premium-info">

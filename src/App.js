@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import io from 'socket.io-client';
 import { SocketContext } from './SocketContext';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js'; // ✅ NEW
-import Homepage from './pages/Homepage';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
@@ -54,7 +53,7 @@ function App() {
       <PayPalScriptProvider options={{ "client-id": "AY7qRs7DfygmOYGno4nGmmk_LInRmmIANlI4dHb3iY8fru8CMbIkdNEFfyvWTSnsR6AybBUQrG4EOnsa", currency: "USD" }}>
         <Router>
           <Routes>
-            <Route path="/" element={<Homepage />} />
+            <Route path="/" element={<Dashboard />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/profile" element={<Profile />} />
