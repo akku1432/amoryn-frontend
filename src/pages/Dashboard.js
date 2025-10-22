@@ -5,6 +5,7 @@ import './Dashboard.css';
 import { SocketContext } from '../SocketContext';
 import { Video, BadgePercent, Home } from 'lucide-react';
 import { BASE_URL } from '../utils/config';
+import LoginModal from '../components/LoginModal';
 
 function Dashboard() {
   const socket = useContext(SocketContext);
@@ -27,6 +28,10 @@ function Dashboard() {
   const [referralPremiumExpiry, setReferralPremiumExpiry] = useState(null);
   const [timeRemaining, setTimeRemaining] = useState('');
   const [showExpiredModal, setShowExpiredModal] = useState(false);
+
+  // NEW: Login modal for unauthenticated users
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   // Countdown timer for referral premium
   useEffect(() => {
@@ -67,6 +72,11 @@ function Dashboard() {
 
   const token = localStorage.getItem('token');
 
+  // Check authentication status
+  useEffect(() => {
+    setIsAuthenticated(!!token);
+  }, [token]);
+
   // Detect mobile screen size
   useEffect(() => {
     const checkMobile = () => {
@@ -100,31 +110,47 @@ function Dashboard() {
 
   // Fetch match users and premium status
   useEffect(() => {
-    axios
-      .get(`${BASE_URL}/api/user/match`, { headers: { Authorization: `Bearer ${token}` } })
-      .then((res) => {
-        setUsers(res.data.users || []);
-        setIsPremium(res.data.isPremium || false);
-        setLikeCountToday(res.data.likeCountToday || 0);
-      })
-      .catch((err) => console.error('Failed to fetch users', err));
+    if (token) {
+      // Authenticated user - fetch personalized matches
+      axios
+        .get(`${BASE_URL}/api/user/match`, { headers: { Authorization: `Bearer ${token}` } })
+        .then((res) => {
+          setUsers(res.data.users || []);
+          setIsPremium(res.data.isPremium || false);
+          setLikeCountToday(res.data.likeCountToday || 0);
+        })
+        .catch((err) => console.error('Failed to fetch users', err));
+    } else {
+      // Unauthenticated user - fetch public profiles
+      axios
+        .get(`${BASE_URL}/api/user/public/profiles`)
+        .then((res) => {
+          setUsers(res.data.users || []);
+          setIsPremium(false);
+          setLikeCountToday(0);
+        })
+        .catch((err) => console.error('Failed to fetch profiles', err));
+    }
   }, [token]);
 
-  // Fetch user profile for friend checking
+  // Fetch user profile for friend checking (only if authenticated)
   useEffect(() => {
-    axios
-      .get(`${BASE_URL}/api/user/profile`, { headers: { Authorization: `Bearer ${token}` } })
-      .then((res) => {
-        setUserProfile(res.data);
-        // Set referral premium status
-        setIsReferralPremium(res.data.isReferralPremium || false);
-        setReferralPremiumExpiry(res.data.referralPremiumExpiry || null);
-      })
-      .catch((err) => console.error('Failed to fetch user profile', err));
+    if (token) {
+      axios
+        .get(`${BASE_URL}/api/user/profile`, { headers: { Authorization: `Bearer ${token}` } })
+        .then((res) => {
+          setUserProfile(res.data);
+          // Set referral premium status
+          setIsReferralPremium(res.data.isReferralPremium || false);
+          setReferralPremiumExpiry(res.data.referralPremiumExpiry || null);
+        })
+        .catch((err) => console.error('Failed to fetch user profile', err));
+    }
   }, [token]);
 
-  // Fetch friend requests count
+  // Fetch friend requests count (only if authenticated)
   const fetchFriendRequests = async () => {
+    if (!token) return;
     try {
       const res = await axios.get(`${BASE_URL}/api/user/requests`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -226,9 +252,11 @@ function Dashboard() {
 
 
 
-  // 🔹 NEW: Profile completion check
+  // 🔹 NEW: Profile completion check (only for authenticated users)
   useEffect(() => {
     const checkProfileCompletion = async () => {
+      if (!token) return; // Skip if not authenticated
+      
       try {
         const res = await axios.get(`${BASE_URL}/api/user/profile`, {
           headers: { Authorization: `Bearer ${token}` },
@@ -266,7 +294,7 @@ function Dashboard() {
       }
     };
 
-    if (token) checkProfileCompletion();
+    checkProfileCompletion();
   }, [token]);
   // 🔹 END NEW CODE
 
@@ -303,6 +331,12 @@ function Dashboard() {
   };
 
   const handleAction = async (userId, action) => {
+    // Check if user is authenticated
+    if (!token) {
+      setShowLoginModal(true);
+      return;
+    }
+
     if (!isPremium && action === 'like' && likeCountToday >= 10) {
       setShowLikeLimitModal(true);
       return;
@@ -332,7 +366,17 @@ function Dashboard() {
     }
   };
 
+  const handleLoginSuccess = () => {
+    setShowLoginModal(false);
+    // Reload the page to fetch authenticated data
+    window.location.reload();
+  };
+
   const goToChat = () => {
+    if (!token) {
+      setShowLoginModal(true);
+      return;
+    }
     if (!isPremium) {
       setShowPremiumFeatureModal(true);
       return;
@@ -345,6 +389,10 @@ function Dashboard() {
   };
 
   const startVideoCall = () => {
+    if (!token) {
+      setShowLoginModal(true);
+      return;
+    }
     if (!isPremium) {
       setShowPremiumFeatureModal(true);
       return;
@@ -378,60 +426,80 @@ function Dashboard() {
       <div className="dashboard-header">Amoryn</div>
 
       <div className="dashboard-nav">
-        <Link to="/profile">Profile</Link>
-        <Link to="/match">Match</Link>
+        {isAuthenticated ? (
+          <>
+            <Link to="/profile">Profile</Link>
+            <Link to="/match">Match</Link>
 
-        <Link
-          to="/friends"
-          onClick={handleGoToFriends}
-          style={{ position: 'relative' }}
-        >
-          Friends
-          {friendRequestsCount > 0 && (
-            <span className={`notification-badge ${newFriendNotification ? 'new-notification' : ''}`}>
-              {renderBadgeCount(friendRequestsCount)}
-            </span>
-          )}
-        </Link>
+            <Link
+              to="/friends"
+              onClick={handleGoToFriends}
+              style={{ position: 'relative' }}
+            >
+              Friends
+              {friendRequestsCount > 0 && (
+                <span className={`notification-badge ${newFriendNotification ? 'new-notification' : ''}`}>
+                  {renderBadgeCount(friendRequestsCount)}
+                </span>
+              )}
+            </Link>
 
-        <Link
-          to="/chats"
-          onClick={handleGoToChats}
-          style={{ position: 'relative' }}
-        >
-          Chats
-          {chatUnreadCount > 0 && (
-            <span className={`notification-badge ${newChatNotification ? 'new-notification' : ''}`}>
-              {renderBadgeCount(chatUnreadCount)}
-            </span>
-          )}
-        </Link>
-        <Link to="/Faq">FAQ</Link>
+            <Link
+              to="/chats"
+              onClick={handleGoToChats}
+              style={{ position: 'relative' }}
+            >
+              Chats
+              {chatUnreadCount > 0 && (
+                <span className={`notification-badge ${newChatNotification ? 'new-notification' : ''}`}>
+                  {renderBadgeCount(chatUnreadCount)}
+                </span>
+              )}
+            </Link>
+            <Link to="/Faq">FAQ</Link>
 
-        {/* Admin Link - Only visible for admin users */}
-        {userProfile?.email === 'support@amoryn.in' && (
-          <Link to="/admin" className="admin-link">
-            👑 Admin
-          </Link>
+            {/* Admin Link - Only visible for admin users */}
+            {userProfile?.email === 'support@amoryn.in' && (
+              <Link to="/admin" className="admin-link">
+                👑 Admin
+              </Link>
+            )}
+
+            <button className="premium-button" onClick={handlePremiumClick}>
+              <BadgePercent size={18} style={{ marginRight: '8px' }} /> 
+              {isReferralPremium && referralPremiumExpiry && new Date(referralPremiumExpiry) > new Date() 
+                ? 'Premium Active' 
+                : 'Go Premium'
+              }
+            </button>
+            <button className="logout-button" onClick={handleLogout}>
+              Logout
+            </button>
+          </>
+        ) : (
+          <>
+            <Link to="/">Home</Link>
+            <Link to="/Faq">FAQ</Link>
+            <button className="premium-button" onClick={() => setShowLoginModal(true)}>
+              Login
+            </button>
+            <Link to="/signup">
+              <button className="logout-button">Sign Up</button>
+            </Link>
+          </>
         )}
-
-        <button className="premium-button" onClick={handlePremiumClick}>
-          <BadgePercent size={18} style={{ marginRight: '8px' }} /> 
-          {isReferralPremium && referralPremiumExpiry && new Date(referralPremiumExpiry) > new Date() 
-            ? 'Premium Active' 
-            : 'Go Premium'
-          }
-        </button>
-        <button className="logout-button" onClick={handleLogout}>
-          Logout
-        </button>
       </div>
 
       <div className="dashboard-content">
-        <h2>Welcome to Amoryn</h2>
+        <h2>{isAuthenticated ? 'Welcome to Amoryn' : 'Explore Amazing Profiles'}</h2>
+        {!isAuthenticated && (
+          <p style={{ textAlign: 'center', color: '#666', marginBottom: '20px' }}>
+            Login or sign up to like profiles and connect with people
+          </p>
+        )}
 
         {/* Referral Premium Status Display */}
-        {isReferralPremium && referralPremiumExpiry && (
+        {isAuthenticated && isReferralPremium && referralPremiumExpiry && (
           <div className="referral-premium-banner">
             <div className="premium-icon">🎁</div>
             <div className="premium-info">
@@ -633,6 +701,14 @@ function Dashboard() {
             </div>
           </div>
         </div>
+      )}
+
+      {/* Login Modal for unauthenticated users */}
+      {showLoginModal && (
+        <LoginModal 
+          onClose={() => setShowLoginModal(false)}
+          onLoginSuccess={handleLoginSuccess}
+        />
       )}
     </div>
   );

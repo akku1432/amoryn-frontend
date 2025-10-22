@@ -76,11 +76,8 @@ function Homepage() {
   };
 
   const handleGoToDashboard = () => {
-    if (token) {
-      navigate('/dashboard');
-    } else {
-      setShowLoginModal(true);
-    }
+    // Always navigate to dashboard, it will handle login state
+    navigate('/dashboard');
   };
 
   return (
@@ -88,13 +85,12 @@ function Homepage() {
       <div className="homepage-header">
         <div className="homepage-logo">Amoryn</div>
         <div className="homepage-nav">
-          {token ? (
-            <button onClick={handleGoToDashboard} className="nav-button primary">
-              Go to Dashboard
-            </button>
-          ) : (
+          <button onClick={handleGoToDashboard} className="nav-button primary">
+            {token ? 'Go to Dashboard' : 'Explore Profiles'}
+          </button>
+          {!token && (
             <>
-              <button onClick={() => setShowLoginModal(true)} className="nav-button primary">
+              <button onClick={() => setShowLoginModal(true)} className="nav-button secondary">
                 Login
               </button>
               <Link to="/signup" className="nav-button secondary">
