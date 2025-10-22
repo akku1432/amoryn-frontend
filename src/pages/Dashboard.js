@@ -22,6 +22,10 @@ function Dashboard() {
   // Mobile single profile view state
   const [currentProfileIndex, setCurrentProfileIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  
+  // Swipe state
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
 
   // NEW: Referral premium status
   const [isReferralPremium, setIsReferralPremium] = useState(false);
@@ -317,15 +321,30 @@ function Dashboard() {
     return age;
   };
 
-  // Mobile navigation functions
-  const nextProfile = () => {
-    if (currentProfileIndex < users.length - 1) {
-      setCurrentProfileIndex(prev => prev + 1);
-    }
+  // Swipe gesture handlers
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
   };
 
-  const previousProfile = () => {
-    if (currentProfileIndex > 0) {
+  const onTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+    
+    if (isLeftSwipe && currentProfileIndex < users.length - 1) {
+      setCurrentProfileIndex(prev => prev + 1);
+    }
+    
+    if (isRightSwipe && currentProfileIndex > 0) {
       setCurrentProfileIndex(prev => prev - 1);
     }
   };
@@ -505,9 +524,30 @@ function Dashboard() {
 
         <div className="user-grid">
           {isMobile ? (
-            // Mobile: Show only current profile
+            // Mobile: Show current profile with swipe gestures
             users.length > 0 && currentProfileIndex < users.length ? (
-              <div className="user-card" key={users[currentProfileIndex]._id}>
+              <div 
+                className="swipe-container"
+                onTouchStart={onTouchStart}
+                onTouchMove={onTouchMove}
+                onTouchEnd={onTouchEnd}
+              >
+                {/* Previous profile preview (blurred) */}
+                {currentProfileIndex > 0 && (
+                  <div className="profile-preview profile-preview-left">
+                    <img
+                      src={
+                        users[currentProfileIndex - 1].photos && users[currentProfileIndex - 1].photos.length > 0
+                          ? `${BASE_URL}/${users[currentProfileIndex - 1].photos[0].replace(/^\//, '')}`
+                          : 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxjaXJjbGUgY3g9IjEwMCIgY3k9IjgwIiByPSIzMCIgZmlsbD0iI0NDQyIvPjxwYXRoIGQ9Ik0zMCAxNjBDMzAgMTQwIDQwIDEyMCA2MCAxMTBIMTQwQzE2MCAxMjAgMTcwIDE0MCAxNzAgMTYwVjE4MEgzMFYxNjBaIiBmaWxsPSIjQ0NDIi8+Cjwvc3ZnPgo='
+                      }
+                      alt="Previous"
+                    />
+                  </div>
+                )}
+
+                {/* Current profile */}
+                <div className="user-card user-card-active" key={users[currentProfileIndex]._id}>
                 <img
                   src={
                     users[currentProfileIndex].photos && users[currentProfileIndex].photos.length > 0
@@ -527,27 +567,26 @@ function Dashboard() {
                   <button className="dislike" onClick={() => handleAction(users[currentProfileIndex]._id, 'dislike')}>❌</button>
                 </div>
                 
-                {/* Mobile navigation buttons */}
-                <div className="mobile-nav-buttons">
-                  <button 
-                    className="nav-btn prev-btn" 
-                    onClick={previousProfile}
-                    disabled={currentProfileIndex === 0}
-                  >
-                    ← Previous
-                  </button>
-                  <span className="profile-counter">
-                    {currentProfileIndex + 1} of {users.length}
-                  </span>
-                  <button 
-                    className="nav-btn next-btn" 
-                    onClick={nextProfile}
-                    disabled={currentProfileIndex >= users.length - 1}
-                  >
-                    Next →
-                  </button>
+                {/* Profile counter */}
+                <div className="profile-counter-badge">
+                  {currentProfileIndex + 1} / {users.length}
                 </div>
               </div>
+
+              {/* Next profile preview (blurred) */}
+              {currentProfileIndex < users.length - 1 && (
+                <div className="profile-preview profile-preview-right">
+                  <img
+                    src={
+                      users[currentProfileIndex + 1].photos && users[currentProfileIndex + 1].photos.length > 0
+                        ? `${BASE_URL}/${users[currentProfileIndex + 1].photos[0].replace(/^\//, '')}`
+                        : 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxjaXJjbGUgY3g9IjEwMCIgY3k9IjgwIiByPSIzMCIgZmlsbD0iI0NDQyIvPjxwYXRoIGQ9Ik0zMCAxNjBDMzAgMTQwIDQwIDEyMCA2MCAxMTBIMTQwQzE2MCAxMjAgMTcwIDE0MCAxNzAgMTYwVjE4MEgzMFYxNjBaIiBmaWxsPSIjQ0NDIi8+Cjwvc3ZnPgo='
+                    }
+                    alt="Next"
+                  />
+                </div>
+              )}
+            </div>
             ) : (
               <div className="no-profiles-message">
                 <h3>No more profiles to show</h3>
