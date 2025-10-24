@@ -183,7 +183,7 @@ function Match() {
                   className="profile-nav-arrow"
                   onClick={handlePrevProfile}
                 >
-                  ←
+                  ‹
                 </button>
               ) : (
                 <div style={{ width: '50px', flexShrink: 0 }}></div>
@@ -222,7 +222,7 @@ function Match() {
                   className="profile-nav-arrow"
                   onClick={handleNextProfile}
                 >
-                  →
+                  ›
                 </button>
               ) : (
                 <div style={{ width: '50px', flexShrink: 0 }}></div>
