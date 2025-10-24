@@ -568,7 +568,10 @@ function Dashboard() {
               >
                 {/* Previous card (left side preview) */}
                 {currentProfileIndex > 0 && (
-                  <div className="user-card user-card-stack user-card-left">
+                  <div 
+                    className="user-card user-card-stack user-card-left"
+                    key={`prev-${users[currentProfileIndex - 1]._id}`}
+                  >
                     <img
                       src={
                         users[currentProfileIndex - 1].photos && users[currentProfileIndex - 1].photos.length > 0
@@ -619,7 +622,10 @@ function Dashboard() {
 
               {/* Next card (right side preview) */}
               {currentProfileIndex < users.length - 1 && (
-                <div className="user-card user-card-stack user-card-right">
+                <div 
+                  className="user-card user-card-stack user-card-right"
+                  key={`next-${users[currentProfileIndex + 1]._id}`}
+                >
                   <img
                     src={
                       users[currentProfileIndex + 1].photos && users[currentProfileIndex + 1].photos.length > 0

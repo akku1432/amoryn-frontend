@@ -234,7 +234,10 @@ function Match() {
             >
               {/* Previous card (left side preview) */}
               {currentProfileIndex > 0 && (
-                <div className="match-card match-card-stack match-card-left">
+                <div 
+                  className="match-card match-card-stack match-card-left"
+                  key={`prev-${matches[currentProfileIndex - 1]._id}`}
+                >
                   <img
                     src={
                       matches[currentProfileIndex - 1].photos && matches[currentProfileIndex - 1].photos.length > 0
@@ -285,7 +288,10 @@ function Match() {
 
             {/* Next card (right side preview) */}
             {currentProfileIndex < matches.length - 1 && (
-              <div className="match-card match-card-stack match-card-right">
+              <div 
+                className="match-card match-card-stack match-card-right"
+                key={`next-${matches[currentProfileIndex + 1]._id}`}
+              >
                 <img
                   src={
                     matches[currentProfileIndex + 1].photos && matches[currentProfileIndex + 1].photos.length > 0
