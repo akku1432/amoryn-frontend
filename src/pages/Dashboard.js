@@ -511,24 +511,18 @@ function Dashboard() {
             // Mobile: Show current profile with swipe gestures
             users.length > 0 && currentProfileIndex < users.length ? (
               <div className="mobile-profile-container">
-                {/* Left Arrow Button */}
-                {currentProfileIndex > 0 ? (
+                {/* Left Arrow */}
+                {currentProfileIndex > 0 && (
                   <button 
                     className="profile-nav-arrow"
                     onClick={handlePrevProfile}
-                    aria-label="Previous profile"
                   >
                     ←
                   </button>
-                ) : (
-                  <div style={{ width: '50px' }}></div>
                 )}
 
-                {/* Active profile card with key to force re-render */}
-                <div 
-                  className="user-card active-card"
-                  key={users[currentProfileIndex]._id}
-                >
+                {/* Profile Card */}
+                <div className="user-card" key={users[currentProfileIndex]._id}>
                 <img
                   src={
                     users[currentProfileIndex].photos && users[currentProfileIndex].photos.length > 0
@@ -554,17 +548,14 @@ function Dashboard() {
                 </div>
               </div>
 
-                {/* Right Arrow Button */}
-                {currentProfileIndex < users.length - 1 ? (
+                {/* Right Arrow */}
+                {currentProfileIndex < users.length - 1 && (
                   <button 
                     className="profile-nav-arrow"
                     onClick={handleNextProfile}
-                    aria-label="Next profile"
                   >
                     →
                   </button>
-                ) : (
-                  <div style={{ width: '50px' }}></div>
                 )}
               </div>
             ) : (

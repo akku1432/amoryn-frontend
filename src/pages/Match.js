@@ -177,24 +177,18 @@ function Match() {
           // Mobile: Show current profile with swipe gestures
           matches.length > 0 && currentProfileIndex < matches.length ? (
             <div className="mobile-profile-container">
-              {/* Left Arrow Button */}
-              {currentProfileIndex > 0 ? (
+              {/* Left Arrow */}
+              {currentProfileIndex > 0 && (
                 <button 
                   className="profile-nav-arrow"
                   onClick={handlePrevProfile}
-                  aria-label="Previous profile"
                 >
                   ←
                 </button>
-              ) : (
-                <div style={{ width: '50px' }}></div>
               )}
 
-              {/* Active profile card with key to force re-render */}
-              <div 
-                className="match-card active-card"
-                key={matches[currentProfileIndex]._id}
-              >
+              {/* Profile Card */}
+              <div className="match-card" key={matches[currentProfileIndex]._id}>
               <img
                 src={
                   matches[currentProfileIndex].photos && matches[currentProfileIndex].photos.length > 0
@@ -220,17 +214,14 @@ function Match() {
               </div>
             </div>
 
-              {/* Right Arrow Button */}
-              {currentProfileIndex < matches.length - 1 ? (
+              {/* Right Arrow */}
+              {currentProfileIndex < matches.length - 1 && (
                 <button 
                   className="profile-nav-arrow"
                   onClick={handleNextProfile}
-                  aria-label="Next profile"
                 >
                   →
                 </button>
-              ) : (
-                <div style={{ width: '50px' }}></div>
               )}
             </div>
           ) : (

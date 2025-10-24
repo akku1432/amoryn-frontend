@@ -534,54 +534,48 @@
     margin-bottom: 20px;
   }
 
-  /* Mobile profile container with arrow navigation */
+  /* SIMPLE Mobile profile container */
   .mobile-profile-container {
     position: relative;
     width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 15px;
-    padding: 0 5px;
+    max-width: 100%;
+    padding: 0 60px; /* Space for arrows on sides */
   }
 
-  /* Navigation arrow buttons - OUTSIDE the card */
+  /* Navigation arrow buttons */
   .profile-nav-arrow {
-    flex-shrink: 0;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.95);
+    background: white;
     border: 2px solid #d63384;
     color: #d63384;
     font-size: 28px;
     font-weight: bold;
     cursor: pointer;
-    z-index: 100;
+    z-index: 1000;
     display: flex;
     align-items: center;
     justify-content: center;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
-  }
-
-  .profile-nav-arrow:hover {
-    background: #d63384;
-    color: white;
-    transform: scale(1.1);
-    box-shadow: 0 6px 16px rgba(214, 51, 132, 0.4);
+    transition: all 0.2s ease;
   }
 
   .profile-nav-arrow:active {
-    transform: scale(0.95);
+    transform: translateY(-50%) scale(0.9);
+    background: #d63384;
+    color: white;
   }
 
-  /* Active profile card - centered between arrows */
-  .active-card {
-    position: relative;
-    flex: 1;
-    width: 100%;
-    max-width: 100%;
+  .profile-nav-arrow:first-child {
+    left: 5px;
+  }
+
+  .profile-nav-arrow:last-child {
+    right: 5px;
   }
 
   /* Visual feedback during swipe */
