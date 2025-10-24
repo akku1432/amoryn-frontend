@@ -568,21 +568,22 @@
     max-width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 0 12px;
+    justify-content: space-between;
+    gap: 6px;
+    padding: 0 10px;
+    box-sizing: border-box;
   }
 
   /* Modern Navigation arrow buttons */
   .profile-nav-arrow {
     flex-shrink: 0;
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
     background: linear-gradient(135deg, #ff6b9d 0%, #d63384 100%);
     border: none;
     color: white;
-    font-size: 32px;
+    font-size: 30px;
     font-weight: 700;
     cursor: pointer;
     z-index: 1000;
@@ -621,12 +622,14 @@
     box-shadow: 0 4px 15px rgba(214, 51, 132, 0.4);
   }
 
-  /* Profile card in mobile - takes available space */
+  /* Profile card in mobile - constrained width */
   .mobile-profile-container .user-card {
-    flex: 1;
+    flex: 0 1 auto;
     margin: 0;
-    max-width: 100%;
+    width: calc(100% - 106px);
+    max-width: calc(100% - 106px);
     min-width: 0;
+    box-sizing: border-box;
   }
 
   /* Visual feedback during swipe */

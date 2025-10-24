@@ -186,7 +186,7 @@ function Match() {
                   ‹
                 </button>
               ) : (
-                <div style={{ width: '50px', flexShrink: 0 }}></div>
+                <div style={{ width: '45px', flexShrink: 0 }}></div>
               )}
 
               {/* Profile Card */}
@@ -225,7 +225,7 @@ function Match() {
                   ›
                 </button>
               ) : (
-                <div style={{ width: '50px', flexShrink: 0 }}></div>
+                <div style={{ width: '45px', flexShrink: 0 }}></div>
               )}
             </div>
           ) : (
