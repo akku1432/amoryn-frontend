@@ -513,22 +513,11 @@
   /* This rule is no longer needed - we handle mobile display in mobile-profile-container */
 
   /* Add swipe indicators and navigation hints */
-  .match-grid::after {
-    content: "Swipe or use buttons to see more profiles";
-    display: block;
-    text-align: center;
-    color: #666;
-    font-size: 14px;
-    margin-top: 20px;
-    font-style: italic;
-  }
-
-  /* Add mobile navigation dots */
+  /* Mobile profile spacing */
   .match-grid::before {
     content: "";
     display: block;
-    text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 0;
   }
 
   /* Mobile profile container */
