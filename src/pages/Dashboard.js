@@ -566,7 +566,24 @@ function Dashboard() {
                 onTouchMove={onTouchMove}
                 onTouchEnd={onTouchEnd}
               >
-                {/* Current profile */}
+                {/* Previous card (left side preview) */}
+                {currentProfileIndex > 0 && (
+                  <div className="user-card user-card-stack user-card-left">
+                    <img
+                      src={
+                        users[currentProfileIndex - 1].photos && users[currentProfileIndex - 1].photos.length > 0
+                          ? `${BASE_URL}/${users[currentProfileIndex - 1].photos[0].replace(/^\//, '')}`
+                          : 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxjaXJjbGUgY3g9IjEwMCIgY3k9IjgwIiByPSIzMCIgZmlsbD0iI0NDQyIvPjxwYXRoIGQ9Ik0zMCAxNjBDMzAgMTQwIDQwIDEyMCA2MCAxMTBIMTQwQzE2MCAxMjAgMTcwIDE0MCAxNzAgMTYwVjE4MEgzMFYxNjBaIiBmaWxsPSIjQ0NDIi8+Cjwvc3ZnPgo='
+                      }
+                      alt="Previous"
+                      onError={(e) => {
+                        e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxjaXJjbGUgY3g9IjEwMCIgY3k9IjgwIiByPSIzMCIgZmlsbD0iI0NDQyIvPjxwYXRoIGQ9Ik0zMCAxNjBDMzAgMTQwIDQwIDEyMCA2MCAxMTBIMTQwQzE2MCAxMjAgMTcwIDE0MCAxNzAgMTYwVjE4MEgzMFYxNjBaIiBmaWxsPSIjQ0NDIi8+Cjwvc3ZnPgo=';
+                      }}
+                    />
+                  </div>
+                )}
+
+                {/* Current profile (center, active) */}
                 <div 
                   className={`user-card user-card-active ${swipeDirection ? `swipe-${swipeDirection}` : ''}`}
                   style={{
@@ -600,18 +617,20 @@ function Dashboard() {
                 </div>
               </div>
 
-              {/* Swipe indicators */}
-              {currentProfileIndex > 0 && (
-                <div className="swipe-indicator swipe-indicator-left">
-                  <span>←</span>
-                  <p>Swipe left</p>
-                </div>
-              )}
-              
+              {/* Next card (right side preview) */}
               {currentProfileIndex < users.length - 1 && (
-                <div className="swipe-indicator swipe-indicator-right">
-                  <span>→</span>
-                  <p>Swipe right</p>
+                <div className="user-card user-card-stack user-card-right">
+                  <img
+                    src={
+                      users[currentProfileIndex + 1].photos && users[currentProfileIndex + 1].photos.length > 0
+                        ? `${BASE_URL}/${users[currentProfileIndex + 1].photos[0].replace(/^\//, '')}`
+                        : 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxjaXJjbGUgY3g9IjEwMCIgY3k9IjgwIiByPSIzMCIgZmlsbD0iI0NDQyIvPjxwYXRoIGQ9Ik0zMCAxNjBDMzAgMTQwIDQwIDEyMCA2MCAxMTBIMTQwQzE2MCAxMjAgMTcwIDE0MCAxNzAgMTYwVjE4MEgzMFYxNjBaIiBmaWxsPSIjQ0NDIi8+Cjwvc3ZnPgo='
+                    }
+                    alt="Next"
+                    onError={(e) => {
+                      e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxjaXJjbGUgY3g9IjEwMCIgY3k9IjgwIiByPSIzMCIgZmlsbD0iI0NDQyIvPjxwYXRoIGQ9Ik0zMCAxNjBDMzAgMTQwIDQwIDEyMCA2MCAxMTBIMTQwQzE2MCAxMjAgMTcwIDE0MCAxNzAgMTYwVjE4MEgzMFYxNjBaIiBmaWxsPSIjQ0NDIi8+Cjwvc3ZnPgo=';
+                    }}
+                  />
                 </div>
               )}
             </div>
