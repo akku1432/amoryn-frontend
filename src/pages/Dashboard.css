@@ -565,88 +565,57 @@
   }
 
   /* Swipe container for card carousel */
+  /* REBUILT: Clean swipe container */
   .swipe-container {
     position: relative;
     width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0;
     overflow: visible;
   }
 
-  /* Stack cards (adjacent cards on sides) */
-  .user-card-stack {
+  /* Preview cards on sides */
+  .preview-card {
     position: absolute;
     top: 50%;
-    transform: translateY(-50%) scale(0.9);
-    width: 80%;
-    max-width: 240px;
-    opacity: 0.6;
+    transform: translateY(-50%) scale(0.85);
+    width: 75%;
+    max-width: 250px;
     pointer-events: none;
-    z-index: 0;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    opacity: 0.5;
   }
 
-  .user-card-stack img {
+  .preview-card img {
     width: 100%;
-    height: clamp(220px, 45dvh, 260px);
+    height: clamp(240px, 48dvh, 300px);
     object-fit: cover;
     border-radius: 20px;
-    display: block;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
   }
 
-  .user-card-left {
-    left: -70%;
+  .preview-left {
+    left: -65%;
   }
 
-  .user-card-right {
-    right: -70%;
+  .preview-right {
+    right: -65%;
   }
 
-  /* Active user card with higher z-index */
-  .user-card-active {
+  /* Active center card */
+  .active-card {
     position: relative;
-    z-index: 2;
+    z-index: 10;
     cursor: grab;
     user-select: none;
     -webkit-user-select: none;
     touch-action: pan-y;
   }
 
-  .user-card-active:active {
+  .active-card:active {
     cursor: grabbing;
-  }
-
-  /* Swipe animations */
-  .swipe-left-complete {
-    animation: swipeOutLeft 0.3s ease-out forwards;
-  }
-
-  .swipe-right-complete {
-    animation: swipeOutRight 0.3s ease-out forwards;
-  }
-
-  @keyframes swipeOutLeft {
-    0% {
-      transform: translateX(0) rotate(0deg);
-      opacity: 1;
-    }
-    100% {
-      transform: translateX(-120%) rotate(-20deg);
-      opacity: 0;
-    }
-  }
-
-  @keyframes swipeOutRight {
-    0% {
-      transform: translateX(0) rotate(0deg);
-      opacity: 1;
-    }
-    100% {
-      transform: translateX(120%) rotate(20deg);
-      opacity: 0;
-    }
   }
 
   /* Visual feedback during swipe */

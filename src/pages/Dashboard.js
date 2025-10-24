@@ -23,11 +23,10 @@ function Dashboard() {
   const [currentProfileIndex, setCurrentProfileIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   
-  // Swipe state
-  const [touchStart, setTouchStart] = useState(null);
-  const [touchEnd, setTouchEnd] = useState(null);
-  const [swipeDirection, setSwipeDirection] = useState(null);
-  const [dragOffset, setDragOffset] = useState(0);
+  // Swipe state - REBUILT
+  const [touchStartX, setTouchStartX] = useState(0);
+  const [currentOffset, setCurrentOffset] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
 
   // NEW: Referral premium status
   const [isReferralPremium, setIsReferralPremium] = useState(false);
@@ -324,63 +323,35 @@ function Dashboard() {
   };
 
   // Enhanced swipe gesture handlers with visual feedback
-  const minSwipeDistance = 75;
-
-  const onTouchStart = (e) => {
-    setTouchEnd(null);
-    setTouchStart(e.targetTouches[0].clientX);
-    setSwipeDirection(null);
+  // REBUILT Swipe Handlers - Clean and Simple
+  const handleTouchStart = (e) => {
+    setTouchStartX(e.touches[0].clientX);
+    setIsDragging(true);
   };
 
-  const onTouchMove = (e) => {
-    const currentTouch = e.targetTouches[0].clientX;
-    setTouchEnd(currentTouch);
-    
-    if (touchStart) {
-      const diff = currentTouch - touchStart;
-      setDragOffset(diff);
-      
-      // Visual feedback during drag
-      if (Math.abs(diff) > 10) {
-        if (diff > 0) {
-          setSwipeDirection('right');
-        } else {
-          setSwipeDirection('left');
-        }
-      }
-    }
+  const handleTouchMove = (e) => {
+    if (!isDragging) return;
+    const currentX = e.touches[0].clientX;
+    const diff = currentX - touchStartX;
+    setCurrentOffset(diff);
   };
 
-  const onTouchEnd = () => {
-    if (!touchStart || !touchEnd) {
-      setDragOffset(0);
-      setSwipeDirection(null);
-      return;
+  const handleTouchEnd = () => {
+    setIsDragging(false);
+    
+    const swipeThreshold = 75;
+    
+    // Swiped left (next profile)
+    if (currentOffset < -swipeThreshold && currentProfileIndex < users.length - 1) {
+      setCurrentProfileIndex(prev => prev + 1);
+    }
+    // Swiped right (previous profile)
+    else if (currentOffset > swipeThreshold && currentProfileIndex > 0) {
+      setCurrentProfileIndex(prev => prev - 1);
     }
     
-    const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > minSwipeDistance;
-    const isRightSwipe = distance < -minSwipeDistance;
-    
-    if (isLeftSwipe && currentProfileIndex < users.length - 1) {
-      setSwipeDirection('left-complete');
-      setTimeout(() => {
-        setCurrentProfileIndex(prev => prev + 1);
-        setDragOffset(0);
-        setSwipeDirection(null);
-      }, 200);
-    } else if (isRightSwipe && currentProfileIndex > 0) {
-      setSwipeDirection('right-complete');
-      setTimeout(() => {
-        setCurrentProfileIndex(prev => prev - 1);
-        setDragOffset(0);
-        setSwipeDirection(null);
-      }, 200);
-    } else {
-      // Snap back if swipe not far enough
-      setDragOffset(0);
-      setSwipeDirection(null);
-    }
+    // Reset offset
+    setCurrentOffset(0);
   };
 
   const handleAction = async (userId, action) => {
@@ -560,20 +531,11 @@ function Dashboard() {
           {isMobile ? (
             // Mobile: Show current profile with swipe gestures
             users.length > 0 && currentProfileIndex < users.length ? (
-              <div 
-                className="swipe-container"
-                onTouchStart={onTouchStart}
-                onTouchMove={onTouchMove}
-                onTouchEnd={onTouchEnd}
-              >
-                {/* Previous card (left side preview) */}
+              <div className="swipe-container">
+                {/* Left preview card */}
                 {currentProfileIndex > 0 && (
-                  <div 
-                    className="user-card user-card-stack user-card-left"
-                    key={`prev-${currentProfileIndex - 1}-${users[currentProfileIndex - 1]._id}`}
-                  >
+                  <div className="preview-card preview-left">
                     <img
-                      key={`prev-img-${currentProfileIndex - 1}-${users[currentProfileIndex - 1]._id}`}
                       src={
                         users[currentProfileIndex - 1].photos && users[currentProfileIndex - 1].photos.length > 0
                           ? `${BASE_URL}/${users[currentProfileIndex - 1].photos[0].replace(/^\//, '')}`
@@ -587,14 +549,16 @@ function Dashboard() {
                   </div>
                 )}
 
-                {/* Current profile (center, active) */}
+                {/* Active center card */}
                 <div 
-                  className={`user-card user-card-active ${swipeDirection ? `swipe-${swipeDirection}` : ''}`}
+                  className="user-card active-card"
                   style={{
-                    transform: `translateX(${dragOffset}px) rotate(${dragOffset * 0.03}deg)`,
-                    transition: dragOffset === 0 ? 'transform 0.3s ease-out' : 'none'
+                    transform: `translateX(${currentOffset}px) rotate(${currentOffset * 0.05}deg)`,
+                    transition: isDragging ? 'none' : 'transform 0.3s ease-out'
                   }}
-                  key={users[currentProfileIndex]._id}
+                  onTouchStart={handleTouchStart}
+                  onTouchMove={handleTouchMove}
+                  onTouchEnd={handleTouchEnd}
                 >
                 <img
                   src={
@@ -621,27 +585,23 @@ function Dashboard() {
                 </div>
               </div>
 
-              {/* Next card (right side preview) */}
-              {currentProfileIndex < users.length - 1 && (
-                <div 
-                  className="user-card user-card-stack user-card-right"
-                  key={`next-${currentProfileIndex + 1}-${users[currentProfileIndex + 1]._id}`}
-                >
-                  <img
-                    key={`next-img-${currentProfileIndex + 1}-${users[currentProfileIndex + 1]._id}`}
-                    src={
-                      users[currentProfileIndex + 1].photos && users[currentProfileIndex + 1].photos.length > 0
-                        ? `${BASE_URL}/${users[currentProfileIndex + 1].photos[0].replace(/^\//, '')}`
-                        : 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxjaXJjbGUgY3g9IjEwMCIgY3k9IjgwIiByPSIzMCIgZmlsbD0iI0NDQyIvPjxwYXRoIGQ9Ik0zMCAxNjBDMzAgMTQwIDQwIDEyMCA2MCAxMTBIMTQwQzE2MCAxMjAgMTcwIDE0MCAxNzAgMTYwVjE4MEgzMFYxNjBaIiBmaWxsPSIjQ0NDIi8+Cjwvc3ZnPgo='
-                    }
-                    alt="Next"
-                    onError={(e) => {
-                      e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxjaXJjbGUgY3g9IjEwMCIgY3k9IjgwIiByPSIzMCIgZmlsbD0iI0NDQyIvPjxwYXRoIGQ9Ik0zMCAxNjBDMzAgMTQwIDQwIDEyMCA2MCAxMTBIMTQwQzE2MCAxMjAgMTcwIDE0MCAxNzAgMTYwVjE4MEgzMFYxNjBaIiBmaWxsPSIjQ0NDIi8+Cjwvc3ZnPgo=';
-                    }}
-                  />
-                </div>
-              )}
-            </div>
+                {/* Right preview card */}
+                {currentProfileIndex < users.length - 1 && (
+                  <div className="preview-card preview-right">
+                    <img
+                      src={
+                        users[currentProfileIndex + 1].photos && users[currentProfileIndex + 1].photos.length > 0
+                          ? `${BASE_URL}/${users[currentProfileIndex + 1].photos[0].replace(/^\//, '')}`
+                          : 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxjaXJjbGUgY3g9IjEwMCIgY3k9IjgwIiByPSIzMCIgZmlsbD0iI0NDQyIvPjxwYXRoIGQ9Ik0zMCAxNjBDMzAgMTQwIDQwIDEyMCA2MCAxMTBIMTQwQzE2MCAxMjAgMTcwIDE0MCAxNzAgMTYwVjE4MEgzMFYxNjBaIiBmaWxsPSIjQ0NDIi8+Cjwvc3ZnPgo='
+                      }
+                      alt="Next"
+                      onError={(e) => {
+                        e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxjaXJjbGUgY3g9IjEwMCIgY3k9IjgwIiByPSIzMCIgZmlsbD0iI0NDQyIvPjxwYXRoIGQ9Ik0zMCAxNjBDMzAgMTQwIDQwIDEyMCA2MCAxMTBIMTQwQzE2MCAxMjAgMTcwIDE0MCAxNzAgMTYwVjE4MEgzMFYxNjBaIiBmaWxsPSIjQ0NDIi8+Cjwvc3ZnPgo=';
+                      }}
+                    />
+                  </div>
+                )}
+              </div>
             ) : (
               <div className="no-profiles-message">
                 <h3>No more profiles to show</h3>
