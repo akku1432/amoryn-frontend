@@ -535,7 +535,7 @@
   }
 
   /* Swipe container for card carousel */
-  /* REBUILT: Clean swipe container */
+  /* REBUILT: Clean swipe container - ONE CARD ONLY */
   .swipe-container {
     position: relative;
     width: 100%;
@@ -543,41 +543,26 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: visible;
+    overflow: hidden; /* Hide preview cards */
   }
 
-  /* Preview cards on sides */
+  /* Preview cards - HIDDEN off screen */
   .preview-card {
     position: absolute;
     top: 50%;
-    transform: translateY(-50%) scale(0.85);
-    width: 75%;
-    max-width: 250px;
+    transform: translateY(-50%);
+    width: 100%;
     pointer-events: none;
     z-index: 1;
-    opacity: 0.5;
+    opacity: 0;
+    display: none; /* Completely hidden */
   }
 
-  .preview-card img {
-    width: 100%;
-    height: clamp(240px, 48dvh, 300px);
-    object-fit: cover;
-    border-radius: 20px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
-  }
-
-  .preview-left {
-    left: -65%;
-  }
-
-  .preview-right {
-    right: -65%;
-  }
-
-  /* Active center card */
+  /* Active center card - FULL VIEW ONLY */
   .active-card {
     position: relative;
     z-index: 10;
+    width: 100%;
     cursor: grab;
     user-select: none;
     -webkit-user-select: none;
