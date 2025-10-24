@@ -568,21 +568,21 @@
     max-width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 0 8px;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 12px;
   }
 
   /* Modern Navigation arrow buttons */
   .profile-nav-arrow {
     flex-shrink: 0;
-    width: 55px;
-    height: 55px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     background: linear-gradient(135deg, #ff6b9d 0%, #d63384 100%);
     border: none;
     color: white;
-    font-size: 26px;
+    font-size: 24px;
     font-weight: 600;
     cursor: pointer;
     z-index: 1000;
@@ -624,7 +624,7 @@
   .mobile-profile-container .user-card {
     flex: 1;
     margin: 0;
-    max-width: calc(100% - 134px);
+    max-width: 100%;
     min-width: 0;
   }
 
