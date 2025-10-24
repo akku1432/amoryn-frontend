@@ -236,9 +236,10 @@ function Match() {
               {currentProfileIndex > 0 && (
                 <div 
                   className="match-card match-card-stack match-card-left"
-                  key={`prev-${matches[currentProfileIndex - 1]._id}`}
+                  key={`prev-${currentProfileIndex - 1}-${matches[currentProfileIndex - 1]._id}`}
                 >
                   <img
+                    key={`prev-img-${currentProfileIndex - 1}-${matches[currentProfileIndex - 1]._id}`}
                     src={
                       matches[currentProfileIndex - 1].photos && matches[currentProfileIndex - 1].photos.length > 0
                         ? `${BASE_URL}/${matches[currentProfileIndex - 1].photos[0].replace(/^\//, '')}`
@@ -290,9 +291,10 @@ function Match() {
             {currentProfileIndex < matches.length - 1 && (
               <div 
                 className="match-card match-card-stack match-card-right"
-                key={`next-${matches[currentProfileIndex + 1]._id}`}
+                key={`next-${currentProfileIndex + 1}-${matches[currentProfileIndex + 1]._id}`}
               >
                 <img
+                  key={`next-img-${currentProfileIndex + 1}-${matches[currentProfileIndex + 1]._id}`}
                   src={
                     matches[currentProfileIndex + 1].photos && matches[currentProfileIndex + 1].photos.length > 0
                       ? `${BASE_URL}/${matches[currentProfileIndex + 1].photos[0].replace(/^\//, '')}`

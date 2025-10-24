@@ -570,9 +570,10 @@ function Dashboard() {
                 {currentProfileIndex > 0 && (
                   <div 
                     className="user-card user-card-stack user-card-left"
-                    key={`prev-${users[currentProfileIndex - 1]._id}`}
+                    key={`prev-${currentProfileIndex - 1}-${users[currentProfileIndex - 1]._id}`}
                   >
                     <img
+                      key={`prev-img-${currentProfileIndex - 1}-${users[currentProfileIndex - 1]._id}`}
                       src={
                         users[currentProfileIndex - 1].photos && users[currentProfileIndex - 1].photos.length > 0
                           ? `${BASE_URL}/${users[currentProfileIndex - 1].photos[0].replace(/^\//, '')}`
@@ -624,9 +625,10 @@ function Dashboard() {
               {currentProfileIndex < users.length - 1 && (
                 <div 
                   className="user-card user-card-stack user-card-right"
-                  key={`next-${users[currentProfileIndex + 1]._id}`}
+                  key={`next-${currentProfileIndex + 1}-${users[currentProfileIndex + 1]._id}`}
                 >
                   <img
+                    key={`next-img-${currentProfileIndex + 1}-${users[currentProfileIndex + 1]._id}`}
                     src={
                       users[currentProfileIndex + 1].photos && users[currentProfileIndex + 1].photos.length > 0
                         ? `${BASE_URL}/${users[currentProfileIndex + 1].photos[0].replace(/^\//, '')}`
