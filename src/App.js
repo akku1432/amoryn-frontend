@@ -21,6 +21,7 @@ import ContactUs from './pages/ContactUs';
 import CancellationRefund from './pages/CancellationRefund';
 import ShippingPolicy from './pages/ShippingPolicy';
 import Admin from './pages/Admin';
+import TravelDating from './pages/TravelDating';
 import { BASE_URL } from './utils/config';
 
 const socket = io(`${BASE_URL}`);
@@ -63,6 +64,7 @@ function App() {
             <Route path="/chats" element={<Chat />} />
             <Route path="/video-call" element={<VideoCall />} />
             <Route path="/friends" element={<Friends />} />
+            <Route path="/travel" element={<TravelDating />} />
             <Route path="/subscription" element={<Subscription />} />
             <Route path="/reset-password/:token" element={<ResetPassword />} />
             <Route path="/terms" element={<Terms />} />

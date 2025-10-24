@@ -457,6 +457,7 @@ function Dashboard() {
             </span>
           )}
         </Link>
+        <Link to="/travel">✈️ Travel</Link>
         <Link to="/Faq">FAQ</Link>
 
         {/* Admin Link - Only visible for admin users */}
