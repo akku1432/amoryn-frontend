@@ -534,43 +534,62 @@
     margin-bottom: 20px;
   }
 
-  /* Swipe container for card carousel */
-  /* REBUILT: Clean swipe container - ONE CARD ONLY */
-  .swipe-container {
+  /* Mobile profile container with arrow navigation */
+  .mobile-profile-container {
     position: relative;
     width: 100%;
-    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden; /* Hide preview cards */
+    gap: 10px;
   }
 
-  /* Preview cards - HIDDEN off screen */
-  .preview-card {
+  /* Navigation arrow buttons */
+  .profile-nav-arrow {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    width: 100%;
-    pointer-events: none;
-    z-index: 1;
-    opacity: 0;
-    display: none; /* Completely hidden */
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.95);
+    border: 2px solid #d63384;
+    color: #d63384;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
   }
 
-  /* Active center card - FULL VIEW ONLY */
+  .profile-nav-arrow:hover {
+    background: #d63384;
+    color: white;
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 6px 16px rgba(214, 51, 132, 0.3);
+  }
+
+  .profile-nav-arrow:active {
+    transform: translateY(-50%) scale(0.95);
+  }
+
+  .arrow-left {
+    left: 5px;
+  }
+
+  .arrow-right {
+    right: 5px;
+  }
+
+  /* Active profile card */
   .active-card {
     position: relative;
-    z-index: 10;
     width: 100%;
-    cursor: grab;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: pan-y;
-  }
-
-  .active-card:active {
-    cursor: grabbing;
+    max-width: 100%;
   }
 
   /* Visual feedback during swipe */

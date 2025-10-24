@@ -23,10 +23,8 @@ function Dashboard() {
   const [currentProfileIndex, setCurrentProfileIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   
-  // Swipe state - REBUILT
-  const [touchStartX, setTouchStartX] = useState(0);
+  // Navigation for mobile - Simple arrows instead of swipe
   const [currentOffset, setCurrentOffset] = useState(0);
-  const [isDragging, setIsDragging] = useState(false);
 
   // NEW: Referral premium status
   const [isReferralPremium, setIsReferralPremium] = useState(false);
@@ -322,36 +320,17 @@ function Dashboard() {
     return age;
   };
 
-  // Enhanced swipe gesture handlers with visual feedback
-  // REBUILT Swipe Handlers - Clean and Simple
-  const handleTouchStart = (e) => {
-    setTouchStartX(e.touches[0].clientX);
-    setIsDragging(true);
-  };
-
-  const handleTouchMove = (e) => {
-    if (!isDragging) return;
-    const currentX = e.touches[0].clientX;
-    const diff = currentX - touchStartX;
-    setCurrentOffset(diff);
-  };
-
-  const handleTouchEnd = () => {
-    setIsDragging(false);
-    
-    const swipeThreshold = 75;
-    
-    // Swiped left (next profile)
-    if (currentOffset < -swipeThreshold && currentProfileIndex < users.length - 1) {
-      setCurrentProfileIndex(prev => prev + 1);
-    }
-    // Swiped right (previous profile)
-    else if (currentOffset > swipeThreshold && currentProfileIndex > 0) {
+  // Simple navigation handlers for arrow buttons
+  const handlePrevProfile = () => {
+    if (currentProfileIndex > 0) {
       setCurrentProfileIndex(prev => prev - 1);
     }
-    
-    // Reset offset
-    setCurrentOffset(0);
+  };
+
+  const handleNextProfile = () => {
+    if (currentProfileIndex < users.length - 1) {
+      setCurrentProfileIndex(prev => prev + 1);
+    }
   };
 
   const handleAction = async (userId, action) => {
@@ -531,35 +510,20 @@ function Dashboard() {
           {isMobile ? (
             // Mobile: Show current profile with swipe gestures
             users.length > 0 && currentProfileIndex < users.length ? (
-              <div className="swipe-container">
-                {/* Left preview card */}
+              <div className="mobile-profile-container">
+                {/* Left Arrow Button */}
                 {currentProfileIndex > 0 && (
-                  <div className="preview-card preview-left">
-                    <img
-                      src={
-                        users[currentProfileIndex - 1].photos && users[currentProfileIndex - 1].photos.length > 0
-                          ? `${BASE_URL}/${users[currentProfileIndex - 1].photos[0].replace(/^\//, '')}`
-                          : 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxjaXJjbGUgY3g9IjEwMCIgY3k9IjgwIiByPSIzMCIgZmlsbD0iI0NDQyIvPjxwYXRoIGQ9Ik0zMCAxNjBDMzAgMTQwIDQwIDEyMCA2MCAxMTBIMTQwQzE2MCAxMjAgMTcwIDE0MCAxNzAgMTYwVjE4MEgzMFYxNjBaIiBmaWxsPSIjQ0NDIi8+Cjwvc3ZnPgo='
-                      }
-                      alt="Previous"
-                      onError={(e) => {
-                        e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxjaXJjbGUgY3g9IjEwMCIgY3k9IjgwIiByPSIzMCIgZmlsbD0iI0NDQyIvPjxwYXRoIGQ9Ik0zMCAxNjBDMzAgMTQwIDQwIDEyMCA2MCAxMTBIMTQwQzE2MCAxMjAgMTcwIDE0MCAxNzAgMTYwVjE4MEgzMFYxNjBaIiBmaWxsPSIjQ0NDIi8+Cjwvc3ZnPgo=';
-                      }}
-                    />
-                  </div>
+                  <button 
+                    className="profile-nav-arrow arrow-left"
+                    onClick={handlePrevProfile}
+                    aria-label="Previous profile"
+                  >
+                    ←
+                  </button>
                 )}
 
-                {/* Active center card */}
-                <div 
-                  className="user-card active-card"
-                  style={{
-                    transform: `translateX(${currentOffset}px) rotate(${currentOffset * 0.05}deg)`,
-                    transition: isDragging ? 'none' : 'transform 0.3s ease-out'
-                  }}
-                  onTouchStart={handleTouchStart}
-                  onTouchMove={handleTouchMove}
-                  onTouchEnd={handleTouchEnd}
-                >
+                {/* Active profile card */}
+                <div className="user-card active-card">
                 <img
                   src={
                     users[currentProfileIndex].photos && users[currentProfileIndex].photos.length > 0
@@ -585,21 +549,15 @@ function Dashboard() {
                 </div>
               </div>
 
-                {/* Right preview card */}
+                {/* Right Arrow Button */}
                 {currentProfileIndex < users.length - 1 && (
-                  <div className="preview-card preview-right">
-                    <img
-                      src={
-                        users[currentProfileIndex + 1].photos && users[currentProfileIndex + 1].photos.length > 0
-                          ? `${BASE_URL}/${users[currentProfileIndex + 1].photos[0].replace(/^\//, '')}`
-                          : 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxjaXJjbGUgY3g9IjEwMCIgY3k9IjgwIiByPSIzMCIgZmlsbD0iI0NDQyIvPjxwYXRoIGQ9Ik0zMCAxNjBDMzAgMTQwIDQwIDEyMCA2MCAxMTBIMTQwQzE2MCAxMjAgMTcwIDE0MCAxNzAgMTYwVjE4MEgzMFYxNjBaIiBmaWxsPSIjQ0NDIi8+Cjwvc3ZnPgo='
-                      }
-                      alt="Next"
-                      onError={(e) => {
-                        e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxjaXJjbGUgY3g9IjEwMCIgY3k9IjgwIiByPSIzMCIgZmlsbD0iI0NDQyIvPjxwYXRoIGQ9Ik0zMCAxNjBDMzAgMTQwIDQwIDEyMCA2MCAxMTBIMTQwQzE2MCAxMjAgMTcwIDE0MCAxNzAgMTYwVjE4MEgzMFYxNjBaIiBmaWxsPSIjQ0NDIi8+Cjwvc3ZnPgo=';
-                      }}
-                    />
-                  </div>
+                  <button 
+                    className="profile-nav-arrow arrow-right"
+                    onClick={handleNextProfile}
+                    aria-label="Next profile"
+                  >
+                    →
+                  </button>
                 )}
               </div>
             ) : (
