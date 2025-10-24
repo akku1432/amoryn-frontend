@@ -24,27 +24,7 @@
   font-weight: bold;
   margin-bottom: 16px;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 15px;
-  flex-wrap: wrap;
-}
-
-.hero-icon {
-  font-size: 48px;
-  animation: sparkle 2s ease-in-out infinite;
-}
-
-@keyframes sparkle {
-  0%, 100% {
-    transform: scale(1) rotate(0deg);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.2) rotate(15deg);
-    opacity: 0.8;
-  }
+  color: #ffd700;
 }
 
 .travel-hero p {
@@ -374,7 +354,7 @@
   background: white;
   border-radius: 20px;
   padding: 40px;
-  max-width: 600px;
+  max-width: 500px;
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
@@ -401,16 +381,23 @@
   color: #667eea;
   font-size: 28px;
   margin-bottom: 10px;
+  text-align: center;
 }
 
 .modal-subtitle {
   color: #666;
   margin-bottom: 30px;
   font-size: 16px;
+  text-align: center;
+}
+
+.post-modal form {
+  width: 100%;
 }
 
 .form-group {
   margin-bottom: 20px;
+  width: 100%;
 }
 
 .form-group label {
@@ -430,6 +417,7 @@
   font-size: 15px;
   font-family: inherit;
   transition: all 0.3s ease;
+  box-sizing: border-box;
 }
 
 .form-group input:focus,
@@ -463,6 +451,12 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 15px;
+  width: 100%;
+}
+
+.form-row .form-group {
+  margin-bottom: 20px;
+  width: 100%;
 }
 
 .interest-selection {
@@ -470,6 +464,7 @@
   flex-wrap: wrap;
   gap: 10px;
   margin-bottom: 10px;
+  width: 100%;
 }
 
 .submit-button {
@@ -634,10 +629,15 @@
 
   .modal-content {
     padding: 30px 20px;
+    max-width: 95%;
   }
 
   .form-row {
     grid-template-columns: 1fr;
+  }
+
+  .form-row .form-group {
+    width: 100%;
   }
 
   .modal-buttons {
