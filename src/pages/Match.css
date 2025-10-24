@@ -4,6 +4,10 @@
   min-height: 100vh;
   padding: 40px 20px;
   text-align: center;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+  box-sizing: border-box;
 }
 
 .match-container h2 {
@@ -420,6 +424,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    overflow-x: hidden;
+    max-width: 100vw;
+    width: 100%;
   }
 
   .match-container h2 {
@@ -434,10 +441,11 @@
     align-items: center;
     justify-content: center;
     gap: 0;
-    padding: 0 8px;
+    padding: 0;
     max-width: 100%;
     width: 100%;
     flex: 1;
+    overflow-x: hidden;
   }
 
   .match-card {
