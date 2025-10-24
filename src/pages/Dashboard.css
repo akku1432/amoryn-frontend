@@ -568,43 +568,64 @@
     max-width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding: 0 5px;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 0 8px;
   }
 
-  /* Navigation arrow buttons */
+  /* Modern Navigation arrow buttons */
   .profile-nav-arrow {
     flex-shrink: 0;
-    width: 50px;
-    height: 50px;
+    width: 55px;
+    height: 55px;
     border-radius: 50%;
-    background: white;
-    border: 2px solid #d63384;
-    color: #d63384;
-    font-size: 28px;
-    font-weight: bold;
+    background: linear-gradient(135deg, #ff6b9d 0%, #d63384 100%);
+    border: none;
+    color: white;
+    font-size: 26px;
+    font-weight: 600;
     cursor: pointer;
     z-index: 1000;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    transition: all 0.2s ease;
+    box-shadow: 0 6px 20px rgba(214, 51, 132, 0.35);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     align-self: center;
+    position: relative;
+  }
+
+  .profile-nav-arrow::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff6b9d, #d63384);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .profile-nav-arrow:hover {
+    transform: scale(1.08);
+    box-shadow: 0 8px 25px rgba(214, 51, 132, 0.5);
+  }
+
+  .profile-nav-arrow:hover::before {
+    opacity: 0.3;
   }
 
   .profile-nav-arrow:active {
-    transform: scale(0.9);
-    background: #d63384;
-    color: white;
+    transform: scale(0.95);
+    box-shadow: 0 4px 15px rgba(214, 51, 132, 0.4);
   }
 
   /* Profile card in mobile - takes available space */
   .mobile-profile-container .user-card {
     flex: 1;
     margin: 0;
-    max-width: 100%;
+    max-width: calc(100% - 134px);
+    min-width: 0;
   }
 
   /* Visual feedback during swipe */
