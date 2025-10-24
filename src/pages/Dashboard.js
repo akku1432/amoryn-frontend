@@ -512,18 +512,23 @@ function Dashboard() {
             users.length > 0 && currentProfileIndex < users.length ? (
               <div className="mobile-profile-container">
                 {/* Left Arrow Button */}
-                {currentProfileIndex > 0 && (
+                {currentProfileIndex > 0 ? (
                   <button 
-                    className="profile-nav-arrow arrow-left"
+                    className="profile-nav-arrow"
                     onClick={handlePrevProfile}
                     aria-label="Previous profile"
                   >
                     ←
                   </button>
+                ) : (
+                  <div style={{ width: '50px' }}></div>
                 )}
 
-                {/* Active profile card */}
-                <div className="user-card active-card">
+                {/* Active profile card with key to force re-render */}
+                <div 
+                  className="user-card active-card"
+                  key={users[currentProfileIndex]._id}
+                >
                 <img
                   src={
                     users[currentProfileIndex].photos && users[currentProfileIndex].photos.length > 0
@@ -550,14 +555,16 @@ function Dashboard() {
               </div>
 
                 {/* Right Arrow Button */}
-                {currentProfileIndex < users.length - 1 && (
+                {currentProfileIndex < users.length - 1 ? (
                   <button 
-                    className="profile-nav-arrow arrow-right"
+                    className="profile-nav-arrow"
                     onClick={handleNextProfile}
                     aria-label="Next profile"
                   >
                     →
                   </button>
+                ) : (
+                  <div style={{ width: '50px' }}></div>
                 )}
               </div>
             ) : (
