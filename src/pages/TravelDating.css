@@ -12,7 +12,7 @@
 
 /* Hero Section */
 .travel-hero {
-  background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   text-align: center;
   padding: 60px 20px;
@@ -24,6 +24,25 @@
   font-weight: bold;
   margin-bottom: 16px;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.hero-icon {
+  font-size: 48px;
+  animation: rotate 3s ease-in-out infinite;
+}
+
+@keyframes rotate {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(15deg);
+  }
 }
 
 .travel-hero p {
@@ -37,7 +56,7 @@
 
 .post-plan-button {
   background: white;
-  color: #ff416c;
+  color: #667eea;
   border: none;
   padding: 16px 40px;
   font-size: 18px;
@@ -65,7 +84,7 @@
 }
 
 .travel-filters h3 {
-  color: #d63384;
+  color: #667eea;
   font-size: 24px;
   margin-bottom: 20px;
   text-align: center;
@@ -92,8 +111,8 @@
 .filter-item input:focus,
 .filter-item select:focus {
   outline: none;
-  border-color: #ff416c;
-  box-shadow: 0 0 0 3px rgba(255, 65, 108, 0.1);
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
 .clear-filters-btn {
@@ -144,12 +163,12 @@
 }
 
 .interest-tag:hover {
-  border-color: #ff416c;
-  color: #ff416c;
+  border-color: #667eea;
+  color: #667eea;
 }
 
 .interest-tag.selected {
-  background: linear-gradient(135deg, #ff416c, #ff4b2b);
+  background: linear-gradient(135deg, #667eea, #764ba2);
   color: white;
   border-color: transparent;
 }
@@ -163,7 +182,7 @@
 
 .travel-feed h2 {
   text-align: center;
-  color: #d63384;
+  color: #667eea;
   font-size: 28px;
   margin-bottom: 30px;
 }
@@ -258,7 +277,7 @@
 .travel-destination h3 {
   margin: 0;
   font-size: 22px;
-  color: #ff416c;
+  color: #667eea;
   font-weight: 600;
 }
 
@@ -288,11 +307,11 @@
 .interest-badge {
   display: inline-block;
   padding: 6px 12px;
-  background: linear-gradient(135deg, #ffe6e6, #fff0f5);
-  border: 1px solid #ffccd5;
+  background: linear-gradient(135deg, #e5e9ff, #f3e7ff);
+  border: 1px solid #c5ceff;
   border-radius: 15px;
   font-size: 13px;
-  color: #d63384;
+  color: #667eea;
   font-weight: 500;
 }
 
@@ -308,7 +327,7 @@
 .connect-button {
   width: 100%;
   padding: 14px;
-  background: linear-gradient(135deg, #ff416c, #ff4b2b);
+  background: linear-gradient(135deg, #667eea, #764ba2);
   color: white;
   border: none;
   border-radius: 12px;
@@ -321,7 +340,7 @@
 
 .connect-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(255, 65, 108, 0.4);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.5);
 }
 
 .connect-button.premium-required {
@@ -372,12 +391,12 @@
 }
 
 .modal-close:hover {
-  color: #ff416c;
+  color: #667eea;
 }
 
 /* Post Modal */
 .post-modal h2 {
-  color: #d63384;
+  color: #667eea;
   font-size: 28px;
   margin-bottom: 10px;
 }
@@ -415,8 +434,8 @@
 .form-group select:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #ff416c;
-  box-shadow: 0 0 0 3px rgba(255, 65, 108, 0.1);
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
 .form-group input.error,
@@ -454,7 +473,7 @@
 .submit-button {
   width: 100%;
   padding: 16px;
-  background: linear-gradient(135deg, #ff416c, #ff4b2b);
+  background: linear-gradient(135deg, #667eea, #764ba2);
   color: white;
   border: none;
   border-radius: 12px;
@@ -467,7 +486,7 @@
 
 .submit-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 65, 108, 0.4);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
 }
 
 /* Upgrade Modal */
@@ -481,7 +500,7 @@
 }
 
 .upgrade-modal h2 {
-  color: #d63384;
+  color: #667eea;
   font-size: 28px;
   margin-bottom: 15px;
 }
@@ -502,7 +521,7 @@
 .upgrade-button {
   flex: 1;
   padding: 16px;
-  background: linear-gradient(135deg, #ff416c, #ff4b2b);
+  background: linear-gradient(135deg, #667eea, #764ba2);
   color: white;
   border: none;
   border-radius: 12px;
@@ -514,7 +533,7 @@
 
 .upgrade-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 65, 108, 0.4);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
 }
 
 .later-button {
