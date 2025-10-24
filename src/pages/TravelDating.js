@@ -298,7 +298,7 @@ const TravelDating = () => {
       {/* Hero Section */}
       <div className="travel-hero">
         <h1>
-          <span className="hero-icon">🌍</span>
+          <span className="hero-icon">✨</span>
           Find Your Perfect Travel Partner
         </h1>
         <p>Discover people traveling to the same destinations and plan your next adventure together.</p>

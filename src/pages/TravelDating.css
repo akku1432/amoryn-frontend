@@ -12,7 +12,7 @@
 
 /* Hero Section */
 .travel-hero {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
   color: white;
   text-align: center;
   padding: 60px 20px;
@@ -33,15 +33,17 @@
 
 .hero-icon {
   font-size: 48px;
-  animation: rotate 3s ease-in-out infinite;
+  animation: sparkle 2s ease-in-out infinite;
 }
 
-@keyframes rotate {
+@keyframes sparkle {
   0%, 100% {
-    transform: rotate(0deg);
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
   }
   50% {
-    transform: rotate(15deg);
+    transform: scale(1.2) rotate(15deg);
+    opacity: 0.8;
   }
 }
 
@@ -56,7 +58,7 @@
 
 .post-plan-button {
   background: white;
-  color: #667eea;
+  color: #ff416c;
   border: none;
   padding: 16px 40px;
   font-size: 18px;
@@ -168,7 +170,7 @@
 }
 
 .interest-tag.selected {
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #ff416c, #ff4b2b);
   color: white;
   border-color: transparent;
 }
@@ -307,11 +309,11 @@
 .interest-badge {
   display: inline-block;
   padding: 6px 12px;
-  background: linear-gradient(135deg, #e5e9ff, #f3e7ff);
-  border: 1px solid #c5ceff;
+  background: linear-gradient(135deg, #ffe6f0, #fff0f5);
+  border: 1px solid #ffcce0;
   border-radius: 15px;
   font-size: 13px;
-  color: #667eea;
+  color: #ff416c;
   font-weight: 500;
 }
 
@@ -327,7 +329,7 @@
 .connect-button {
   width: 100%;
   padding: 14px;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #ff416c, #ff4b2b);
   color: white;
   border: none;
   border-radius: 12px;
@@ -340,7 +342,7 @@
 
 .connect-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.5);
+  box-shadow: 0 4px 15px rgba(255, 65, 108, 0.4);
 }
 
 .connect-button.premium-required {
@@ -473,7 +475,7 @@
 .submit-button {
   width: 100%;
   padding: 16px;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #ff416c, #ff4b2b);
   color: white;
   border: none;
   border-radius: 12px;
@@ -486,7 +488,7 @@
 
 .submit-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+  box-shadow: 0 6px 20px rgba(255, 65, 108, 0.4);
 }
 
 /* Upgrade Modal */
@@ -521,7 +523,7 @@
 .upgrade-button {
   flex: 1;
   padding: 16px;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #ff416c, #ff4b2b);
   color: white;
   border: none;
   border-radius: 12px;
@@ -533,7 +535,7 @@
 
 .upgrade-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+  box-shadow: 0 6px 20px rgba(255, 65, 108, 0.4);
 }
 
 .later-button {
