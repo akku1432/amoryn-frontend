@@ -511,14 +511,16 @@ function Dashboard() {
             // Mobile: Show current profile with swipe gestures
             users.length > 0 && currentProfileIndex < users.length ? (
               <div className="mobile-profile-container">
-                {/* Left Arrow */}
-                {currentProfileIndex > 0 && (
+                {/* Left Arrow - always show as placeholder or button */}
+                {currentProfileIndex > 0 ? (
                   <button 
                     className="profile-nav-arrow"
                     onClick={handlePrevProfile}
                   >
                     ←
                   </button>
+                ) : (
+                  <div style={{ width: '50px', flexShrink: 0 }}></div>
                 )}
 
                 {/* Profile Card */}
@@ -548,14 +550,16 @@ function Dashboard() {
                 </div>
               </div>
 
-                {/* Right Arrow */}
-                {currentProfileIndex < users.length - 1 && (
+                {/* Right Arrow - always show as placeholder or button */}
+                {currentProfileIndex < users.length - 1 ? (
                   <button 
                     className="profile-nav-arrow"
                     onClick={handleNextProfile}
                   >
                     →
                   </button>
+                ) : (
+                  <div style={{ width: '50px', flexShrink: 0 }}></div>
                 )}
               </div>
             ) : (

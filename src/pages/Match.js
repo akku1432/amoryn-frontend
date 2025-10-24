@@ -177,14 +177,16 @@ function Match() {
           // Mobile: Show current profile with swipe gestures
           matches.length > 0 && currentProfileIndex < matches.length ? (
             <div className="mobile-profile-container">
-              {/* Left Arrow */}
-              {currentProfileIndex > 0 && (
+              {/* Left Arrow - always show as placeholder or button */}
+              {currentProfileIndex > 0 ? (
                 <button 
                   className="profile-nav-arrow"
                   onClick={handlePrevProfile}
                 >
                   ←
                 </button>
+              ) : (
+                <div style={{ width: '50px', flexShrink: 0 }}></div>
               )}
 
               {/* Profile Card */}
@@ -214,14 +216,16 @@ function Match() {
               </div>
             </div>
 
-              {/* Right Arrow */}
-              {currentProfileIndex < matches.length - 1 && (
+              {/* Right Arrow - always show as placeholder or button */}
+              {currentProfileIndex < matches.length - 1 ? (
                 <button 
                   className="profile-nav-arrow"
                   onClick={handleNextProfile}
                 >
                   →
                 </button>
+              ) : (
+                <div style={{ width: '50px', flexShrink: 0 }}></div>
               )}
             </div>
           ) : (

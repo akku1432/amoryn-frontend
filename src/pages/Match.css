@@ -534,19 +534,21 @@
     margin-bottom: 20px;
   }
 
-  /* SIMPLE Mobile profile container */
+  /* Mobile profile container */
   .mobile-profile-container {
     position: relative;
     width: 100%;
     max-width: 100%;
-    padding: 0 60px; /* Space for arrows on sides */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 0 5px;
   }
 
   /* Navigation arrow buttons */
   .profile-nav-arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+    flex-shrink: 0;
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -562,20 +564,20 @@
     justify-content: center;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     transition: all 0.2s ease;
+    align-self: center;
   }
 
   .profile-nav-arrow:active {
-    transform: translateY(-50%) scale(0.9);
+    transform: scale(0.9);
     background: #d63384;
     color: white;
   }
 
-  .profile-nav-arrow:first-child {
-    left: 5px;
-  }
-
-  .profile-nav-arrow:last-child {
-    right: 5px;
+  /* Profile card in mobile - takes available space */
+  .mobile-profile-container .match-card {
+    flex: 1;
+    margin: 0;
+    max-width: 100%;
   }
 
   /* Visual feedback during swipe */
