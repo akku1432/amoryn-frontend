@@ -510,10 +510,7 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   }
 
-  /* Hide other profiles on mobile - show only the first one */
-  .match-card:not(:first-child) {
-    display: none;
-  }
+  /* This rule is no longer needed - we handle mobile display in mobile-profile-container */
 
   /* Add swipe indicators and navigation hints */
   .match-grid::after {
