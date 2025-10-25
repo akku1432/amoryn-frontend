@@ -404,35 +404,35 @@
 .post-modal h2 {
   color: #667eea;
   font-size: 26px;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   text-align: center;
+  margin-top: 0;
 }
 
 .modal-subtitle {
   color: #666;
-  margin-bottom: 25px;
+  margin-bottom: 28px;
   font-size: 15px;
   text-align: center;
+  margin-top: 0;
 }
 
 .post-modal form {
   width: 100%;
+  margin-top: 0;
 }
 
 .form-group {
   margin-bottom: 18px;
   width: 100%;
-  display: flex;
-  flex-direction: column;
 }
 
 .form-group label {
   display: block;
   color: #333;
   font-weight: 600;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
   font-size: 14px;
-  order: -1;
 }
 
 .form-group input,
@@ -469,8 +469,9 @@
 .error-text {
   display: block;
   color: #dc3545;
-  font-size: 13px;
-  margin-top: 5px;
+  font-size: 12px;
+  margin-top: 4px;
+  font-weight: 500;
 }
 
 .form-group small {
@@ -485,14 +486,18 @@
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  gap: 15px;
   width: 100%;
-  margin-bottom: 0;
+  margin-bottom: 18px;
 }
 
 .form-row .form-group {
-  margin-bottom: 18px;
+  margin-bottom: 0;
   width: 100%;
+}
+
+.form-row .form-group label {
+  margin-bottom: 8px;
 }
 
 .post-modal .interest-selection {
@@ -552,7 +557,7 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  margin-top: 15px;
+  margin-top: 20px;
 }
 
 .submit-button:hover {
@@ -725,10 +730,16 @@
   .form-row {
     grid-template-columns: 1fr;
     gap: 0;
+    margin-bottom: 0;
   }
 
   .form-row .form-group {
     width: 100%;
+    margin-bottom: 18px;
+  }
+
+  .form-row .form-group:last-child {
+    margin-bottom: 0;
   }
 
   .modal-buttons {
@@ -789,15 +800,28 @@
 
   .post-modal h2 {
     font-size: 22px;
+    margin-bottom: 8px;
   }
 
   .modal-subtitle {
     font-size: 14px;
-    margin-bottom: 20px;
+    margin-bottom: 22px;
   }
 
   .form-group {
     margin-bottom: 15px;
+  }
+
+  .form-group label {
+    font-size: 13px;
+    margin-bottom: 6px;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-size: 14px;
+    padding: 10px 12px;
   }
 
   .post-modal .interest-selection {
