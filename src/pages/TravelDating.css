@@ -421,6 +421,8 @@
 .form-group {
   margin-bottom: 18px;
   width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .form-group label {
@@ -429,6 +431,7 @@
   font-weight: 600;
   margin-bottom: 6px;
   font-size: 14px;
+  order: -1;
 }
 
 .form-group input,
@@ -474,6 +477,8 @@
   color: #999;
   font-size: 12px;
   margin-top: 6px;
+  width: 100%;
+  text-align: left;
 }
 
 .form-row {
@@ -493,29 +498,45 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  width: 100%;
+  width: 100% !important;
   padding: 10px 14px;
   border: 2px solid #ffe6e6;
   border-radius: 10px;
-  min-height: 48px;
+  min-height: 100px;
+  max-height: 200px;
+  overflow-y: auto;
   box-sizing: border-box;
   background: #fff;
   transition: all 0.3s ease;
   align-items: flex-start;
   align-content: flex-start;
+  margin: 0;
 }
 
 .interest-selection:hover {
   border-color: #ffcccc;
 }
 
-.interest-selection:empty {
-  min-height: 48px;
-}
-
 .interest-selection .interest-tag {
   padding: 6px 12px;
   font-size: 13px;
+  border: 2px solid #ffe6e6;
+  background: #fff;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #666;
+}
+
+.interest-selection .interest-tag:hover {
+  border-color: #667eea;
+  color: #667eea;
+}
+
+.interest-selection .interest-tag.selected {
+  background: linear-gradient(135deg, #ff416c, #ff4b2b);
+  color: white;
+  border-color: transparent;
 }
 
 .submit-button {
@@ -779,7 +800,8 @@
 
   .interest-selection {
     padding: 8px 12px;
-    min-height: 44px;
+    min-height: 90px;
+    max-height: 180px;
   }
 
   .interest-selection .interest-tag {
