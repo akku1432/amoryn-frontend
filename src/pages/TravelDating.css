@@ -444,6 +444,11 @@
   box-sizing: border-box;
 }
 
+.form-group textarea {
+  resize: vertical;
+  line-height: 1.5;
+}
+
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
@@ -467,8 +472,8 @@
 .form-group small {
   display: block;
   color: #999;
-  font-size: 13px;
-  margin-top: 5px;
+  font-size: 12px;
+  margin-top: 6px;
 }
 
 .form-row {
@@ -488,8 +493,24 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 8px;
   width: 100%;
+  padding: 10px 14px;
+  border: 2px solid #ffe6e6;
+  border-radius: 10px;
+  min-height: 48px;
+  box-sizing: border-box;
+  background: #fff;
+  transition: all 0.3s ease;
+  align-items: flex-start;
+  align-content: flex-start;
+}
+
+.interest-selection:hover {
+  border-color: #ffcccc;
+}
+
+.interest-selection:empty {
+  min-height: 48px;
 }
 
 .interest-selection .interest-tag {
@@ -754,6 +775,16 @@
 
   .form-group {
     margin-bottom: 15px;
+  }
+
+  .interest-selection {
+    padding: 8px 12px;
+    min-height: 44px;
+  }
+
+  .interest-selection .interest-tag {
+    padding: 5px 10px;
+    font-size: 12px;
   }
 }
 
