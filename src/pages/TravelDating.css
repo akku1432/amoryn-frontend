@@ -1,4 +1,4 @@
-/* Travel Dating Page Styles - Updated */
+/* Travel Dating Page Styles - Form Layout Fixed v2 */
 /* Main Container */
 .travel-dating-container {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -377,8 +377,8 @@
 .modal-content {
   background: white;
   border-radius: 20px;
-  padding: 35px 30px;
-  max-width: 450px;
+  padding: 30px 25px;
+  max-width: 480px;
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
@@ -403,27 +403,24 @@
 /* Post Modal */
 .post-modal h2 {
   color: #667eea;
-  font-size: 26px;
-  margin-bottom: 10px;
+  font-size: 24px;
+  margin: 0 0 8px 0;
   text-align: center;
-  margin-top: 0;
 }
 
 .modal-subtitle {
   color: #666;
-  margin-bottom: 28px;
-  font-size: 15px;
+  margin: 0 0 24px 0;
+  font-size: 14px;
   text-align: center;
-  margin-top: 0;
 }
 
 .post-modal form {
   width: 100%;
-  margin-top: 0;
 }
 
 .form-group {
-  margin-bottom: 18px;
+  margin-bottom: 20px;
   width: 100%;
 }
 
@@ -433,6 +430,7 @@
   font-weight: 600;
   margin-bottom: 8px;
   font-size: 14px;
+  line-height: 1.2;
 }
 
 .form-group input,
@@ -486,9 +484,9 @@
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 15px;
+  gap: 16px;
   width: 100%;
-  margin-bottom: 18px;
+  margin-bottom: 20px;
 }
 
 .form-row .form-group {
@@ -498,6 +496,11 @@
 
 .form-row .form-group label {
   margin-bottom: 8px;
+}
+
+.form-row .form-group .error-text {
+  font-size: 11px;
+  margin-top: 4px;
 }
 
 .post-modal .interest-selection {
@@ -548,7 +551,7 @@
 
 .submit-button {
   width: 100%;
-  padding: 14px;
+  padding: 15px;
   background: linear-gradient(135deg, #ff416c, #ff4b2b);
   color: white;
   border: none;
@@ -557,12 +560,17 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  margin-top: 20px;
+  margin-top: 24px;
+  box-shadow: 0 2px 8px rgba(255, 65, 108, 0.2);
 }
 
 .submit-button:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(255, 65, 108, 0.4);
+}
+
+.submit-button:active {
+  transform: translateY(0);
 }
 
 /* Upgrade Modal */
@@ -723,8 +731,17 @@
   }
 
   .modal-content {
-    padding: 25px 20px;
-    max-width: 92%;
+    padding: 25px 18px;
+    max-width: 90%;
+  }
+
+  .post-modal h2 {
+    font-size: 22px;
+  }
+
+  .modal-subtitle {
+    font-size: 13px;
+    margin-bottom: 20px;
   }
 
   .form-row {
@@ -735,11 +752,15 @@
 
   .form-row .form-group {
     width: 100%;
-    margin-bottom: 18px;
+    margin-bottom: 20px;
   }
 
   .form-row .form-group:last-child {
     margin-bottom: 0;
+  }
+
+  .form-group {
+    margin-bottom: 18px;
   }
 
   .modal-buttons {
@@ -799,17 +820,17 @@
   }
 
   .post-modal h2 {
-    font-size: 22px;
-    margin-bottom: 8px;
+    font-size: 20px;
+    margin-bottom: 6px;
   }
 
   .modal-subtitle {
-    font-size: 14px;
-    margin-bottom: 22px;
+    font-size: 13px;
+    margin-bottom: 20px;
   }
 
   .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 16px;
   }
 
   .form-group label {
@@ -822,6 +843,11 @@
   .form-group textarea {
     font-size: 14px;
     padding: 10px 12px;
+  }
+
+  .submit-button {
+    margin-top: 20px;
+    padding: 14px;
   }
 
   .post-modal .interest-selection {
