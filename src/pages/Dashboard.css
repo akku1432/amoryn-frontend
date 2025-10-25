@@ -139,6 +139,7 @@
   width: 100%;
   height: 250px;
   object-fit: cover;
+  object-position: center top;
   border-radius: 15px;
   margin-bottom: 15px;
   border: 3px solid #f0f0f0;
@@ -295,6 +296,7 @@
   height: auto;
   max-height: 300px;
   object-fit: cover;
+  object-position: center top;
   border-radius: 15px;
   margin-bottom: 20px;
   border: 3px solid #f0f0f0;
@@ -513,6 +515,7 @@
     height: clamp(220px, 45dvh, 260px);
     width: 100%;
     object-fit: cover;
+    object-position: center top;
     border-radius: 20px;
     margin-bottom: 12px;
   }
@@ -707,6 +710,7 @@
 
   .user-card img {
     height: 280px;
+    object-position: center top;
   }
 
   .user-card h4 {
@@ -773,6 +777,7 @@
     height: 250px;
     width: 100%;
     object-fit: cover;
+    object-position: center top;
   }
 
   .modal-buttons {
@@ -814,6 +819,7 @@
     height: 200px;
     width: 100%;
     object-fit: cover;
+    object-position: center top;
   }
 
   .modal-buttons {
@@ -863,6 +869,7 @@
     height: 180px;
     width: 100%;
     object-fit: cover;
+    object-position: center top;
   }
 
   .modal-content h3 {

@@ -66,6 +66,7 @@
   width: 120px;
   height: 120px;
   object-fit: cover;
+  object-position: center top;
   border-radius: 15px;
   margin-right: 25px;
   border: 3px solid #f0f0f0;
@@ -211,6 +212,7 @@
   height: auto;
   max-height: 300px;
   object-fit: cover;
+  object-position: center top;
   border-radius: 15px;
   margin-bottom: 20px;
   border: 3px solid #f0f0f0;
@@ -406,6 +408,7 @@
     margin: 0 0 15px 0;
     width: 100px;
     height: 100px;
+    object-position: center top;
   }
 
   .friend-details {
@@ -464,6 +467,7 @@
   .friend-card img {
     width: 80px;
     height: 80px;
+    object-position: center top;
   }
 
   .friend-details h4 {
@@ -485,6 +489,7 @@
 
   .modal-photo {
     max-height: 250px;
+    object-position: center top;
   }
 
   .modal-content h3 {
