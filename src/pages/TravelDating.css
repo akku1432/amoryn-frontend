@@ -17,6 +17,29 @@
   text-align: center;
   padding: 60px 20px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.hero-home-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: white;
+  backdrop-filter: blur(10px);
+}
+
+.hero-home-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
 }
 
 .travel-hero h1 {
@@ -24,7 +47,7 @@
   font-weight: bold;
   margin-bottom: 16px;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-  color: #ffd700;
+  color: white;
 }
 
 .travel-hero p {
@@ -353,8 +376,8 @@
 .modal-content {
   background: white;
   border-radius: 20px;
-  padding: 40px;
-  max-width: 500px;
+  padding: 35px 30px;
+  max-width: 450px;
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
@@ -379,15 +402,15 @@
 /* Post Modal */
 .post-modal h2 {
   color: #667eea;
-  font-size: 28px;
-  margin-bottom: 10px;
+  font-size: 26px;
+  margin-bottom: 8px;
   text-align: center;
 }
 
 .modal-subtitle {
   color: #666;
-  margin-bottom: 30px;
-  font-size: 16px;
+  margin-bottom: 25px;
+  font-size: 15px;
   text-align: center;
 }
 
@@ -396,25 +419,26 @@
 }
 
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 18px;
   width: 100%;
 }
 
 .form-group label {
   display: block;
   color: #333;
-  font-weight: 500;
-  margin-bottom: 8px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  font-size: 14px;
 }
 
 .form-group input,
 .form-group select,
 .form-group textarea {
   width: 100%;
-  padding: 12px 16px;
+  padding: 10px 14px;
   border: 2px solid #ffe6e6;
   border-radius: 10px;
-  font-size: 15px;
+  font-size: 14px;
   font-family: inherit;
   transition: all 0.3s ease;
   box-sizing: border-box;
@@ -450,35 +474,41 @@
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 15px;
+  gap: 12px;
   width: 100%;
+  margin-bottom: 0;
 }
 
 .form-row .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 18px;
   width: 100%;
 }
 
 .interest-selection {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 10px;
+  gap: 8px;
+  margin-bottom: 8px;
   width: 100%;
+}
+
+.interest-selection .interest-tag {
+  padding: 6px 12px;
+  font-size: 13px;
 }
 
 .submit-button {
   width: 100%;
-  padding: 16px;
+  padding: 14px;
   background: linear-gradient(135deg, #ff416c, #ff4b2b);
   color: white;
   border: none;
   border-radius: 12px;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  margin-top: 20px;
+  margin-top: 15px;
 }
 
 .submit-button:hover {
@@ -601,6 +631,22 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  .travel-hero {
+    padding: 50px 20px 60px;
+  }
+
+  .hero-home-button {
+    width: 45px;
+    height: 45px;
+    top: 15px;
+    right: 15px;
+  }
+
+  .hero-home-button svg {
+    width: 24px;
+    height: 24px;
+  }
+
   .travel-hero h1 {
     font-size: 32px;
   }
@@ -628,12 +674,13 @@
   }
 
   .modal-content {
-    padding: 30px 20px;
-    max-width: 95%;
+    padding: 25px 20px;
+    max-width: 92%;
   }
 
   .form-row {
     grid-template-columns: 1fr;
+    gap: 0;
   }
 
   .form-row .form-group {
@@ -647,15 +694,27 @@
 
 @media (max-width: 480px) {
   .travel-hero {
-    padding: 40px 15px;
+    padding: 40px 15px 50px;
+  }
+
+  .hero-home-button {
+    width: 40px;
+    height: 40px;
+    top: 12px;
+    right: 12px;
+  }
+
+  .hero-home-button svg {
+    width: 22px;
+    height: 22px;
   }
 
   .travel-hero h1 {
-    font-size: 28px;
+    font-size: 26px;
   }
 
   .travel-hero p {
-    font-size: 15px;
+    font-size: 14px;
   }
 
   .travel-filters h3 {
@@ -677,6 +736,24 @@
 
   .travel-destination h3 {
     font-size: 20px;
+  }
+
+  .modal-content {
+    padding: 20px 15px;
+    max-width: 95%;
+  }
+
+  .post-modal h2 {
+    font-size: 22px;
+  }
+
+  .modal-subtitle {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
   }
 }
 

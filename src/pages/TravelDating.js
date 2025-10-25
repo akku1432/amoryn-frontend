@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { Home } from 'lucide-react';
 import './TravelDating.css';
 
 const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
@@ -286,6 +287,9 @@ const TravelDating = () => {
     <div className="travel-dating-container">
       {/* Hero Section */}
       <div className="travel-hero">
+        <div className="hero-home-button" onClick={() => navigate('/dashboard')}>
+          <Home size={28} />
+        </div>
         <h1>
           Find Your Perfect Travel Partner
         </h1>
