@@ -87,6 +87,24 @@ const TravelDating = () => {
       }
     } catch (error) {
       console.error('Error fetching interests:', error);
+      // Fallback interests if API fails
+      setAvailableInterests([
+        'Beaches',
+        'Mountains',
+        'Hiking',
+        'Adventure',
+        'Food & Cuisine',
+        'Photography',
+        'Culture & History',
+        'Wildlife',
+        'City Tours',
+        'Shopping',
+        'Nightlife',
+        'Relaxation',
+        'Water Sports',
+        'Camping',
+        'Road Trips',
+      ]);
     }
   };
 
