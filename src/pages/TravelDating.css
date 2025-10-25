@@ -1,7 +1,10 @@
 /* ========================================
    Travel Dating Page Styles  
-   Version: 4.0 - FIXED CONFLICTS
-   Last Updated: Just Now
+   Version: 5.0 - GRID LAYOUT FIXED
+   - Fixed travel cards grid overlapping
+   - Added proper gaps and spacing
+   - Fixed container widths
+   - Responsive on all screen sizes
    ======================================== */
 
 /* Main Container */
@@ -88,10 +91,12 @@
 .travel-filters {
   max-width: 1200px;
   margin: 40px auto;
-  padding: 30px 20px;
+  padding: 30px;
   background: white;
   border-radius: 20px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  width: calc(100% - 60px);
+  box-sizing: border-box;
 }
 
 .travel-filters h3 {
@@ -189,7 +194,9 @@
 .travel-feed {
   max-width: 1200px;
   margin: 40px auto;
-  padding: 0 20px;
+  padding: 0 30px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .travel-feed h2 {
@@ -214,8 +221,11 @@
 /* Travel Cards Grid */
 .travel-cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .travel-card {
@@ -225,6 +235,9 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
   position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .travel-card:hover {
@@ -740,16 +753,24 @@
   }
 
   .travel-filters {
-    padding: 20px 15px;
+    padding: 20px;
+    width: calc(100% - 40px);
+    margin: 30px auto;
   }
 
   .filter-grid {
     grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .travel-feed {
+    padding: 0 20px;
   }
 
   .travel-cards-grid {
     grid-template-columns: 1fr;
     gap: 20px;
+    width: 100%;
   }
 
   .modal-content {
@@ -815,16 +836,35 @@
     font-size: 14px;
   }
 
+  .travel-filters {
+    padding: 18px;
+    width: calc(100% - 30px);
+    margin: 20px auto;
+  }
+
   .travel-filters h3 {
     font-size: 20px;
   }
 
+  .filter-grid {
+    gap: 10px;
+  }
+
+  .travel-feed {
+    padding: 0 15px;
+  }
+
   .travel-feed h2 {
-    font-size: 24px;
+    font-size: 22px;
+  }
+
+  .travel-cards-grid {
+    gap: 15px;
   }
 
   .travel-card {
-    padding: 20px;
+    padding: 18px;
+    margin: 0;
   }
 
   .traveler-photo {
@@ -833,7 +873,7 @@
   }
 
   .travel-destination h3 {
-    font-size: 20px;
+    font-size: 18px;
   }
 
   .modal-content {
