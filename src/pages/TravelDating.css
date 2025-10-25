@@ -1,10 +1,11 @@
 /* ========================================
    Travel Dating Page Styles  
-   Version: 6.0 - FILTER LAYOUT ORGANIZED
-   - Fixed filter grid arrangement
-   - Organized input fields properly
-   - Fixed travel cards grid overlapping
-   - Proper responsive layout
+   Version: 7.0 - IPAD OPTIMIZED
+   - Fixed iPad Air 4th gen layout
+   - Added tablet-specific breakpoint (769px-1024px)
+   - Proper date field display on tablets
+   - Organized filter grid for all devices
+   - Responsive travel cards on iPad
    ======================================== */
 
 /* Main Container */
@@ -739,6 +740,95 @@
 }
 
 /* Responsive Design */
+
+/* Tablet Landscape & iPad (769px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .travel-hero h1 {
+    font-size: 38px;
+  }
+
+  .travel-hero p {
+    font-size: 17px;
+  }
+
+  .hero-home-button {
+    width: 48px;
+    height: 48px;
+  }
+
+  .travel-filters {
+    padding: 25px;
+    width: calc(100% - 50px);
+  }
+
+  .filter-grid {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 12px;
+    align-items: stretch;
+  }
+
+  .filter-item {
+    display: flex;
+    align-items: stretch;
+  }
+
+  .filter-item input,
+  .filter-item select {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .filter-item:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .filter-item:nth-child(2),
+  .filter-item:nth-child(3) {
+    grid-column: span 2;
+  }
+
+  .filter-item:nth-child(4),
+  .filter-item:nth-child(5) {
+    grid-column: span 2;
+  }
+
+  .filter-item:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .clear-filters-btn {
+    width: 100%;
+  }
+
+  .travel-feed {
+    padding: 0 25px;
+  }
+
+  .travel-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .travel-card {
+    padding: 22px;
+  }
+
+  .interest-filters .interest-tags {
+    gap: 10px;
+  }
+
+  .interest-filters .interest-tag {
+    padding: 8px 14px;
+    font-size: 13px;
+  }
+
+  .modal-content {
+    padding: 30px 25px;
+    max-width: 550px;
+  }
+}
+
+/* Tablet Portrait (max-width: 768px) */
 @media (max-width: 768px) {
   .travel-hero {
     padding: 50px 20px 60px;
@@ -776,12 +866,17 @@
   }
 
   .filter-grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 12px;
   }
 
   .filter-item:first-child {
     grid-column: 1 / -1;
+  }
+
+  .filter-item:nth-child(4),
+  .filter-item:nth-child(5) {
+    grid-column: span 1;
   }
 
   .filter-item:last-child {

@@ -40,6 +40,67 @@
   height: 45px;
 }
 
+/* Date Input Specific Styling */
+.signup-container input[type="date"] {
+  position: relative;
+  padding: 12px;
+  color: #333;
+  background-color: #fff;
+  font-family: inherit;
+  cursor: pointer;
+  display: block;
+  text-align: left;
+  min-height: 45px;
+}
+
+/* iOS Safari specific fixes */
+@supports (-webkit-touch-callout: none) {
+  .signup-container input[type="date"] {
+    min-height: 45px;
+    line-height: 45px;
+  }
+}
+
+.signup-container input[type="date"]::-webkit-calendar-picker-indicator {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  opacity: 1;
+  width: 20px;
+  height: 20px;
+}
+
+.signup-container input[type="date"]::-webkit-datetime-edit {
+  padding: 0;
+}
+
+.signup-container input[type="date"]::-webkit-datetime-edit-fields-wrapper {
+  padding: 0;
+}
+
+.signup-container input[type="date"]:invalid {
+  color: #999;
+}
+
+.signup-container input[type="date"]:valid {
+  color: #333;
+}
+
+/* Placeholder-like text for date input */
+.signup-container input[type="date"]::before {
+  content: attr(placeholder);
+  color: #999;
+  position: absolute;
+  pointer-events: none;
+}
+
+.signup-container input[type="date"]:focus::before,
+.signup-container input[type="date"]:valid::before {
+  display: none;
+}
+
 .signup-container button {
   width: 100%;
   padding: 12px;
@@ -86,6 +147,56 @@
 
 
 /* Responsive Design */
+
+/* Tablet View (iPad, etc) */
+@media screen and (min-width: 481px) and (max-width: 1024px) {
+  .signup-container {
+    max-width: 500px;
+    padding: 35px;
+    margin: 50px auto;
+  }
+
+  .logo {
+    font-size: 30px;
+  }
+
+  .quote {
+    font-size: 18px;
+  }
+
+  .signup-container h2 {
+    font-size: 26px;
+  }
+
+  .signup-container input,
+  .signup-container select,
+  .signup-container label {
+    font-size: 16px;
+    padding: 13px;
+    height: 48px;
+  }
+
+  .signup-container input[type="date"] {
+    padding: 13px;
+    font-size: 16px;
+  }
+
+  .signup-container input[type="date"]::-webkit-calendar-picker-indicator {
+    width: 24px;
+    height: 24px;
+  }
+
+  .signup-container button {
+    font-size: 17px;
+    height: 50px;
+  }
+
+  .terms-checkbox {
+    font-size: 15px;
+  }
+}
+
+/* Mobile View */
 @media screen and (max-width: 480px) {
   .signup-container {
     padding: 25px;
@@ -107,10 +218,20 @@
   .signup-container input,
   .signup-container select,
   .signup-container label {
-    font-size: 14px;
+    font-size: 16px;
+    padding: 12px;
+  }
+
+  .signup-container input[type="date"] {
+    font-size: 16px;
+    padding: 12px;
   }
 
   .signup-container button {
-    font-size: 15px;
+    font-size: 16px;
+  }
+
+  .terms-checkbox {
+    font-size: 13px;
   }
 }

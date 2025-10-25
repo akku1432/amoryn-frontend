@@ -66,7 +66,14 @@ function Signup() {
           <option value="female">Female</option>
           <option value="other">Other</option>
         </select>
-        <input type="date" name="dob" onChange={handleChange} required />
+        <input 
+          type="date" 
+          name="dob" 
+          placeholder="Date of Birth" 
+          onChange={handleChange} 
+          required 
+          max={new Date(new Date().setFullYear(new Date().getFullYear() - 18)).toISOString().split('T')[0]}
+        />
         <select name="lookingFor" onChange={handleChange} required>
           <option value="">Looking For</option>
           <option value="male">Male</option>
