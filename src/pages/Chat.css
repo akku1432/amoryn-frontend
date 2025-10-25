@@ -123,6 +123,7 @@
   height: 50px;
   border-radius: 50%;
   object-fit: cover;
+  object-position: center top;
   border: 2px solid #e9ecef;
 }
 
