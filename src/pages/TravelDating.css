@@ -275,6 +275,10 @@
   font-size: 12px;
   font-weight: 600;
   box-shadow: 0 2px 8px rgba(236, 41, 77, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 /* Travel Card Header */

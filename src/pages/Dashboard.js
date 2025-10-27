@@ -469,8 +469,8 @@ function Dashboard() {
 
         <button className="premium-button" onClick={handlePremiumClick}>
           <BadgePercent size={18} style={{ marginRight: '8px' }} /> 
-          {isReferralPremium && referralPremiumExpiry && new Date(referralPremiumExpiry) > new Date() 
-            ? 'Premium Active' 
+          {(isPremium || (isReferralPremium && referralPremiumExpiry && new Date(referralPremiumExpiry) > new Date()))
+            ? 'Premium' 
             : 'Go Premium'
           }
         </button>
