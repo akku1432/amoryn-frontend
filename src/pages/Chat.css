@@ -307,52 +307,41 @@
 }
 
 .chat-actions {
-  display: flex !important;
+  display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   flex-shrink: 0;
-  flex-wrap: nowrap;
-  visibility: visible !important;
-  overflow: visible !important;
-  position: relative;
-  z-index: 2;
 }
 
 .chat-actions .premium-badge {
   background: linear-gradient(135deg, #ec294d, #d63384);
   color: white;
-  padding: 6px 12px;
+  padding: 8px 16px;
   border-radius: 20px;
-  font-size: 11px;
-  font-weight: 700;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  animation: premiumGlow 2s ease-in-out infinite alternate;
+  font-size: 12px;
+  font-weight: 600;
+  border: none;
   white-space: nowrap;
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  height: 28px;
-  box-shadow: 0 2px 8px rgba(236, 41, 77, 0.3);
-  flex-shrink: 0;
+  height: 36px;
+  box-shadow: 0 2px 8px rgba(236, 41, 77, 0.25);
+  margin-right: 6px;
 }
 
 .action-button {
   background: #f8f9fa;
   border: none;
   padding: 10px;
-  border-radius: 8px;
+  border-radius: 50%;
   cursor: pointer;
   transition: all 0.3s ease;
   color: #666;
-  flex-shrink: 0;
-  display: inline-flex !important;
+  display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 40px;
-  min-height: 40px;
-  visibility: visible !important;
-  opacity: 1;
-  position: relative;
-  z-index: 1;
+  width: 40px;
+  height: 40px;
 }
 
 .action-button:hover {
@@ -680,14 +669,14 @@
   }
 
   .chat-actions .premium-badge {
-    padding: 4px 10px;
-    font-size: 10px;
-    height: 24px;
+    padding: 6px 12px;
+    font-size: 11px;
+    height: 32px;
   }
 
   .action-button {
-    min-width: 36px;
-    min-height: 36px;
+    width: 36px;
+    height: 36px;
     padding: 8px;
   }
 
@@ -792,9 +781,9 @@
   }
 
   .chat-actions .premium-badge {
-    padding: 3px 8px;
-    font-size: 9px;
-    height: 22px;
+    padding: 5px 10px;
+    font-size: 10px;
+    height: 28px;
   }
 
   .chat-actions {
@@ -802,8 +791,8 @@
   }
 
   .action-button {
-    min-width: 32px;
-    min-height: 32px;
+    width: 32px;
+    height: 32px;
     padding: 6px;
   }
 
