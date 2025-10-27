@@ -390,7 +390,7 @@
 .edit-button {
   width: 100%;
   padding: 14px;
-  background: linear-gradient(135deg, #4CAF50, #45a049);
+  background: linear-gradient(135deg, #ff416c, #ff4b2b);
   color: white;
   border: none;
   border-radius: 12px;
@@ -403,7 +403,7 @@
 
 .edit-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+  box-shadow: 0 4px 15px rgba(255, 65, 108, 0.4);
 }
 
 .connect-button.premium-required {

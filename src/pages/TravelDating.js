@@ -497,7 +497,7 @@ const TravelDating = () => {
                     className="edit-button"
                     onClick={() => handleEditPlan(plan)}
                   >
-                    ✏️ Edit Plan
+                    Edit Plan
                   </button>
                 ) : (
                   <button
