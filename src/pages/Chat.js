@@ -313,11 +313,6 @@ function Chat() {
               </div>
               
               <div className="chat-actions">
-                {isPremium && (
-                  <span className="premium-badge" title="Premium User">
-                    👑 Premium
-                  </span>
-                )}
                 <button
                   className="action-button video-call"
                   onClick={handleVideoCall}
@@ -329,6 +324,11 @@ function Chat() {
                 <button className="action-button more-options">
                   <MoreVertical size={20} />
                 </button>
+                {isPremium && (
+                  <span className="premium-badge" title="Premium User">
+                    👑 Premium
+                  </span>
+                )}
               </div>
             </div>
 
