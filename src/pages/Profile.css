@@ -1,0 +1,877 @@
+/* Profile Page Container */
+.profile-page {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+  font-family: 'Segoe UI', sans-serif;
+  color: #333;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+  padding: 30px 20px;
+}
+
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.profile-header h2 {
+  margin: 0;
+  font-size: 1.8rem;
+  color: #d63384;
+  font-weight: 700;
+}
+
+.profile-header button {
+  background: linear-gradient(135deg, #ec294d, #d63384);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(236, 41, 77, 0.3);
+}
+
+.profile-header button:hover {
+  background: linear-gradient(135deg, #d63384, #ec294d);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(236, 41, 77, 0.4);
+}
+
+.home-button {
+  background: linear-gradient(135deg, #ec294d, #d63384) !important;
+  color: white !important;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(236, 41, 77, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.home-button:hover {
+  background: linear-gradient(135deg, #d63384, #ec294d) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(236, 41, 77, 0.4);
+}
+
+.delete-btn {
+  background: linear-gradient(135deg, #dc3545, #c82333);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);
+}
+
+.delete-btn:hover {
+  background: linear-gradient(135deg, #c82333, #a71e2a);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);
+}
+
+/* Progress Message Styles */
+.progress-message {
+  padding: 15px 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  font-weight: 500;
+  text-align: center;
+  animation: slideIn 0.3s ease-out;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.progress-message.success {
+  background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.progress-message.error {
+  background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.progress-message.info {
+  background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+  color: #0c5460;
+  border: 1px solid #bee5eb;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Profile Image Section */
+.profile-image-section {
+  text-align: center;
+  margin-bottom: 30px;
+  padding: 20px;
+  background: #fafafa;
+  border-radius: 12px;
+  border: 1px solid #e0e0e0;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.profile-preview {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 50%;
+  border: 4px solid #ff4b6e;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.profile-preview:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.profile-placeholder {
+  width: 180px;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  color: #666;
+  border-radius: 50%;
+  margin: auto;
+  margin-bottom: 15px;
+  font-size: 1rem;
+  border: 4px dashed #ddd;
+  transition: all 0.3s ease;
+}
+
+.profile-placeholder:hover {
+  border-color: #ff4b6e;
+  background: linear-gradient(135deg, #ffeef2 0%, #ffd6e0 100%);
+}
+
+/* File input styling */
+.profile-image-section input[type="file"] {
+  margin: 15px auto;
+  padding: 12px 16px;
+  border: 2px dashed #ff4b6e;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  max-width: 300px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #666;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.profile-image-section input[type="file"]:hover {
+  border-color: #e63e61;
+  background: #fff5f7;
+}
+
+.profile-image-section input[type="file"]::-webkit-file-upload-button {
+  background: linear-gradient(135deg, #ec294d, #d63384);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-right: 10px;
+  transition: all 0.3s ease;
+}
+
+.profile-image-section input[type="file"]::-webkit-file-upload-button:hover {
+  background: linear-gradient(135deg, #d63384, #ec294d);
+  transform: translateY(-1px);
+}
+
+/* Form Styles */
+.profile-form {
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  box-sizing: border-box;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.profile-form input[type="text"],
+.profile-form input[type="date"],
+.profile-form select,
+.profile-form textarea {
+  width: 100%;
+  padding: 12px;
+  margin-top: 8px;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  border: 2px solid #e0e0e0;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+  background: #fff;
+}
+
+.profile-form input[type="text"]:focus,
+.profile-form input[type="date"]:focus,
+.profile-form select:focus,
+.profile-form textarea:focus {
+  outline: none;
+  border-color: #ff4b6e;
+  box-shadow: 0 0 0 3px rgba(255, 75, 110, 0.1);
+  transform: translateY(-1px);
+}
+
+.profile-form textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+/* Radio Groups and Checkboxes */
+.profile-form h4 {
+  margin-bottom: 12px;
+  font-weight: 600;
+  color: #333;
+  font-size: 1.1rem;
+  border-bottom: 2px solid #ff4b6e;
+  padding-bottom: 8px;
+  display: inline-block;
+}
+
+.radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.radio-group label {
+  background: #fff;
+  padding: 10px 16px;
+  border-radius: 25px;
+  cursor: pointer;
+  border: 2px solid #e0e0e0;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #555;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.radio-group label:hover {
+  border-color: #ec294d;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.radio-group input[type="radio"] {
+  display: none;
+}
+
+.radio-group input[type="radio"]:checked + span {
+  background: linear-gradient(135deg, #ec294d, #d63384);
+  color: white !important;
+  border-color: #ec294d;
+  box-shadow: 0 6px 20px rgba(236, 41, 77, 0.4);
+  transform: scale(1.05);
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  animation: optionSelected 0.3s ease-out;
+  z-index: 1;
+}
+
+/* Checkbox styling for hobbies and other options */
+.options-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.options-wrap label {
+  background: #fff;
+  padding: 10px 16px;
+  border-radius: 25px;
+  cursor: pointer;
+  border: 2px solid #e0e0e0;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #555;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.options-wrap label span {
+  color: inherit;
+  font-weight: inherit;
+  transition: all 0.3s ease;
+  border-radius: 20px;
+  padding: 8px 12px;
+  min-width: fit-content;
+}
+
+.options-wrap label:hover {
+  border-color: #ec294d;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Hover effect for selected options */
+.options-wrap label:has(input:checked):hover {
+  border-color: #d63384;
+  box-shadow: 0 6px 20px rgba(236, 41, 77, 0.3);
+  transform: translateY(-2px) scale(1.02);
+}
+
+.options-wrap input[type="checkbox"],
+.options-wrap input[type="radio"] {
+  display: none;
+}
+
+
+
+/* Enhanced label styling for selected options */
+.options-wrap label:has(input:checked) {
+  border-color: #ec294d;
+  box-shadow: 0 4px 15px rgba(236, 41, 77, 0.2);
+  transform: translateY(-1px);
+}
+
+/* Force selected state visibility - HIGH PRIORITY */
+.options-wrap input[type="checkbox"]:checked + span,
+.options-wrap input[type="radio"]:checked + span,
+.radio-group input[type="radio"]:checked + span {
+  background: linear-gradient(135deg, #ec294d, #d63384) !important;
+  color: white !important;
+  border-color: #ec294d !important;
+  box-shadow: 0 6px 20px rgba(236, 41, 77, 0.4) !important;
+  transform: scale(1.05) !important;
+  font-weight: 600 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+  position: relative !important;
+  z-index: 1 !important;
+  display: block !important;
+}
+
+/* Checkmark for selected options */
+.options-wrap input[type="checkbox"]:checked + span::before,
+.options-wrap input[type="radio"]:checked + span::before {
+  content: '✓';
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  background: #fff;
+  color: #ec294d;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Additional specificity for relationship type and hobbies */
+.options-wrap input[type="checkbox"]:checked + span {
+  background: linear-gradient(135deg, #ec294d, #d63384) !important;
+  color: white !important;
+  border-color: #ec294d !important;
+  box-shadow: 0 6px 20px rgba(236, 41, 77, 0.4) !important;
+  transform: scale(1.05) !important;
+  font-weight: 600 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+  position: relative !important;
+  z-index: 1 !important;
+  display: block !important;
+}
+
+/* Ultra-specific selectors to ensure styling works */
+.options-wrap input[name="relationshipType"]:checked + span,
+.options-wrap input[name="hobbies"]:checked + span {
+  background: linear-gradient(135deg, #ec294d, #d63384) !important;
+  color: white !important;
+  border-color: #ec294d !important;
+  box-shadow: 0 6px 20px rgba(236, 41, 77, 0.4) !important;
+  transform: scale(1.05) !important;
+  font-weight: 600 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+  position: relative !important;
+  z-index: 1 !important;
+  display: block !important;
+}
+
+/* Debug styling - make sure relationship type is visible */
+.options-wrap input[name="relationshipType"]:checked + span {
+  background: linear-gradient(135deg, #ec294d, #d63384) !important;
+  color: white !important;
+  border-color: #ec294d !important;
+  box-shadow: 0 6px 20px rgba(236, 41, 77, 0.4) !important;
+  transform: scale(1.05) !important;
+  font-weight: 600 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+  position: relative !important;
+  z-index: 1 !important;
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Force relationship type styling with maximum specificity */
+.options-wrap input[type="checkbox"][name="relationshipType"]:checked + span {
+  background: linear-gradient(135deg, #ec294d, #d63384) !important;
+  color: white !important;
+  border-color: #ec294d !important;
+  box-shadow: 0 6px 20px rgba(236, 41, 77, 0.4) !important;
+  transform: scale(1.05) !important;
+  font-weight: 600 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+  position: relative !important;
+  z-index: 1 !important;
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Additional debugging - target relationship type specifically */
+.options-wrap input[name="relationshipType"]:checked + span {
+  background: linear-gradient(135deg, #ec294d, #d63384) !important;
+  color: white !important;
+  border-color: #ec294d !important;
+  box-shadow: 0 6px 20px rgba(236, 41, 77, 0.4) !important;
+  transform: scale(1.05) !important;
+  font-weight: 600 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+  position: relative !important;
+  z-index: 1 !important;
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Final attempt - use attribute selectors for maximum specificity */
+input[type="checkbox"][name="relationshipType"]:checked + span {
+  background: linear-gradient(135deg, #ec294d, #d63384) !important;
+  color: white !important;
+  border-color: #ec294d !important;
+  box-shadow: 0 6px 20px rgba(236, 41, 77, 0.4) !important;
+  transform: scale(1.05) !important;
+  font-weight: 600 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+  position: relative !important;
+  z-index: 1 !important;
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Disabled state styling */
+.options-wrap input[type="checkbox"]:disabled + span {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: #f5f5f5;
+  color: #999 !important;
+  border-color: #ddd;
+  transform: scale(0.95);
+}
+
+.options-wrap label:has(input:disabled) {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+@keyframes optionSelected {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(236, 41, 77, 0.5);
+  }
+  100% {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(236, 41, 77, 0.4);
+  }
+}
+
+
+
+/* Enhanced Submit Button */
+.submit-btn {
+  background: linear-gradient(135deg, #ec294d, #d63384);
+  color: white;
+  border: none;
+  padding: 16px 32px;
+  border-radius: 25px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+  box-shadow: 0 4px 12px rgba(236, 41, 77, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.submit-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #d63384, #ec294d);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(236, 41, 77, 0.4);
+}
+
+.submit-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.submit-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Loading Spinner */
+.loading-spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top: 3px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Delete Account Dialog */
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+.dialog-box {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+  animation: dialogSlideIn 0.3s ease-out;
+}
+
+@keyframes dialogSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.dialog-box h3 {
+  color: #dc3545;
+  margin-bottom: 15px;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.dialog-box p {
+  color: #666;
+  margin-bottom: 25px;
+  line-height: 1.5;
+  font-size: 16px;
+}
+
+.dialog-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.cancel-btn {
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  min-width: 120px;
+  max-width: 200px;
+  box-sizing: border-box;
+}
+
+.cancel-btn:hover:not(:disabled) {
+  background: #5a6268;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
+}
+
+.delete-confirm-btn {
+  background: linear-gradient(135deg, #dc3545, #c82333);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  min-width: 120px;
+  max-width: 200px;
+  box-sizing: border-box;
+}
+
+.delete-confirm-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #c82333, #a71e2a);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+}
+
+.cancel-btn:disabled,
+.delete-confirm-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .profile-page {
+    padding: 15px;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .profile-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .profile-preview,
+  .profile-placeholder {
+    width: 150px;
+    height: 150px;
+  }
+
+  .profile-form {
+    padding: 20px;
+  }
+
+  .profile-image-section input[type="file"] {
+    max-width: 100%;
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 0.85rem;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .radio-group,
+  .options-wrap {
+    gap: 10px;
+  }
+
+  .radio-group label,
+  .options-wrap label {
+    font-size: 0.9rem;
+    padding: 8px 14px;
+  }
+
+  .options-wrap label span {
+    font-size: 0.9rem;
+  }
+
+  .submit-btn {
+    padding: 14px 28px;
+    font-size: 1rem;
+  }
+
+  .dialog-box {
+    padding: 25px;
+    margin: 20px;
+  }
+
+  .dialog-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .cancel-btn,
+  .delete-confirm-btn {
+    width: 100%;
+    min-width: 120px;
+    max-width: 200px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .profile-page {
+    padding: 10px;
+    overflow-x: hidden;
+  }
+
+  .profile-preview,
+  .profile-placeholder {
+    width: 120px;
+    height: 120px;
+  }
+
+  .profile-form {
+    padding: 15px;
+  }
+
+  .profile-image-section input[type="file"] {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .radio-group,
+  .options-wrap {
+    gap: 8px;
+  }
+
+  .radio-group label,
+  .options-wrap label {
+    font-size: 0.85rem;
+    padding: 6px 12px;
+  }
+
+  .options-wrap label span {
+    font-size: 0.85rem;
+  }
+
+  .submit-btn {
+    padding: 12px 24px;
+    font-size: 0.95rem;
+  }
+
+  .dialog-box {
+    padding: 20px;
+    margin: 15px;
+  }
+
+  .dialog-box h3 {
+    font-size: 20px;
+  }
+
+  .dialog-box p {
+    font-size: 14px;
+  }
+
+  .cancel-btn,
+  .delete-confirm-btn {
+    width: 100%;
+    min-width: 100px;
+    max-width: 180px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .options-wrap {
+    gap: 6px;
+  }
+
+  .options-wrap label {
+    font-size: 0.8rem;
+    padding: 5px 10px;
+  }
+
+  .options-wrap label span {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .options-wrap {
+    gap: 5px;
+  }
+
+  .options-wrap label {
+    font-size: 0.75rem;
+    padding: 4px 8px;
+  }
+
+  .options-wrap label span {
+    font-size: 0.75rem;
+  }
+}

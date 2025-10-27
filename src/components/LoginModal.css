@@ -1,0 +1,257 @@
+/* Login Modal Overlay */
+.login-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(8px);
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Login Modal Content */
+.login-modal-content {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 450px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Close Button */
+.login-modal-close {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  font-size: 28px;
+  cursor: pointer;
+  color: #888;
+  transition: all 0.3s ease;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.login-modal-close:hover {
+  color: #333;
+  background: rgba(0, 0, 0, 0.1);
+  transform: rotate(90deg);
+}
+
+/* Modal Header */
+.login-modal-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.login-modal-header h2 {
+  font-size: 28px;
+  color: #d63384;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.login-modal-header p {
+  font-size: 15px;
+  color: #666;
+  margin: 0;
+}
+
+/* Message Display */
+.login-modal-message {
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.login-modal-message.success {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.login-modal-message.error {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+/* Form Styles */
+.login-modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.login-modal-form input,
+.login-modal-form select {
+  padding: 14px 16px;
+  font-size: 15px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.login-modal-form input:focus,
+.login-modal-form select:focus {
+  outline: none;
+  border-color: #d63384;
+  box-shadow: 0 0 0 3px rgba(214, 51, 132, 0.1);
+}
+
+.login-modal-form button[type="submit"] {
+  padding: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  background: linear-gradient(135deg, #ec294d, #d63384);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.login-modal-form button[type="submit"]:hover:not(:disabled) {
+  background: linear-gradient(135deg, #d63384, #ec294d);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(236, 41, 77, 0.4);
+}
+
+.login-modal-form button[type="submit"]:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Toggle Between Login and Signup */
+.login-modal-toggle {
+  text-align: center;
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.login-modal-toggle p {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+}
+
+.login-modal-toggle button {
+  background: none;
+  border: none;
+  color: #d63384;
+  font-weight: 600;
+  cursor: pointer;
+  margin-left: 5px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.login-modal-toggle button:hover {
+  color: #ec294d;
+  text-decoration: underline;
+}
+
+/* Forgot Password Link */
+.login-modal-forgot {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.login-modal-forgot a {
+  font-size: 13px;
+  color: #666;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.login-modal-forgot a:hover {
+  color: #d63384;
+  text-decoration: underline;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+  .login-modal-content {
+    padding: 30px 25px;
+    max-width: 95%;
+  }
+
+  .login-modal-header h2 {
+    font-size: 24px;
+  }
+
+  .login-modal-header p {
+    font-size: 14px;
+  }
+
+  .login-modal-form input,
+  .login-modal-form select {
+    padding: 12px 14px;
+    font-size: 14px;
+  }
+
+  .login-modal-form button[type="submit"] {
+    padding: 12px;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-modal-content {
+    padding: 25px 20px;
+  }
+
+  .login-modal-header h2 {
+    font-size: 22px;
+  }
+
+  .login-modal-close {
+    right: 15px;
+    top: 15px;
+    font-size: 24px;
+    width: 35px;
+    height: 35px;
+  }
+}
+

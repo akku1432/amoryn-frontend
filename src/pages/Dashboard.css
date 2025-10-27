@@ -1,0 +1,1099 @@
+/* Main container with background gradient */
+.dashboard-container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to bottom right, #ffe6e6, #fff0f5);
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+  box-sizing: border-box;
+}
+
+/* Header / Brand name */
+.dashboard-header {
+  text-align: center;
+  padding: 30px 0 10px;
+  font-size: 36px;
+  font-weight: bold;
+  color: #d63384;
+  font-family: 'Segoe Script', cursive;
+}
+
+/* Navigation Bar */
+.dashboard-nav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 25px;
+  background: linear-gradient(to right, #ff416c, #ff4b2b);
+  padding: 14px 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+.dashboard-nav a,
+.dashboard-nav button {
+  color: #fff;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 500;
+  padding: 10px 20px;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.dashboard-nav a:hover,
+.dashboard-nav button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Admin Link Styling */
+.admin-link {
+  background: linear-gradient(135deg, #ffd700, #ffed4e) !important;
+  color: #333 !important;
+  font-weight: 700 !important;
+  border: 2px solid #ffd700 !important;
+}
+
+.admin-link:hover {
+  background: linear-gradient(135deg, #ffed4e, #ffd700) !important;
+  transform: translateY(-2px) scale(1.05) !important;
+  box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4) !important;
+}
+
+/* Main dashboard content */
+.dashboard-content {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.dashboard-content h2 {
+  font-size: 36px;
+  color: #d6336c;
+  margin-bottom: 16px;
+}
+
+.dashboard-content p {
+  font-size: 18px;
+  color: #555;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.user-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 25px;
+  justify-items: center;
+  margin-top: 30px;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.user-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 200px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.user-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.user-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transition: left 0.5s;
+}
+
+.user-card:hover::before {
+  left: 100%;
+}
+
+.user-card img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 15px;
+  margin-bottom: 15px;
+  border: 3px solid #f0f0f0;
+  transition: all 0.3s ease;
+  display: block;
+}
+
+.user-card:hover img {
+  border-color: #d63384;
+  transform: scale(1.05);
+}
+
+.user-card h4 {
+  font-size: 18px;
+  color: #333;
+  margin: 10px 0 5px;
+  font-weight: 600;
+}
+
+.user-card p {
+  font-size: 14px;
+  color: #666;
+  margin: 5px 0 15px;
+}
+
+.like-dislike-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 15px;
+}
+
+.like-dislike-buttons button {
+  font-size: 20px;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  background: #f8f9fa;
+  border: 2px solid transparent;
+}
+
+.like-dislike-buttons button:hover {
+  transform: scale(1.1);
+}
+
+.like {
+  background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+  color: white;
+}
+
+.like:hover {
+  background: linear-gradient(135deg, #ee5a52, #d63031);
+  box-shadow: 0 4px 15px rgba(238, 90, 82, 0.4);
+}
+
+.dislike {
+  background: linear-gradient(135deg, #6c757d, #5a6268);
+  color: white;
+}
+
+.dislike:hover {
+  background: linear-gradient(135deg, #5a6268, #495057);
+  box-shadow: 0 4px 15px rgba(108, 117, 125, 0.4);
+}
+
+/* Notification Badge */
+.notification-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: linear-gradient(135deg, #ff4757, #ff3742);
+  color: white;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: bold;
+  border: 2px solid white;
+  box-shadow: 0 4px 12px rgba(255, 71, 87, 0.4);
+  animation: notificationPulse 2s infinite;
+  z-index: 10;
+}
+
+@keyframes notificationPulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 4px 12px rgba(255, 71, 87, 0.4);
+  }
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(255, 71, 87, 0.6);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 4px 12px rgba(255, 71, 87, 0.4);
+  }
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  backdrop-filter: blur(5px);
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.modal-content {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  padding: 30px;
+  border-radius: 20px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  position: relative;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  animation: modalSlideIn 0.3s ease-out;
+  overflow-y: auto;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-30px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.modal-photo {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  max-height: 300px;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  border: 3px solid #f0f0f0;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.modal-close {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #888;
+  transition: all 0.3s ease;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.05);
+  z-index: 10;
+}
+
+.modal-close:hover {
+  color: #333;
+  background: rgba(0, 0, 0, 0.1);
+  transform: rotate(90deg);
+}
+
+.modal-content h3 {
+  margin-bottom: 15px;
+  font-size: 24px;
+  color: #d63384;
+  font-weight: 700;
+  text-align: center;
+}
+
+.modal-content p {
+  font-size: 14px;
+  color: #444;
+  margin: 6px 0;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.modal-content strong {
+  color: #000;
+  font-weight: 600;
+}
+
+/* Enhanced Buttons */
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 25px;
+  width: 100%;
+  flex-wrap: wrap;
+  position: sticky;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 15px 0;
+  border-radius: 15px;
+}
+
+.message-button,
+.video-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 12px;
+  border: none;
+  padding: 12px 20px;
+  transition: all 0.3s ease;
+  flex: 1;
+  min-width: 120px;
+  max-width: 45%;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.message-button {
+  background: linear-gradient(135deg, #ec294d, #d63384);
+  color: white;
+}
+
+.message-button:hover {
+  background: linear-gradient(135deg, #d63384, #ec294d);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(236, 41, 77, 0.4);
+}
+
+.video-button {
+  background: linear-gradient(135deg, #ec294d, #d63384);
+  color: white;
+}
+
+.video-button:hover {
+  background: linear-gradient(135deg, #d63384, #ec294d);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(236, 41, 77, 0.4);
+}
+
+.premium-button {
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, #ec294d, #d63384);
+  color: white;
+  font-weight: bold;
+  padding: 12px 20px;
+  border-radius: 15px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 16px;
+  box-shadow: 0 4px 15px rgba(236, 41, 77, 0.3);
+}
+
+.premium-button:hover {
+  background: linear-gradient(135deg, #d63384, #ec294d);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(236, 41, 77, 0.4);
+}
+
+.logout-button {
+  background: linear-gradient(135deg, #ec294d, #d63384);
+  color: white;
+  font-weight: 600;
+  padding: 12px 20px;
+  border-radius: 15px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 16px;
+  box-shadow: 0 4px 15px rgba(236, 41, 77, 0.3);
+}
+
+.logout-button:hover {
+  background: linear-gradient(135deg, #d63384, #ec294d);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(236, 41, 77, 0.4);
+}
+
+/* Mobile-first single profile view */
+@media (max-width: 768px) {
+  .dashboard-container {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    max-width: 100vw;
+    width: 100%;
+  }
+
+  .dashboard-content {
+    padding: 0 !important;
+    margin: 0 !important;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100dvh - 140px);
+  }
+
+  .dashboard-content h2 {
+    margin: 8px 0 16px 0 !important;
+    font-size: 22px !important;
+    padding: 0 20px;
+  }
+
+  .user-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    padding: 0;
+    max-width: 100%;
+    width: 100%;
+    flex: 1;
+    overflow-x: hidden;
+  }
+
+  .user-card {
+    width: 100%;
+    max-width: 295px;
+    margin: 0 auto;
+    padding: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    border-radius: 25px;
+    position: relative;
+    height: auto;
+    max-height: calc(100dvh - 180px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    animation: slideInUp 0.5s ease-out;
+  }
+
+  @keyframes slideInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .user-card img {
+    height: clamp(220px, 45dvh, 260px);
+    width: 100%;
+    object-fit: cover;
+    object-position: center top;
+    border-radius: 20px;
+    margin-bottom: 12px;
+  }
+
+  .user-card h4 {
+    font-size: 24px;
+    margin: 15px 0 8px;
+    font-weight: 700;
+  }
+
+  .user-card p {
+    font-size: 18px;
+    margin: 8px 0 20px;
+    color: #666;
+  }
+
+  .like-dislike-buttons {
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  .like-dislike-buttons button {
+    font-size: 22px;
+    padding: 14px 22px;
+    border-radius: 50%;
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  .like-dislike-buttons button:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  /* This rule is no longer needed - we handle mobile display in mobile-profile-container */
+
+  /* Mobile profile spacing */
+  .user-grid::before {
+    content: "";
+    display: block;
+    margin-bottom: 0;
+  }
+
+  /* Mobile profile container */
+  .mobile-profile-container {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 0 8px;
+    box-sizing: border-box;
+  }
+
+  /* Modern Navigation arrow buttons */
+  .profile-nav-arrow {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff6b9d 0%, #d63384 100%);
+    border: none;
+    color: white;
+    font-size: 28px;
+    font-weight: 700;
+    cursor: pointer;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 20px rgba(214, 51, 132, 0.35);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    align-self: center;
+    position: relative;
+    line-height: 1;
+  }
+
+  .profile-nav-arrow::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff6b9d, #d63384);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .profile-nav-arrow:hover {
+    transform: scale(1.08);
+    box-shadow: 0 8px 25px rgba(214, 51, 132, 0.5);
+  }
+
+  .profile-nav-arrow:hover::before {
+    opacity: 0.3;
+  }
+
+  .profile-nav-arrow:active {
+    transform: scale(0.95);
+    box-shadow: 0 4px 15px rgba(214, 51, 132, 0.4);
+  }
+
+  /* Profile card in mobile - auto-adjusts to available space */
+  .mobile-profile-container .user-card {
+    flex: 1;
+    margin: 0;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Visual feedback during swipe */
+  .user-card-active.swipe-left::before,
+  .user-card-active.swipe-right::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 25px;
+    pointer-events: none;
+    z-index: 1;
+    transition: opacity 0.2s;
+  }
+
+  .user-card-active.swipe-left::before {
+    background: linear-gradient(135deg, rgba(108, 117, 125, 0.2), rgba(108, 117, 125, 0.1));
+  }
+
+  .user-card-active.swipe-right::before {
+    background: linear-gradient(135deg, rgba(255, 107, 107, 0.2), rgba(255, 107, 107, 0.1));
+  }
+
+  /* Profile counter badge */
+  .profile-counter-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    backdrop-filter: blur(10px);
+    z-index: 10;
+  }
+
+  /* No profiles message */
+  .no-profiles-message {
+    text-align: center;
+    padding: 60px 20px;
+    color: #666;
+  }
+
+  .no-profiles-message h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #d63384;
+  }
+
+  .no-profiles-message p {
+    font-size: 16px;
+    margin: 0;
+  }
+}
+
+/* Tablet view - show 2 profiles side by side */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .user-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    max-width: 750px;
+    padding: 0 20px;
+    justify-items: center;
+  }
+
+  .user-card {
+    max-width: 340px;
+    width: 100%;
+    padding: 20px;
+  }
+
+  .user-card img {
+    height: 280px;
+    object-position: center top;
+  }
+
+  .user-card h4 {
+    font-size: 20px;
+  }
+
+  .user-card p {
+    font-size: 16px;
+  }
+
+  .like-dislike-buttons button {
+    font-size: 22px;
+    padding: 10px 18px;
+  }
+}
+
+/* Desktop view - show multiple profiles */
+@media (min-width: 1025px) {
+  .user-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 25px;
+    max-width: 1000px;
+  }
+
+  .user-card {
+    max-width: 200px;
+    padding: 20px;
+  }
+
+  .user-card img {
+    height: 250px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-header {
+    font-size: 32px;
+    padding: 30px 0 15px;
+  }
+
+  .dashboard-nav {
+    gap: 15px;
+    padding: 15px 10px;
+    margin: 0;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .dashboard-content h2 {
+    font-size: 32px;
+  }
+
+  .dashboard-content p {
+    font-size: 16px;
+  }
+
+  .modal-content {
+    padding: 25px;
+    margin: 20px;
+    max-width: 90%;
+  }
+
+  .modal-photo {
+    height: 250px;
+    width: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  .modal-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .message-button,
+  .video-button {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .dashboard-header {
+    font-size: 28px;
+    padding: 25px 0 10px;
+  }
+
+  .dashboard-nav {
+    gap: 10px;
+    padding: 12px 8px;
+    margin: 0;
+  }
+
+  .dashboard-nav a,
+  .dashboard-nav button {
+    font-size: 14px;
+    padding: 10px 16px;
+  }
+
+  .modal-content {
+    padding: 20px;
+    margin: 15px;
+    max-width: 95%;
+  }
+
+  .modal-photo {
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  .modal-buttons {
+    gap: 15px;
+  }
+
+  .message-button,
+  .video-button {
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-header {
+    font-size: 24px;
+    padding: 20px 0 8px;
+  }
+
+  .dashboard-nav {
+    gap: 8px;
+    padding: 10px 6px;
+    margin: 0;
+  }
+
+  .dashboard-nav a,
+  .dashboard-nav button {
+    font-size: 13px;
+    padding: 8px 14px;
+  }
+
+  .dashboard-content h2 {
+    font-size: 28px;
+  }
+
+  .dashboard-content p {
+    font-size: 15px;
+  }
+
+  .modal-content {
+    padding: 15px;
+    margin: 10px;
+    max-width: 98%;
+  }
+
+  .modal-photo {
+    height: 180px;
+    width: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  .modal-content h3 {
+    font-size: 20px;
+  }
+
+  .modal-content p {
+    font-size: 13px;
+  }
+
+  .message-button,
+  .video-button {
+    padding: 10px 18px;
+    font-size: 13px;
+  }
+}
+
+/* Animation for when new notifications arrive */
+.notification-badge.new-notification {
+  animation: notificationReceived 0.6s ease-out;
+}
+
+@keyframes notificationReceived {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Referral Premium Banner */
+.referral-premium-banner {
+  background: linear-gradient(135deg, #ff6b35, #f7931e);
+  color: white;
+  border-radius: 15px;
+  padding: 20px;
+  margin: 20px 0;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
+  animation: premiumGlow 2s ease-in-out infinite alternate;
+}
+
+.premium-icon {
+  font-size: 48px;
+  animation: bounce 2s infinite;
+}
+
+.premium-info h3 {
+  margin: 0 0 10px 0;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.premium-info p {
+  margin: 5px 0;
+  font-size: 16px;
+  opacity: 0.9;
+}
+
+.expiry-info {
+  font-weight: 600;
+  color: #ffd700;
+  font-size: 14px;
+}
+
+.countdown {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-family: 'Courier New', monospace;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes premiumGlow {
+  from {
+    box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
+  }
+  to {
+    box-shadow: 0 8px 35px rgba(255, 107, 53, 0.5);
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Responsive design for referral premium banner */
+@media (max-width: 768px) {
+  .referral-premium-banner {
+    flex-direction: column;
+    text-align: center;
+    padding: 15px;
+  }
+  
+  .premium-icon {
+    font-size: 36px;
+  }
+  
+  .premium-info h3 {
+    font-size: 20px;
+  }
+  
+  .premium-info p {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .referral-premium-banner {
+    padding: 12px;
+    margin: 15px 0;
+  }
+  
+  .premium-icon {
+    font-size: 32px;
+  }
+  
+  .premium-info h3 {
+    font-size: 18px;
+  }
+  
+  .premium-info p {
+    font-size: 13px;
+  }
+}
+
+/* Referral Premium Expired Modal */
+.expired-modal-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.expired-icon {
+  font-size: 32px;
+  animation: pulse 1.5s infinite;
+}
+
+.expired-modal-header h3 {
+  margin: 0;
+  color: #dc3545;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 25px;
+  justify-content: center;
+}
+
+.secondary-btn {
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.secondary-btn:hover {
+  background: #5a6268;
+}
+
+.primary-btn {
+  background: linear-gradient(135deg, #ff6b35, #f7931e);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.primary-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Responsive design for expired modal */
+@media (max-width: 480px) {
+  .modal-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .secondary-btn,
+  .primary-btn {
+    width: 100%;
+    padding: 15px 24px;
+  }
+}
+
