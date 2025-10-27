@@ -250,12 +250,13 @@
 
 /* Chat Header */
 .chat-main-header {
-  padding: 20px;
+  padding: 15px 20px;
   border-bottom: 1px solid #e9ecef;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background: white;
+  min-height: 70px;
 }
 
 .chat-user-info {
@@ -306,22 +307,24 @@
   display: flex;
   align-items: center;
   gap: 12px;
+  flex-shrink: 0;
 }
 
 .chat-actions .premium-badge {
   background: linear-gradient(135deg, #ec294d, #d63384);
   color: white;
-  padding: 6px 14px;
+  padding: 6px 12px;
   border-radius: 20px;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
   border: 1px solid rgba(255, 255, 255, 0.3);
   animation: premiumGlow 2s ease-in-out infinite alternate;
   white-space: nowrap;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  height: 32px;
+  height: 28px;
   box-shadow: 0 2px 8px rgba(236, 41, 77, 0.3);
+  flex-shrink: 0;
 }
 
 .action-button {
@@ -332,6 +335,12 @@
   cursor: pointer;
   transition: all 0.3s ease;
   color: #666;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  min-height: 40px;
 }
 
 .action-button:hover {
@@ -659,9 +668,15 @@
   }
 
   .chat-actions .premium-badge {
-    padding: 5px 10px;
-    font-size: 11px;
-    height: 28px;
+    padding: 4px 10px;
+    font-size: 10px;
+    height: 24px;
+  }
+
+  .action-button {
+    min-width: 36px;
+    min-height: 36px;
+    padding: 8px;
   }
 
   .chat-messages {
@@ -765,9 +780,19 @@
   }
 
   .chat-actions .premium-badge {
-    padding: 4px 8px;
-    font-size: 10px;
-    height: 24px;
+    padding: 3px 8px;
+    font-size: 9px;
+    height: 22px;
+  }
+
+  .chat-actions {
+    gap: 8px;
+  }
+
+  .action-button {
+    min-width: 32px;
+    min-height: 32px;
+    padding: 6px;
   }
 
   .chat-messages {
