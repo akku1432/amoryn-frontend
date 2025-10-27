@@ -20,6 +20,7 @@ const TravelDating = () => {
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
+  const [connectedUser, setConnectedUser] = useState(null);
 
   // Filters
   const [searchDestination, setSearchDestination] = useState('');
@@ -263,6 +264,11 @@ const TravelDating = () => {
 
       if (response.data.success) {
         setSuccessMessage(response.data.message);
+        setConnectedUser({
+          id: plan.userId._id,
+          name: plan.userId.name,
+          photo: plan.userId.photo,
+        });
         setShowSuccessModal(true);
       }
     } catch (error) {
@@ -311,6 +317,20 @@ const TravelDating = () => {
     setFilterInterests([]);
     setFilterStartDate('');
     setFilterEndDate('');
+  };
+
+  const handleSuccessOk = () => {
+    setShowSuccessModal(false);
+    if (connectedUser) {
+      // Navigate to chat page with the connected user
+      navigate('/chats', {
+        state: {
+          userId: connectedUser.id,
+          userName: connectedUser.name,
+          userPhoto: connectedUser.photo,
+        },
+      });
+    }
   };
 
   return (
@@ -646,7 +666,7 @@ const TravelDating = () => {
             <div className="success-icon">✓</div>
             <h2>Success!</h2>
             <p>{successMessage}</p>
-            <button className="ok-button" onClick={() => setShowSuccessModal(false)}>
+            <button className="ok-button" onClick={handleSuccessOk}>
               OK
             </button>
           </div>
