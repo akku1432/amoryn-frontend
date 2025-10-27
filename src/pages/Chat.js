@@ -324,11 +324,6 @@ function Chat() {
                 <button className="action-button more-options">
                   <MoreVertical size={20} />
                 </button>
-                {isPremium && (
-                  <span className="premium-badge" title="Premium User">
-                    👑 Premium
-                  </span>
-                )}
               </div>
             </div>
 
