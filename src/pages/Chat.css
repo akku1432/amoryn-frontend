@@ -194,6 +194,7 @@
   display: flex;
   flex-direction: column;
   background: white;
+  overflow: visible;
 }
 
 .chat-welcome {
@@ -257,6 +258,8 @@
   align-items: center;
   background: white;
   min-height: 70px;
+  overflow: visible;
+  width: 100%;
 }
 
 .chat-user-info {
@@ -304,10 +307,15 @@
 }
 
 .chat-actions {
-  display: flex;
+  display: flex !important;
   align-items: center;
   gap: 12px;
   flex-shrink: 0;
+  flex-wrap: nowrap;
+  visibility: visible !important;
+  overflow: visible !important;
+  position: relative;
+  z-index: 2;
 }
 
 .chat-actions .premium-badge {
@@ -336,11 +344,15 @@
   transition: all 0.3s ease;
   color: #666;
   flex-shrink: 0;
-  display: inline-flex;
+  display: inline-flex !important;
   align-items: center;
   justify-content: center;
   min-width: 40px;
   min-height: 40px;
+  visibility: visible !important;
+  opacity: 1;
+  position: relative;
+  z-index: 1;
 }
 
 .action-button:hover {
