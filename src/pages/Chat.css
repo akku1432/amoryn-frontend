@@ -262,11 +262,33 @@
   align-items: center;
 }
 
+.user-name-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
 .chat-user-details h3 {
-  margin: 0 0 4px 0;
+  margin: 0;
   color: #333;
   font-size: 18px;
   font-weight: 600;
+}
+
+.user-name-container .premium-badge {
+  background: rgba(255, 215, 0, 0.9);
+  color: #333;
+  padding: 4px 10px;
+  border-radius: 15px;
+  font-size: 11px;
+  font-weight: 700;
+  border: 1px solid rgba(255, 215, 0, 0.5);
+  animation: premiumGlow 2s ease-in-out infinite alternate;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  height: 24px;
 }
 
 .status-container {
@@ -640,6 +662,12 @@
     font-size: 16px;
   }
 
+  .user-name-container .premium-badge {
+    padding: 3px 8px;
+    font-size: 10px;
+    height: 20px;
+  }
+
   .chat-messages {
     padding: 15px;
   }
@@ -738,6 +766,12 @@
 
   .chat-user-details h3 {
     font-size: 15px;
+  }
+
+  .user-name-container .premium-badge {
+    padding: 2px 6px;
+    font-size: 9px;
+    height: 18px;
   }
 
   .chat-messages {

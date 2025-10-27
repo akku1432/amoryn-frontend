@@ -211,11 +211,6 @@ function Chat() {
         <div className="chat-header">
           <h2>Messages</h2>
           <div className="header-actions">
-            {isPremium && (
-              <span className="premium-badge" title="Premium User">
-                👑 Premium
-              </span>
-            )}
             <button 
               className="home-button"
               onClick={() => navigate('/dashboard')}
@@ -309,7 +304,14 @@ function Chat() {
             <div className="chat-main-header">
               <div className="chat-user-info">
                 <div className="chat-user-details">
-                  <h3>{selectedUser.name}</h3>
+                  <div className="user-name-container">
+                    <h3>{selectedUser.name}</h3>
+                    {isPremium && (
+                      <span className="premium-badge" title="Premium User">
+                        👑 Premium
+                      </span>
+                    )}
+                  </div>
                   <div className="status-container">
                     <span className="status-dot"></span>
                     <span className="user-status">Online</span>
