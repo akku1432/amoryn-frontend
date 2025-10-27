@@ -274,6 +274,19 @@ const TravelDating = () => {
     }
   };
 
+  const handleEditPlan = (plan) => {
+    // Pre-fill form with existing plan data
+    setFormData({
+      destination: plan.destination,
+      startDate: plan.startDate.split('T')[0],
+      endDate: plan.endDate.split('T')[0],
+      budget: plan.budget,
+      interests: plan.interests,
+      description: plan.description || '',
+    });
+    setShowPostModal(true);
+  };
+
   const formatDate = (dateString) => {
     const options = { month: 'short', day: 'numeric', year: 'numeric' };
     return new Date(dateString).toLocaleDateString('en-US', options);
@@ -478,17 +491,26 @@ const TravelDating = () => {
                   <p className="travel-description">{plan.description}</p>
                 )}
 
-                {/* Connect Button */}
-                <button
-                  className={`connect-button ${!isPremium && isAuthenticated ? 'premium-required' : ''}`}
-                  onClick={() => handleConnect(plan)}
-                >
-                  {!isAuthenticated
-                    ? 'Login to Connect'
-                    : !isPremium
-                    ? '🔒 Premium Required'
-                    : 'Connect'}
-                </button>
+                {/* Connect/Edit Button */}
+                {currentUser && plan.userId?._id === currentUser._id ? (
+                  <button
+                    className="edit-button"
+                    onClick={() => handleEditPlan(plan)}
+                  >
+                    ✏️ Edit Plan
+                  </button>
+                ) : (
+                  <button
+                    className={`connect-button ${!isPremium && isAuthenticated ? 'premium-required' : ''}`}
+                    onClick={() => handleConnect(plan)}
+                  >
+                    {!isAuthenticated
+                      ? 'Login to Connect'
+                      : !isPremium
+                      ? '🔒 Premium Required'
+                      : 'Connect'}
+                  </button>
+                )}
               </div>
             ))}
           </div>

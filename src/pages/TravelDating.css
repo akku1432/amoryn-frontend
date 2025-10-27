@@ -268,13 +268,13 @@
   position: absolute;
   top: 15px;
   right: 15px;
-  background: linear-gradient(135deg, #ffd700, #ffed4e);
-  color: #333;
+  background: linear-gradient(135deg, #ec294d, #d63384);
+  color: white;
   padding: 6px 14px;
   border-radius: 20px;
   font-size: 12px;
   font-weight: 600;
-  box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
+  box-shadow: 0 2px 8px rgba(236, 41, 77, 0.3);
 }
 
 /* Travel Card Header */
@@ -385,6 +385,25 @@
 .connect-button:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 15px rgba(255, 65, 108, 0.4);
+}
+
+.edit-button {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #4CAF50, #45a049);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 15px;
+}
+
+.edit-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
 }
 
 .connect-button.premium-required {
