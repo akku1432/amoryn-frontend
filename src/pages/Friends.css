@@ -1,0 +1,525 @@
+.friends-container {
+  padding: 30px;
+  text-align: center;
+  max-width: 1000px;
+  margin: 0 auto;
+  background: linear-gradient(to bottom right, #fff0f5, #ffe6e6);
+  min-height: 100vh;
+  color: #333;
+}
+
+.friends-container h2 {
+  color: #d63384;
+  font-size: 36px;
+  margin-bottom: 30px;
+  font-weight: 700;
+}
+
+.friend-list {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.friend-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 850px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  padding: 20px 25px;
+  transition: all 0.3s ease;
+  min-height: 140px;
+  flex-wrap: wrap;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.friend-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.friend-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transition: left 0.5s;
+}
+
+.friend-card:hover::before {
+  left: 100%;
+}
+
+.friend-card img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 15px;
+  margin-right: 25px;
+  border: 3px solid #f0f0f0;
+  transition: all 0.3s ease;
+}
+
+.friend-card:hover img {
+  border-color: #667eea;
+  transform: scale(1.05);
+}
+
+.friend-details {
+  flex: 1;
+  text-align: left;
+  padding-right: 25px;
+  min-width: 200px;
+}
+
+.friend-details h4 {
+  margin: 0 0 8px;
+  font-size: 22px;
+  color: #333;
+  font-weight: 600;
+}
+
+.friend-details p {
+  margin: 5px 0;
+  font-size: 15px;
+  color: #666;
+  line-height: 1.4;
+}
+
+.friend-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-end;
+  min-width: 140px;
+}
+
+.friend-actions button,
+.modal-buttons button {
+  padding: 10px 18px;
+  font-size: 14px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #ec294d, #d63384);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(236, 41, 77, 0.3);
+}
+
+.friend-actions button:hover,
+.modal-buttons button:hover {
+  background: linear-gradient(135deg, #d63384, #ec294d);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(236, 41, 77, 0.4);
+}
+
+.no-friends-msg {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 18px;
+  margin: 40px 0;
+  font-style: italic;
+}
+
+/* Modal Styling */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.modal-content {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  padding: 30px;
+  border-radius: 20px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  text-align: left;
+  position: relative;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  animation: modalSlideIn 0.3s ease-out;
+  overflow-y: auto;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-30px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.modal-close {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #888;
+  transition: all 0.3s ease;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.05);
+  z-index: 10;
+}
+
+.modal-close:hover {
+  color: #333;
+  background: rgba(0, 0, 0, 0.1);
+  transform: rotate(90deg);
+}
+
+.modal-photo {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  max-height: 300px;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  border: 3px solid #f0f0f0;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.modal-content h3 {
+  margin-bottom: 15px;
+  font-size: 24px;
+  color: #d63384;
+  font-weight: 700;
+  text-align: center;
+}
+
+.modal-content p {
+  font-size: 14px;
+  color: #444;
+  margin: 6px 0;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.modal-content strong {
+  color: #000;
+  font-weight: 600;
+}
+
+.modal-buttons {
+  margin-top: 25px;
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
+  position: sticky;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 15px 0;
+  border-radius: 15px;
+}
+
+.message-button,
+.video-button {
+  flex: 1 1 auto;
+  min-width: 120px;
+  background: linear-gradient(135deg, #ec294d, #d63384);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 20px;
+  cursor: pointer;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(236, 41, 77, 0.3);
+  max-width: 45%;
+}
+
+.video-button {
+  background: linear-gradient(135deg, #ec294d, #d63384);
+  box-shadow: 0 4px 15px rgba(236, 41, 77, 0.3);
+}
+
+.message-button:hover {
+  background: linear-gradient(135deg, #c44569, #a83a5a);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(212, 51, 132, 0.4);
+}
+
+.video-button:hover {
+  background: linear-gradient(135deg, #ee5a52, #d63031);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(238, 90, 82, 0.4);
+}
+
+/* Enhanced Premium Dialog Box */
+.premium-dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px);
+}
+
+.premium-dialog-content {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  padding: 40px;
+  border-radius: 20px;
+  max-width: 450px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  animation: dialogSlideIn 0.3s ease-out;
+}
+
+@keyframes dialogSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.premium-dialog-content h3 {
+  margin-bottom: 20px;
+  color: #667eea;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.premium-dialog-content p {
+  margin-bottom: 30px;
+  color: #555;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.premium-dialog-content button {
+  padding: 15px 30px;
+  font-size: 16px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #fff;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.premium-dialog-content button:hover {
+  background: linear-gradient(135deg, #5a6fd8, #6a4c93);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+.premium-dialog-close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 28px;
+  cursor: pointer;
+  color: #888;
+  transition: all 0.3s ease;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.premium-dialog-close:hover {
+  color: #333;
+  background: rgba(0, 0, 0, 0.1);
+  transform: rotate(90deg);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .friends-container {
+    padding: 20px;
+  }
+
+  .friends-container h2 {
+    font-size: 32px;
+  }
+
+  .friend-card {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 25px;
+  }
+
+  .friend-card img {
+    margin: 0 0 15px 0;
+    width: 100px;
+    height: 100px;
+    object-position: center top;
+  }
+
+  .friend-details {
+    padding: 0;
+    text-align: center;
+    margin-bottom: 15px;
+  }
+
+  .friend-actions {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 15px;
+  }
+
+  .modal-content {
+    padding: 25px;
+  }
+
+  .modal-buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .message-button,
+  .video-button {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .premium-dialog-content {
+    padding: 25px;
+  }
+
+  .premium-dialog-content button {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .friends-container {
+    padding: 15px;
+  }
+
+  .friends-container h2 {
+    font-size: 28px;
+  }
+
+  .friend-card {
+    padding: 20px;
+  }
+
+  .friend-card img {
+    width: 80px;
+    height: 80px;
+    object-position: center top;
+  }
+
+  .friend-details h4 {
+    font-size: 18px;
+  }
+
+  .friend-details p {
+    font-size: 14px;
+  }
+
+  .friend-actions button {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+
+  .modal-content {
+    padding: 20px;
+  }
+
+  .modal-photo {
+    max-height: 250px;
+    object-position: center top;
+  }
+
+  .modal-content h3 {
+    font-size: 20px;
+  }
+
+  .modal-content p {
+    font-size: 14px;
+  }
+
+  .message-button,
+  .video-button {
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+
+  .premium-dialog-content {
+    padding: 20px;
+  }
+
+  .premium-dialog-content h3 {
+    font-size: 20px;
+  }
+
+  .premium-dialog-content p {
+    font-size: 14px;
+  }
+
+  .premium-dialog-content button {
+    padding: 12px 24px;
+    font-size: 14px;
+  }
+}

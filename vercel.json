@@ -1,0 +1,11 @@
+{
+  "rewrites": [
+    { "source": "/favicon.ico", "destination": "/favicon.ico" },
+    { "source": "/robots.txt", "destination": "/robots.txt" },
+    { "source": "/sitemap.xml", "destination": "/sitemap.xml" },
+    { "source": "/api/(.*)", "destination": "/api/$1" },
+    { "source": "/_next/static/(.*)", "destination": "/_next/static/$1" },
+    { "source": "/static/(.*)", "destination": "/static/$1" },
+    { "source": "/(.*)", "destination": "/" }
+  ]
+}

@@ -1,0 +1,95 @@
+/* ContactUs.css */
+
+body {
+    background: linear-gradient(135deg, #ffe6f0, #ffffff);
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+.contact-container{
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  color: #333;
+  font-family: 'Segoe UI', sans-serif;
+}
+.p-6 {
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    margin: 40px auto;
+    padding: 24px;
+    max-width: 95%;
+}
+
+@media (min-width: 640px) {
+    .p-6 {
+        padding: 32px;
+        max-width: 85%;
+    }
+}
+
+@media (min-width: 1024px) {
+    .p-6 {
+        max-width: 50%;
+    }
+}
+
+h1 {
+    text-align: center;
+    color: #ec4899; /* Tailwind pink-600 */
+    font-weight: 700;
+    font-size: 1.75rem;
+    margin-bottom: 24px;
+}
+
+@media (min-width: 640px) {
+    h1 {
+        font-size: 2.25rem;
+    }
+}
+
+p {
+    color: #374151; /* Tailwind gray-700 */
+    font-size: 0.95rem;
+    line-height: 1.5;
+    text-align:center;
+    margin-bottom: 20px;
+}
+
+@media (min-width: 640px) {
+    p {
+        font-size: 1rem;
+    }
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: center;
+}
+
+li {
+    background-color: #fafafa;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 8px 0;
+    display: inline-block;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    font-size: 0.95rem;
+}
+
+@media (min-width: 640px) {
+    li {
+        font-size: 1rem;
+    }
+}
+
+strong {
+    color: #111827; /* Tailwind gray-800 */
+    font-weight: 600;
+}
