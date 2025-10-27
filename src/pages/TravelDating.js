@@ -2,9 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Home } from 'lucide-react';
+<<<<<<< HEAD
 import { BASE_URL } from '../utils/config';
 import './TravelDating.css';
 
+=======
+import './TravelDating.css';
+
+const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+
+>>>>>>> 65982f034f3a9c2aa82e525fbb2e36450ba5d938
 const TravelDating = () => {
   const navigate = useNavigate();
   const [travelPlans, setTravelPlans] = useState([]);
