@@ -56,8 +56,8 @@ function Admin() {
         headers: { Authorization: `Bearer ${token}` }
       });
       
-      // Check if user is admin (support@amoryn.in)
-      if (res.data.email !== 'support@amoryn.in') {
+      // Check if user is admin (official@amoryn.in)
+      if (res.data.email !== 'official@amoryn.in') {
         navigate('/dashboard');
         return;
       }

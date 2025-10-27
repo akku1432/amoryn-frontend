@@ -461,7 +461,7 @@ function Dashboard() {
         <Link to="/Faq">FAQ</Link>
 
         {/* Admin Link - Only visible for admin users */}
-        {userProfile?.email === 'support@amoryn.in' && (
+        {userProfile?.email === 'official@amoryn.in' && (
           <Link to="/admin" className="admin-link">
             👑 Admin
           </Link>
