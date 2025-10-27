@@ -39,26 +39,27 @@
 }
 
 .premium-badge {
-  background: rgba(255, 215, 0, 0.9);
-  color: #333;
+  background: linear-gradient(135deg, #ec294d, #d63384);
+  color: white;
   padding: 6px 14px;
   border-radius: 20px;
   font-size: 13px;
   font-weight: 700;
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   animation: premiumGlow 2s ease-in-out infinite alternate;
   white-space: nowrap;
   display: flex;
   align-items: center;
   height: 32px;
+  box-shadow: 0 2px 8px rgba(236, 41, 77, 0.3);
 }
 
 @keyframes premiumGlow {
   from {
-    box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+    box-shadow: 0 2px 8px rgba(236, 41, 77, 0.3);
   }
   to {
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+    box-shadow: 0 4px 20px rgba(236, 41, 77, 0.6);
   }
 }
 
@@ -262,33 +263,11 @@
   align-items: center;
 }
 
-.user-name-container {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 4px;
-}
-
 .chat-user-details h3 {
-  margin: 0;
+  margin: 0 0 4px 0;
   color: #333;
   font-size: 18px;
   font-weight: 600;
-}
-
-.user-name-container .premium-badge {
-  background: rgba(255, 215, 0, 0.9);
-  color: #333;
-  padding: 4px 10px;
-  border-radius: 15px;
-  font-size: 11px;
-  font-weight: 700;
-  border: 1px solid rgba(255, 215, 0, 0.5);
-  animation: premiumGlow 2s ease-in-out infinite alternate;
-  white-space: nowrap;
-  display: flex;
-  align-items: center;
-  height: 24px;
 }
 
 .status-container {
@@ -325,7 +304,24 @@
 
 .chat-actions {
   display: flex;
-  gap: 10px;
+  align-items: center;
+  gap: 12px;
+}
+
+.chat-actions .premium-badge {
+  background: linear-gradient(135deg, #ec294d, #d63384);
+  color: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  animation: premiumGlow 2s ease-in-out infinite alternate;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  height: 32px;
+  box-shadow: 0 2px 8px rgba(236, 41, 77, 0.3);
 }
 
 .action-button {
@@ -662,10 +658,10 @@
     font-size: 16px;
   }
 
-  .user-name-container .premium-badge {
-    padding: 3px 8px;
-    font-size: 10px;
-    height: 20px;
+  .chat-actions .premium-badge {
+    padding: 5px 10px;
+    font-size: 11px;
+    height: 28px;
   }
 
   .chat-messages {
@@ -768,10 +764,10 @@
     font-size: 15px;
   }
 
-  .user-name-container .premium-badge {
-    padding: 2px 6px;
-    font-size: 9px;
-    height: 18px;
+  .chat-actions .premium-badge {
+    padding: 4px 8px;
+    font-size: 10px;
+    height: 24px;
   }
 
   .chat-messages {

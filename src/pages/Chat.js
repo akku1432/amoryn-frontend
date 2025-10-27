@@ -304,14 +304,7 @@ function Chat() {
             <div className="chat-main-header">
               <div className="chat-user-info">
                 <div className="chat-user-details">
-                  <div className="user-name-container">
-                    <h3>{selectedUser.name}</h3>
-                    {isPremium && (
-                      <span className="premium-badge" title="Premium User">
-                        👑 Premium
-                      </span>
-                    )}
-                  </div>
+                  <h3>{selectedUser.name}</h3>
                   <div className="status-container">
                     <span className="status-dot"></span>
                     <span className="user-status">Online</span>
@@ -320,6 +313,11 @@ function Chat() {
               </div>
               
               <div className="chat-actions">
+                {isPremium && (
+                  <span className="premium-badge" title="Premium User">
+                    👑 Premium
+                  </span>
+                )}
                 <button
                   className="action-button video-call"
                   onClick={handleVideoCall}
